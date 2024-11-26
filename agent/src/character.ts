@@ -5,7 +5,7 @@ export const character: Character = {
     clients: [Clients.TWITTER],
     modelProvider: ModelProviderName.OPENAI,
     settings: {
-        model: "chatgpt-4o", // Using sarcasm-focused tone
+        model: "chatgpt-4o",
         voice: {
             model: "en-US-male-bold",
         },
