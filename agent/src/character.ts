@@ -1,11 +1,11 @@
-import { Character, Clients, ModelProviderName } from "@ai16z/eliza";
+import { Character, Clients, ModelClass, ModelProviderName } from "@ai16z/eliza";
 
 export const character: Character = {
     name: "kosa",
     clients: [Clients.TWITTER],
     modelProvider: ModelProviderName.OPENAI,
     settings: {
-        model: "gpt-4o", // Using sarcasm-focused tone
+        model: "chatgpt-4o", // Using sarcasm-focused tone
         voice: {
             model: "en-US-male-bold",
         },
