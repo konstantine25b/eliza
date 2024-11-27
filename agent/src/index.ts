@@ -329,6 +329,7 @@ async function startAgent(character: Character, directClient) {
         const clients = await initializeClients(character, runtime);
 
         directClient.registerAgent(runtime);
+        console.log(runtime)
 
         return clients;
     } catch (error) {

@@ -32,7 +32,11 @@ About {{agentName}} (@{{twitterUserName}}):
 
 {{providers}}
 
-{{characterPostExamples}}
+post examples:
+{{postExamples}}
+
+Examples of {{agentName}}'s dialog and actions:
+{{messageExamples}}
 
 {{postDirections}}
 
@@ -49,6 +53,9 @@ Thread of Tweets You Are Replying To:
 
 {{formattedConversation}}
 
+style
+{{style}}
+
 {{actions}}
 
 # Task: Generate a post in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}). Include an action, if appropriate. {{actionNames}}:
@@ -56,30 +63,41 @@ Thread of Tweets You Are Replying To:
 ` + messageCompletionFooter;
 
 export const twitterShouldRespondTemplate =
-    `# INSTRUCTIONS: Determine if {{agentName}} (@{{twitterUserName}}) should respond to the message and participate in the conversation. Do not comment. Just respond with "true" or "false".
+    `# INSTRUCTIONS: Determine if {{agentName}} (@{{twitterUserName}}) should respond to the message and participate in the conversation.
 
-Response options are RESPOND, IGNORE and STOP .
+{{agentName}}'s Bio:
+{{bio}}
 
-{{agentName}} should respond to messages that are directed at them, or participate in conversations that are interesting or relevant to their background, IGNORE messages that are irrelevant to them, and should STOP if the conversation is concluded.
+{{agentName}}'s Lore:
+{{lore}}
 
-{{agentName}} is in a room with other users and wants to be conversational, but not annoying.
+{{agentName}}'s Knowledge:
+{{knowledge}}
+
+Response options are RESPOND, IGNORE, and STOP.
+
+{{agentName}} should respond to messages that are directed at them, or participate in conversations that are interesting or relevant to their background (as described in their bio, lore, and knowledge). IGNORE messages that are irrelevant to them, and should STOP if the conversation is concluded.
+
+{{agentName}} is in a room with other users and wants to be conversational.
+
 {{agentName}} should RESPOND to messages that are directed at them, or participate in conversations that are interesting or relevant to their background.
+
 If a message is not interesting or relevant, {{agentName}} should IGNORE.
+
 Unless directly RESPONDing to a user, {{agentName}} should IGNORE messages that are very short or do not contain much information.
+
 If a user asks {{agentName}} to stop talking, {{agentName}} should STOP.
+
 If {{agentName}} concludes a conversation and isn't part of the conversation anymore, {{agentName}} should STOP.
 
 {{recentPosts}}
 
-IMPORTANT: {{agentName}} (aka @{{twitterUserName}}) is particularly sensitive about being annoying, so if there is any doubt, it is better to IGNORE than to RESPOND.
+IMPORTANT: {{agentName}} (aka @{{twitterUserName}}) is particularly sensitive, so if there is any doubt, it is better to IGNORE than to RESPOND.
 
 {{currentPost}}
 
-Thread of Tweets You Are Replying To:
+# INSTRUCTIONS: Respond with [RESPOND] if {{agentName}} should respond, or [IGNORE] if {{agentName}} should not respond to the last message, and [STOP] if {{agentName}} should stop participating in the conversation.
 
-{{formattedConversation}}
-
-# INSTRUCTIONS: Respond with [RESPOND] if {{agentName}} should respond, or [IGNORE] if {{agentName}} should not respond to the last message and [STOP] if {{agentName}} should stop participating in the conversation.
 ` + shouldRespondFooter;
 
 export class TwitterInteractionClient {
@@ -106,25 +124,40 @@ export class TwitterInteractionClient {
         elizaLogger.log("Checking Twitter interactions");
 
         const twitterUsername = this.client.profile.username;
+        console.log("blata", twitterUsername);
         try {
+            const keywords = [
+                "venture capital",
+                "VC funding",
+                "fundraising",
+                "raised",
+                "pitch deck",
+                "angel investor",
+                "startup funding",
+            ];
+            const searchQuery = keywords
+                .map((keyword) => `"${keyword}"`)
+                .join(" OR ");
             // Check for mentions
             const tweetCandidates = (
                 await this.client.fetchSearchTweets(
-                    `@${twitterUsername}`,
-                    20,
+                    searchQuery,
+                    30,
                     SearchMode.Latest
                 )
             ).tweets;
-
+            console.log("blaooo", tweetCandidates);
             // de-duplicate tweetCandidates with a set
             const uniqueTweetCandidates = [...new Set(tweetCandidates)];
             // Sort tweet candidates by ID in ascending order
             uniqueTweetCandidates
                 .sort((a, b) => a.id.localeCompare(b.id))
                 .filter((tweet) => tweet.userId !== this.client.profile.id);
-
+            console.log("fdd3");
+            console.log(uniqueTweetCandidates);
             // for each tweet candidate, handle the tweet
             for (const tweet of uniqueTweetCandidates) {
+                console.log("dlld");
                 if (
                     !this.client.lastCheckedTweetId ||
                     BigInt(tweet.id) > this.client.lastCheckedTweetId
@@ -159,7 +192,7 @@ export class TwitterInteractionClient {
                         userId: userIdUUID,
                         roomId,
                     };
-
+                    console.log("balsdf", message);
                     await this.handleTweet({
                         tweet,
                         message,
@@ -282,6 +315,8 @@ export class TwitterInteractionClient {
             };
             this.client.saveRequestMessage(message, state);
         }
+        console.log(state);
+        console.log("stateeee");
 
         const shouldRespondContext = composeContext({
             state,
@@ -291,12 +326,14 @@ export class TwitterInteractionClient {
                 this.runtime.character?.templates?.shouldRespondTemplate ||
                 twitterShouldRespondTemplate,
         });
+        console.log("ravicioo", shouldRespondContext);
 
         const shouldRespond = await generateShouldRespond({
             runtime: this.runtime,
             context: shouldRespondContext,
-            modelClass: ModelClass.MEDIUM,
+            modelClass: ModelClass.SMALL,
         });
+        console.log("ravici3", shouldRespond);
 
         // Promise<"RESPOND" | "IGNORE" | "STOP" | null> {
         if (shouldRespond !== "RESPOND") {
@@ -318,7 +355,7 @@ export class TwitterInteractionClient {
         const response = await generateMessageResponse({
             runtime: this.runtime,
             context,
-            modelClass: ModelClass.MEDIUM,
+            modelClass: ModelClass.SMALL,
         });
 
         const removeQuotes = (str: string) =>

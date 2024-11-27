@@ -129,8 +129,8 @@ export interface Goal {
  * Model size/type classification
  */
 export enum ModelClass {
-    SMALL = "small",
-    MEDIUM = "medium",
+    SMALL = "medium",
+    MEDIUM = "mediume",
     LARGE = "large",
     EMBEDDING = "embedding",
     IMAGE = "image",

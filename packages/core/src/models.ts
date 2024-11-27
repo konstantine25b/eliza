@@ -13,7 +13,7 @@ export const models: Models = {
             temperature: 0.6,
         },
         model: {
-            [ModelClass.SMALL]: "gpt-4o-mini",
+            [ModelClass.SMALL]: "gpt-4o",
             [ModelClass.MEDIUM]: "gpt-4o",
             [ModelClass.LARGE]: "gpt-4o",
             [ModelClass.EMBEDDING]: "text-embedding-3-small",

@@ -70,8 +70,10 @@ export async function generateText({
     });
 
     const provider = runtime.modelProvider;
+    console.log("bebe" ,provider )
     const endpoint =
         runtime.character.modelEndpointOverride || models[provider].endpoint;
+    console.log("lala" , models[provider])
     let model = models[provider].model[modelClass];
 
     // if runtime.getSetting("LLAMACLOUD_MODEL_LARGE") is true and modelProvider is LLAMACLOUD, then use the large model
@@ -111,6 +113,7 @@ export async function generateText({
         elizaLogger.debug(
             `Using provider: ${provider}, model: ${model}, temperature: ${temperature}, max response length: ${max_response_length}`
         );
+        
 
         switch (provider) {
             // OPENAI & LLAMACLOUD shared same structure.
@@ -118,8 +121,9 @@ export async function generateText({
             case ModelProviderName.ETERNALAI:
             case ModelProviderName.LLAMACLOUD: {
                 elizaLogger.debug("Initializing OpenAI model.");
+                console.log("sheiqmna1")
                 const openai = createOpenAI({ apiKey, baseURL: endpoint });
-
+                console.log("sheiqmna")
                 const { text: openaiResponse } = await aiGenerateText({
                     model: openai.languageModel(model),
                     prompt: context,
@@ -134,6 +138,7 @@ export async function generateText({
                 });
 
                 response = openaiResponse;
+                console.log("sheiqmna32")
                 elizaLogger.debug("Received response from OpenAI model.");
                 break;
             }
@@ -461,15 +466,20 @@ export async function generateShouldRespond({
                 "Attempting to generate text with context:",
                 context
             );
+            console.log("dsfd1",runtime)
+            console.log("dsfd2",context)
+            console.log("dsfd3",modelClass)
             const response = await generateText({
                 runtime,
                 context,
                 modelClass,
             });
+            console.log("opaaa", response)
 
             elizaLogger.debug("Received response from generateText:", response);
             const parsedResponse = parseShouldRespondFromText(response.trim());
             if (parsedResponse) {
+                console.log("Parsed response1:", parsedResponse)
                 elizaLogger.debug("Parsed response:", parsedResponse);
                 return parsedResponse;
             } else {
