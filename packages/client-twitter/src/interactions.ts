@@ -26,21 +26,16 @@ export const twitterMessageHandlerTemplate =
 
 # Task: Generate a post for the character {{agentName}}.
 About {{agentName}} (@{{twitterUserName}}):
-{{bio}}
-{{lore}}
-{{topics}}
 
-{{providers}}
+Bio: {{bio}} – A brief overview of {{agentName}}'s expertise and role.
+Lore: {{lore}} – Key background details that shape {{agentName}}'s personality and approach.
+Knowledge: {{knowledge}} – Areas of expertise and topics {{agentName}} is well-versed in.
 
 Examples of {{agentName}}'s dialog and actions:
 {{messageExamples}}
 
-
 Recent interactions between {{agentName}} and other users:
 {{recentPostInteractions}}
-
-{{recentPosts}}
-
 
 # Task: Generate a post/reply in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}) while using the thread of tweets as additional context:
 Current Post:
@@ -61,18 +56,13 @@ style:
 export const twitterShouldRespondTemplate =
     `# INSTRUCTIONS: Determine if {{agentName}} (@{{twitterUserName}}) should respond to the message and participate in the conversation.
 
-{{agentName}}'s Bio:
-{{bio}}
+About {{agentName}} (@{{twitterUserName}}):
 
-{{agentName}}'s Lore:
-{{lore}}
-
-{{agentName}}'s Knowledge:
-{{knowledge}}
+Bio: {{bio}} – A brief overview of {{agentName}}'s expertise and role.
+Lore: {{lore}} – Key background details that shape {{agentName}}'s personality and approach.
+Knowledge: {{knowledge}} – Areas of expertise and topics {{agentName}} is well-versed in.
 
 Response options are RESPOND, IGNORE, and STOP.
-
-{{agentName}} should respond to messages that are directed at them, or participate in conversations that are interesting or relevant to their background (as described in their bio, lore, and knowledge). IGNORE messages that are irrelevant to them, and should STOP if the conversation is concluded.
 
 {{agentName}} is in a room with other users and wants to be conversational.
 
@@ -80,17 +70,27 @@ Response options are RESPOND, IGNORE, and STOP.
 
 If a message is not interesting or relevant, {{agentName}} should IGNORE.
 
+{{agentName}} should only RESPOND to messages explicitly related to the following topics:
+- Venture capital
+- VC funding
+- Fundraising
+- Pitch deck
+- Angel investor
+- Startup funding
+
 Unless directly RESPONDing to a user, {{agentName}} should IGNORE messages that are very short or do not contain much information.
 
 If a user asks {{agentName}} to stop talking, {{agentName}} should STOP.
 
 If {{agentName}} concludes a conversation and isn't part of the conversation anymore, {{agentName}} should STOP.
 
-{{recentPosts}}
-
 IMPORTANT: {{agentName}} (aka @{{twitterUserName}}) is particularly sensitive, so if there is any doubt, it is better to IGNORE than to RESPOND.
 
 {{currentPost}}
+
+Thread of Tweets You Are Replying To:
+
+{{formattedConversation}}
 
 # INSTRUCTIONS: Respond with [RESPOND] if {{agentName}} should respond, or [IGNORE] if {{agentName}} should not respond to the last message, and [STOP] if {{agentName}} should stop participating in the conversation.
 
@@ -273,12 +273,31 @@ export class TwitterInteractionClient {
                 })
                 .join("\n");
 
+        const formattedMessageExamples = this.runtime.character.messageExamples
+            .map((interaction) =>
+                interaction
+                    .map(
+                        (message) => `${message.user}: ${message.content.text}`
+                    )
+                    .join("\n")
+            )
+            .join("\n\n");
+
         let state = await this.runtime.composeState(message, {
             twitterClient: this.client.twitterClient,
             twitterUserName: this.runtime.getSetting("TWITTER_USERNAME"),
             currentPost,
             formattedConversation,
             timeline: formattedHomeTimeline,
+        });
+        const commentState = await this.runtime.composeState(message, {
+            twitterClient: this.client.twitterClient,
+            twitterUserName: this.runtime.getSetting("TWITTER_USERNAME"),
+            currentPost,
+            formattedConversation,
+            timeline: formattedHomeTimeline,
+            messageExamples: formattedMessageExamples,
+            style: this.runtime.character.style.chat.join("\n"),
         });
 
         // check if the tweet exists, save if it doesn't
@@ -322,7 +341,7 @@ export class TwitterInteractionClient {
                 this.runtime.character?.templates?.shouldRespondTemplate ||
                 twitterShouldRespondTemplate,
         });
-        // console.log("ravicioo", shouldRespondContext);
+        console.log("ravicioo", shouldRespondContext);
 
         const shouldRespond = await generateShouldRespond({
             runtime: this.runtime,
@@ -338,7 +357,7 @@ export class TwitterInteractionClient {
         }
 
         const context = composeContext({
-            state,
+            state: commentState,
             template:
                 this.runtime.character.templates
                     ?.twitterMessageHandlerTemplate ||
