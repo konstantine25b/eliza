@@ -284,7 +284,7 @@ export class ClientBase extends EventEmitter {
             );
 
             try {
-                console.log("kosaa",query,maxTweets,searchMode, cursor)
+                // console.log("kosaa",query,maxTweets,searchMode, cursor)
                 const result = await this.requestQueue.add(
                     async () =>
                         await Promise.race([
@@ -298,7 +298,7 @@ export class ClientBase extends EventEmitter {
                         ])
 
                 );
-                console.log("fd23", result)
+                // console.log("fd23", result)
                 return (result ?? { tweets: [] }) as QueryTweetsResponse;
             } catch (error) {
                 elizaLogger.error("Error fetching search tweets:", error);
@@ -440,13 +440,13 @@ export class ClientBase extends EventEmitter {
         const timeline = await this.fetchHomeTimeline(cachedTimeline ? 10 : 50);
 
         // Get the most recent 20 mentions and interactions
-        console.log("kosaa1",this.runtime.getSetting("TWITTER_USERNAME"),SearchMode.Latest)
+        // console.log("kosaa1",this.runtime.getSetting("TWITTER_USERNAME"),SearchMode.Latest)
         const mentionsAndInteractions = await this.fetchSearchTweets(
             `@${this.runtime.getSetting("TWITTER_USERNAME")}`,
             20,
             SearchMode.Latest
         );
-        console.log("fd231", mentionsAndInteractions)
+        // console.log("fd231", mentionsAndInteractions)
         
 
         // Combine the timeline tweets and mentions/interactions

@@ -70,10 +70,10 @@ export async function generateText({
     });
 
     const provider = runtime.modelProvider;
-    console.log("bebe" ,provider )
+    // console.log("bebe" ,provider )
     const endpoint =
         runtime.character.modelEndpointOverride || models[provider].endpoint;
-    console.log("lala" , models[provider])
+    // console.log("lala" , models[provider])
     let model = models[provider].model[modelClass];
 
     // if runtime.getSetting("LLAMACLOUD_MODEL_LARGE") is true and modelProvider is LLAMACLOUD, then use the large model
@@ -121,9 +121,9 @@ export async function generateText({
             case ModelProviderName.ETERNALAI:
             case ModelProviderName.LLAMACLOUD: {
                 elizaLogger.debug("Initializing OpenAI model.");
-                console.log("sheiqmna1")
+                // console.log("sheiqmna1")
                 const openai = createOpenAI({ apiKey, baseURL: endpoint });
-                console.log("sheiqmna")
+                // console.log("sheiqmna")
                 const { text: openaiResponse } = await aiGenerateText({
                     model: openai.languageModel(model),
                     prompt: context,
@@ -466,15 +466,15 @@ export async function generateShouldRespond({
                 "Attempting to generate text with context:",
                 context
             );
-            console.log("dsfd1",runtime)
-            console.log("dsfd2",context)
-            console.log("dsfd3",modelClass)
+            // console.log("dsfd1",runtime)
+            // console.log("dsfd2",context)
+            // console.log("dsfd3",modelClass)
             const response = await generateText({
                 runtime,
                 context,
                 modelClass,
             });
-            console.log("opaaa", response)
+            // console.log("opaaa", response)
 
             elizaLogger.debug("Received response from generateText:", response);
             const parsedResponse = parseShouldRespondFromText(response.trim());
@@ -548,7 +548,7 @@ export async function generateTrueOrFalse({
     modelClass: string;
 }): Promise<boolean> {
     let retryDelay = 1000;
-    console.log("modelClass", modelClass);
+    // console.log("modelClass", modelClass);
 
     const stop = Array.from(
         new Set([

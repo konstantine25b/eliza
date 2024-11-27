@@ -32,13 +32,9 @@ About {{agentName}} (@{{twitterUserName}}):
 
 {{providers}}
 
-post examples:
-{{postExamples}}
-
 Examples of {{agentName}}'s dialog and actions:
 {{messageExamples}}
 
-{{postDirections}}
 
 Recent interactions between {{agentName}} and other users:
 {{recentPostInteractions}}
@@ -53,8 +49,8 @@ Thread of Tweets You Are Replying To:
 
 {{formattedConversation}}
 
-style
-{{style}}
+style: 
+{{style.chat}}
 
 {{actions}}
 
@@ -142,22 +138,22 @@ export class TwitterInteractionClient {
             const tweetCandidates = (
                 await this.client.fetchSearchTweets(
                     searchQuery,
-                    30,
+                    40,
                     SearchMode.Latest
                 )
             ).tweets;
-            console.log("blaooo", tweetCandidates);
+            // console.log("blaooo", tweetCandidates);
             // de-duplicate tweetCandidates with a set
             const uniqueTweetCandidates = [...new Set(tweetCandidates)];
             // Sort tweet candidates by ID in ascending order
             uniqueTweetCandidates
                 .sort((a, b) => a.id.localeCompare(b.id))
                 .filter((tweet) => tweet.userId !== this.client.profile.id);
-            console.log("fdd3");
-            console.log(uniqueTweetCandidates);
+            // console.log("fdd3");
+            // console.log(uniqueTweetCandidates);
             // for each tweet candidate, handle the tweet
             for (const tweet of uniqueTweetCandidates) {
-                console.log("dlld");
+                // console.log("dlld");
                 if (
                     !this.client.lastCheckedTweetId ||
                     BigInt(tweet.id) > this.client.lastCheckedTweetId
@@ -192,7 +188,7 @@ export class TwitterInteractionClient {
                         userId: userIdUUID,
                         roomId,
                     };
-                    console.log("balsdf", message);
+                    // console.log("balsdf", message);
                     await this.handleTweet({
                         tweet,
                         message,
@@ -315,8 +311,8 @@ export class TwitterInteractionClient {
             };
             this.client.saveRequestMessage(message, state);
         }
-        console.log(state);
-        console.log("stateeee");
+        // console.log(state);
+        // console.log("stateeee");
 
         const shouldRespondContext = composeContext({
             state,
@@ -326,7 +322,7 @@ export class TwitterInteractionClient {
                 this.runtime.character?.templates?.shouldRespondTemplate ||
                 twitterShouldRespondTemplate,
         });
-        console.log("ravicioo", shouldRespondContext);
+        // console.log("ravicioo", shouldRespondContext);
 
         const shouldRespond = await generateShouldRespond({
             runtime: this.runtime,
@@ -349,6 +345,8 @@ export class TwitterInteractionClient {
                 this.runtime.character?.templates?.messageHandlerTemplate ||
                 twitterMessageHandlerTemplate,
         });
+
+        console.log("kiki233", context);
 
         elizaLogger.debug("Interactions prompt:\n" + context);
 

@@ -21,15 +21,18 @@ About {{agentName}} (@{{twitterUserName}}):
 {{lore}}
 {{postDirections}}
 
-{{providers}}
+# Best Post Examples
+Here are some exemplary posts in the voice and style of {{agentName}}:
 
-{{recentPosts}}
+{{postExamples}}
 
-{{characterPostExamples}}
+style: 
+{{style}}
 
 # Task: Generate a post in the voice and style of {{agentName}}, aka @{{twitterUserName}}
-Write a single sentence post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Try to write something totally different than previous posts. Do not add commentary or acknowledge this request, just write the post.
-Your response should not contain any questions. Brief, concise statements only. No emojis. Use \\n\\n (double spaces) between statements.`;
+Write a single sentence post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Try to write something totally different than previous posts.
+Use the examples above as inspiration but write something new and unique. 
+Use \\n\\n (double spaces) between statements. Ensure the post aligns with the personality and tone demonstrated in the examples.`;
 
 const MAX_TWEET_LENGTH = 280;
 
@@ -167,6 +170,10 @@ export class TwitterPostClient {
                 {
                     twitterUserName: this.client.profile.username,
                     timeline: formattedHomeTimeline,
+                    postExamples:
+                        this.runtime.character.postExamples.join("\n"),
+                    style:
+                        this.runtime.character.style.post.join("\n"),
                 }
             );
 
@@ -176,6 +183,7 @@ export class TwitterPostClient {
                     this.runtime.character.templates?.twitterPostTemplate ||
                     twitterPostTemplate,
             });
+            console.log("exaaads", context);
 
             elizaLogger.debug("generate post prompt:\n" + context);
 
