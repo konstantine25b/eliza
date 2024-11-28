@@ -57,7 +57,7 @@ Thread of Tweets You Are Replying To:
 5. Use the examples above as inspiration but write something unique and fitting the context.
 6. Focus on maintaining {{agentName}}'s tone and perspective throughout.
 
-# Task: Generate a post in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}). Include an action, if appropriate. {{actionNames}}:
+# Task: Generate a post in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}). Include an action, if appropriate. No emojis. {{actionNames}}:
 {{currentPost}}
 ` + messageCompletionFooter;
 

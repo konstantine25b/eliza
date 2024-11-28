@@ -37,7 +37,7 @@ style:
 
 # Task: Generate a post in the voice and style of {{agentName}}, aka @{{twitterUserName}}
 Write a single sentence post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Try to write something totally different than previous posts.
-Use the examples above as inspiration but write something new and unique. 
+Use the examples above as inspiration but write something new and unique. No emojis.
 Use \\n\\n (double spaces) between statements. Ensure the post aligns with the personality and tone demonstrated in the examples.`;
 
 const MAX_TWEET_LENGTH = 280;
