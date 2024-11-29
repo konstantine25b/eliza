@@ -29,9 +29,18 @@ Here are some exemplary posts in the voice and style of {{agentName}}:
 style: 
 {{style}}
 
+### Guidelines:
+- Write in a casual manner, no caps, and use all lowercase letters.
+- Each comment/post must include the phrase **vc bich**.
+- Do not start all posts with overused phrases like "in the grand scheme" or anything repetitive.
+- The post should create a sense of belonging and let people know they are **vc biches** whether they accept it or not.
+- Ensure the post aligns with the personality and tone demonstrated in the examples.
+- Write in a casual, conversational tone.
+- No caps, and no formal structure—keep it natural and relatable.
+
 # Task: Generate a post in the voice and style of {{agentName}}, aka @{{twitterUserName}}
 Write a single sentence post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Try to write something totally different than previous posts.
-Use the examples above as inspiration but write something new and unique. 
+Use the examples above as inspiration but write something new and unique. No emojis.
 Use \\n\\n (double spaces) between statements. Ensure the post aligns with the personality and tone demonstrated in the examples.`;
 
 const MAX_TWEET_LENGTH = 280;
