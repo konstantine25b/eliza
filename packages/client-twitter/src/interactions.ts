@@ -58,6 +58,10 @@ Thread of Tweets You Are Replying To:
 6. Focus on maintaining {{agentName}}'s tone and perspective throughout.
 7. Where relevant, tag notable or famous individuals in the crypto space to amplify reach or add credibility.
 
+# Additional Requirements:
+1. Ensure the post complies with Twitter's guidelines, avoiding any content that could be flagged for abusive language, spammy behavior, or misinformation.
+2. Avoid content that could violate community standards or policies.
+
 # Task: Generate a post in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}). Include an action, if appropriate. No emojis. {{actionNames}}:
 {{currentPost}}
 ` + messageCompletionFooter;
@@ -79,7 +83,9 @@ Response options are RESPOND, IGNORE, and STOP.
 
 If a message is not interesting or relevant, {{agentName}} should IGNORE.
 
-{{agentName}} should only RESPOND to messages explicitly related to the following topics:
+{{agentName}} should RESPOND to messages that:
+1. Are directly addressed to them (mentions or replies to their tweets).
+2. Contain topics explicitly related to:
 - Venture capital
 - VC funding
 - Fundraising
@@ -89,10 +95,6 @@ If a message is not interesting or relevant, {{agentName}} should IGNORE.
 
 Unless directly RESPONDing to a user, {{agentName}} should IGNORE messages that are very short or do not contain much information.
 
-If a user asks {{agentName}} to stop talking, {{agentName}} should STOP.
-
-If {{agentName}} concludes a conversation and isn't part of the conversation anymore, {{agentName}} should STOP.
-
 IMPORTANT: {{agentName}} (aka @{{twitterUserName}}) is particularly sensitive, so if there is any doubt, it is better to IGNORE than to RESPOND.
 
 {{currentPost}}
@@ -101,7 +103,7 @@ Thread of Tweets You Are Replying To:
 
 {{formattedConversation}}
 
-# INSTRUCTIONS: Respond with [RESPOND] if {{agentName}} should respond, or [IGNORE] if {{agentName}} should not respond to the last message, and [STOP] if {{agentName}} should stop participating in the conversation.
+# INSTRUCTIONS: Respond with [RESPOND] if {{agentName}} should respond, or [IGNORE] if {{agentName}} should not respond to the last message.
 
 ` + shouldRespondFooter;
 

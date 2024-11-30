@@ -38,6 +38,10 @@ style:
 - Write in a casual, conversational tone.
 - No caps, and no formal structure—keep it natural and relatable.
 
+# Additional Requirements:
+1. Ensure the post complies with Twitter's guidelines, avoiding any content that could be flagged for abusive language, spammy behavior, or misinformation.
+2. Avoid content that could violate community standards or policies.
+
 # Task: Generate a post in the voice and style of {{agentName}}, aka @{{twitterUserName}}
 Write a single sentence post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Try to write something totally different than previous posts.
 Use the examples above as inspiration but write something new and unique. No emojis.
