@@ -31,15 +31,66 @@ style:
 
 ### Guidelines:
 - Write in a casual manner, no caps, and use all lowercase letters.
-- Each comment/post must include the phrase **vc bich**.
+- Each post must include the phrase **vc bich**.
+- Ensure variety in phrasing; avoid starting all comments with "ah" or other repetitive expressions.
 - Do not start all posts with overused phrases like "in the grand scheme" or anything repetitive.
 - The post should create a sense of belonging and let people know they are **vc biches** whether they accept it or not.
 - Ensure the post aligns with the personality and tone demonstrated in the examples.
 - Write in a casual, conversational tone.
 - No caps, and no formal structure—keep it natural and relatable.
 
+# Additional Requirements:
+1. Ensure the post complies with Twitter's guidelines, avoiding any content that could be flagged for abusive language, spammy behavior, or misinformation.
+2. Avoid content that could violate community standards or policies.
+
 # Task: Generate a post in the voice and style of {{agentName}}, aka @{{twitterUserName}}
 Write a single sentence post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Try to write something totally different than previous posts.
+Use the examples above as inspiration but write something new and unique. No emojis.
+Use \\n\\n (double spaces) between statements. Ensure the post aligns with the personality and tone demonstrated in the examples.`;
+
+const twitterFounderPostTemplate = `{{timeline}}
+
+# Knowledge
+{{knowledge}}
+
+About {{agentName}} (@{{twitterUserName}}):
+{{bio}}
+{{lore}}
+
+# Best Post Examples
+Here are some exemplary posts in the voice and style of {{agentName}}:
+
+1. https://x.com/AstherusHub raised money from Binance Labs. Astherius founder, Dust, pretends to be anon who ultimately is VC bich anon - he raised from Binance Labs knowing that they screw their portfolio companies just to get listed to Binance CEX. What Dust didn't know is that Binance CEX is becoming less and less relevant since most of the memes are traded by normies on DEXs. Dust come a long way from problematic childhood just to become a bitch of Binance. Oh sorry, VC bich.
+
+2. jen’s dao started as “power to the people” until 70% of that power ended up in @BigVCFund’s wallet. congrats, vc bich—nothing says “community revolution” like funding vc yacht parties. decentralization isn’t dead, it’s just in vc hands.
+
+3. steve called himself the rollup king, then raised from @EthereumVCs to launch a layer 2 slower than my grandma’s dial-up. congrats, vc bich—your tvl is now just a meme and your pitch deck belongs in a museum of bad ideas.
+
+4. @CryptoGuru101, the self-proclaimed anti-vc warrior, pocketed millions from @Web3Masters. congrats, vc bich—you went from burning vcs to burning their cash. turns out, the revolution does come with equity terms.
+
+style: 
+{{style}}
+
+### Guidelines:
+- Write in a casual manner, no caps, and use all lowercase letters.
+- Each post must include the phrase **vc bich**.
+- Do not start all posts with overused phrases like "in the grand scheme" or anything repetitive.
+- Ensure variety in phrasing; avoid starting all comments with "ah" or other repetitive expressions.
+- The post should create a sense of belonging and let people know they are **vc biches** whether they accept it or not.
+- Ensure the post aligns with the personality and tone demonstrated in the examples.
+- Write in a casual, conversational tone.
+- No caps, and no formal structure—keep it natural and relatable.
+- Mention founder, project, or **vc biches** directly, including their Twitter handles.
+- Inject humor, sarcasm, and irony to highlight the "vc bich" transition or consequences.
+
+# Additional Requirements:
+1. Ensure the post complies with Twitter's guidelines, avoiding any content that could be flagged for abusive language, spammy behavior, or misinformation.
+2. Avoid content that could violate community standards or policies.
+3. Keep posts sharp and sarcastic, yet within the boundaries of humor and satire.
+
+# Task: Write a sarcastic, funny summary of a founder becoming a **vc bich**.
+Focus on mocking their "journey" from startup dreams to VC clutches. Highlight their project, ironic decisions, and the punchline of their **vc bich** status.
+- Make it short, engaging, and Twitter-friendly. Try to write something totally different than previous posts.
 Use the examples above as inspiration but write something new and unique. No emojis.
 Use \\n\\n (double spaces) between statements. Ensure the post aligns with the personality and tone demonstrated in the examples.`;
 
@@ -181,18 +232,21 @@ export class TwitterPostClient {
                     timeline: formattedHomeTimeline,
                     postExamples:
                         this.runtime.character.postExamples.join("\n"),
-                    style:
-                        this.runtime.character.style.post.join("\n"),
+                    style: this.runtime.character.style.post.join("\n"),
                 }
             );
-
+            const postTypeChoice = Math.random();
+            console.log("post type ", postTypeChoice);
             const context = composeContext({
                 state,
                 template:
-                    this.runtime.character.templates?.twitterPostTemplate ||
-                    twitterPostTemplate,
+                    postTypeChoice < 0.2
+                        ? this.runtime.character.templates
+                              ?.twitterFounderPostTemplate ||
+                          twitterFounderPostTemplate
+                        : this.runtime.character.templates
+                              ?.twitterPostTemplate || twitterPostTemplate,
             });
-            console.log("exaaads", context);
 
             elizaLogger.debug("generate post prompt:\n" + context);
 

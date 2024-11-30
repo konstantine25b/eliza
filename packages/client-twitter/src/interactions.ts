@@ -58,6 +58,10 @@ Thread of Tweets You Are Replying To:
 6. Focus on maintaining {{agentName}}'s tone and perspective throughout.
 7. Where relevant, tag notable or famous individuals in the crypto space to amplify reach or add credibility.
 
+# Additional Requirements:
+1. Ensure the post complies with Twitter's guidelines, avoiding any content that could be flagged for abusive language, spammy behavior, or misinformation.
+2. Avoid content that could violate community standards or policies.
+
 # Task: Generate a post in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}). Include an action, if appropriate. No emojis. {{actionNames}}:
 {{currentPost}}
 ` + messageCompletionFooter;
@@ -75,11 +79,13 @@ Response options are RESPOND, IGNORE, and STOP.
 
 {{agentName}} is in a room with other users and wants to be conversational.
 
-{{agentName}} should RESPOND to messages that are directed at them, or participate in conversations that are interesting or relevant to their background.
+{{agentName}} participate in conversations that are interesting or relevant to their background.
 
 If a message is not interesting or relevant, {{agentName}} should IGNORE.
 
-{{agentName}} should only RESPOND to messages explicitly related to the following topics:
+{{agentName}} should RESPOND to messages that:
+1. Are directly addressed to them (mentions or replies to their tweets).
+2. Contain topics explicitly related to:
 - Venture capital
 - VC funding
 - Fundraising
@@ -89,9 +95,7 @@ If a message is not interesting or relevant, {{agentName}} should IGNORE.
 
 Unless directly RESPONDing to a user, {{agentName}} should IGNORE messages that are very short or do not contain much information.
 
-If a user asks {{agentName}} to stop talking, {{agentName}} should STOP.
-
-If {{agentName}} concludes a conversation and isn't part of the conversation anymore, {{agentName}} should STOP.
+ **{{agentName}} must RESPOND to messages that are directed at or replied to them:** If a message is a reply to a previous post by {{agentName}}, the response should align with their personality, tone, and style.
 
 IMPORTANT: {{agentName}} (aka @{{twitterUserName}}) is particularly sensitive, so if there is any doubt, it is better to IGNORE than to RESPOND.
 
@@ -101,7 +105,7 @@ Thread of Tweets You Are Replying To:
 
 {{formattedConversation}}
 
-# INSTRUCTIONS: Respond with [RESPOND] if {{agentName}} should respond, or [IGNORE] if {{agentName}} should not respond to the last message, and [STOP] if {{agentName}} should stop participating in the conversation.
+# INSTRUCTIONS: Respond with [RESPOND] if {{agentName}} should respond, or [IGNORE] if {{agentName}} should not respond to the last message.
 
 ` + shouldRespondFooter;
 
@@ -129,8 +133,15 @@ export class TwitterInteractionClient {
         elizaLogger.log("Checking Twitter interactions");
 
         const twitterUsername = this.client.profile.username;
-        console.log("blata", twitterUsername);
+
         try {
+            const tweetCandidates = (
+                await this.client.fetchSearchTweets(
+                    `@${twitterUsername}`,
+                    20,
+                    SearchMode.Latest
+                )
+            ).tweets;
             const keywords = [
                 "venture capital",
                 "VC funding",
@@ -144,16 +155,17 @@ export class TwitterInteractionClient {
                 .map((keyword) => `"${keyword}"`)
                 .join(" OR ");
             // Check for mentions
-            const tweetCandidates = (
+            const tweetCandidates2 = (
                 await this.client.fetchSearchTweets(
                     searchQuery,
                     40,
                     SearchMode.Latest
                 )
             ).tweets;
+
             // console.log("blaooo", tweetCandidates);
             // de-duplicate tweetCandidates with a set
-            const uniqueTweetCandidates = [...new Set(tweetCandidates)];
+            const uniqueTweetCandidates = [...new Set([...tweetCandidates, ...tweetCandidates2])];
             // Sort tweet candidates by ID in ascending order
             uniqueTweetCandidates
                 .sort((a, b) => a.id.localeCompare(b.id))
