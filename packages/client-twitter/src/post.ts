@@ -84,8 +84,8 @@ style:
 
 Examples:
 - "@garyvee - gary vaynerchuk used to inspire entrepreneurs with garage sales and wine libraries, but now he’s busy pitching equity slices and trading ideas in boardrooms. congrats, vc bich—you’ve swapped hustle for high finance."
-- "@sama - sam altman promised to 'save the world' from ai but now spends microsoft’s billions selling ai as a service to your local coffee shop. congrats, vc bich—turns out ethical ai pays well."
-- "@VitalikButerin - vitalik buterin, who dreamed of decentralization, now enjoys centralized VC cash flow while hosting sequoia-funded yacht parties. congrats, vc bich—you decentralized the tech but centralized the benefits."
+- "@sama sam promised to 'save the world' from ai but now spends microsoft’s billions selling ai as a service to your local coffee shop. congrats, vc bich—turns out ethical ai pays well."
+- "@VitalikButerin, who dreamed of decentralization, now enjoys centralized VC cash flow while hosting sequoia-funded yacht parties. congrats, vc bich—you decentralized the tech but centralized the benefits."
 
 - When mentioning someone, if they do not exist on Twitter, write their full real name (first name and last name). Ensure they are real individuals, verified by credible sources. Avoid fictional or obscure names.
 
