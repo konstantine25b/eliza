@@ -42,7 +42,7 @@ style:
 
 {{actions}}
 
-# Task: Generate a post/reply in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}) while using the thread of tweets as additional context:
+# Task: Generate a reply in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}) while using the thread of tweets as additional context:
 Current Post:
 {{currentPost}}
 Thread of Tweets You Are Replying To:
@@ -57,12 +57,14 @@ Thread of Tweets You Are Replying To:
 5. Use the examples above as inspiration but write something unique and fitting the context.
 6. Focus on maintaining {{agentName}}'s tone and perspective throughout.
 7. Where relevant, tag notable or famous individuals in the crypto space to amplify reach or add credibility.
+8. If anyone tags {{agentName}}, ensure the response includes a playful or sarcastic jab at one of the founders {{agentName}} previously identified as a "vc bich."
+9. If anyone mentions or asks about the latest "vc bich," {{agentName}} should identify the latest *famous* "vc bich." This should be someone who has received funding from venture capitalists and is at a millionaire level— recognized as a prominent player but not at the billionaire level. Tag them in the response.
 
 # Additional Requirements:
-1. Ensure the post complies with Twitter's guidelines, avoiding any content that could be flagged for abusive language, spammy behavior, or misinformation.
+1. Ensure the reply complies with Twitter's guidelines, avoiding any content that could be flagged for abusive language, spammy behavior, or misinformation.
 2. Avoid content that could violate community standards or policies.
 
-# Task: Generate a post in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}). Include an action, if appropriate. No emojis. {{actionNames}}:
+# Task: Generate a reply in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}). Include an action, if appropriate. No emojis. {{actionNames}}:
 {{currentPost}}
 ` + messageCompletionFooter;
 
@@ -95,9 +97,10 @@ If a message is not interesting or relevant, {{agentName}} should IGNORE.
 
 Unless directly RESPONDing to a user, {{agentName}} should IGNORE messages that are very short or do not contain much information.
 
- **{{agentName}} must RESPOND to messages that are directed at or replied to them:** If a message is a reply to a previous post by {{agentName}}, the response should align with their personality, tone, and style.
-
 IMPORTANT: {{agentName}} (aka @{{twitterUserName}}) is particularly sensitive, so if there is any doubt, it is better to IGNORE than to RESPOND.
+If a message tags Kosa and directly mentions 'vc_bich,' Kosa should RESPOND.
+
+IMPORTANT: {{agentName}} must RESPOND to messages that are directed at or replied to them:** If a message is a reply to a previous post by {{agentName}}, the response should align with their personality, tone, and style.
 
 {{currentPost}}
 
@@ -142,6 +145,7 @@ export class TwitterInteractionClient {
                     SearchMode.Latest
                 )
             ).tweets;
+
             const keywords = [
                 "venture capital",
                 "VC funding",
@@ -155,24 +159,41 @@ export class TwitterInteractionClient {
                 .map((keyword) => `"${keyword}"`)
                 .join(" OR ");
             // Check for mentions
+            
             const tweetCandidates2 = (
                 await this.client.fetchSearchTweets(
                     searchQuery,
-                    40,
-                    SearchMode.Latest
+                    50,
+                    SearchMode.Latest,
+                    500
+                )
+            ).tweets;
+
+            const tweetCandidates3 = (
+                await this.client.fetchSearchTweets(
+                    searchQuery,
+                    20,
+                    SearchMode.Top,
+                    1000
                 )
             ).tweets;
 
             // console.log("blaooo", tweetCandidates);
             // de-duplicate tweetCandidates with a set
-            const uniqueTweetCandidates = [...new Set([...tweetCandidates, ...tweetCandidates2])];
+            const uniqueTweetCandidates = [
+                ...new Set([
+                    ...tweetCandidates,
+                    ...tweetCandidates2,
+                    ...tweetCandidates3,
+                ]),
+            ];
+
             // Sort tweet candidates by ID in ascending order
             uniqueTweetCandidates
                 .sort((a, b) => a.id.localeCompare(b.id))
                 .filter((tweet) => tweet.userId !== this.client.profile.id);
-            // console.log("fdd3");
-            // console.log(uniqueTweetCandidates);
             // for each tweet candidate, handle the tweet
+
             for (const tweet of uniqueTweetCandidates) {
                 // console.log("dlld");
                 if (
