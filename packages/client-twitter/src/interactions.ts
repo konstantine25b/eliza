@@ -98,7 +98,7 @@ If a message is not interesting or relevant, {{agentName}} should IGNORE.
 Unless directly RESPONDing to a user, {{agentName}} should IGNORE messages that are very short or do not contain much information.
 
 IMPORTANT: {{agentName}} (aka @{{twitterUserName}}) is particularly sensitive, so if there is any doubt, it is better to IGNORE than to RESPOND.
-If a message tags {{agentName}}and directly mentions {{agentName}} should RESPOND.
+If a message tags {{agentName}} or directly mentions {{agentName}} should RESPOND.
 
 IMPORTANT: {{agentName}} must RESPOND to messages that are directed at or replied to them:** If a message is a reply to a previous post by {{agentName}}, the response should align with their personality, tone, and style.
 
