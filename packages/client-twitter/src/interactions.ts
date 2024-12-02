@@ -142,6 +142,7 @@ export class TwitterInteractionClient {
                     SearchMode.Latest
                 )
             ).tweets;
+
             const keywords = [
                 "venture capital",
                 "VC funding",
@@ -155,24 +156,40 @@ export class TwitterInteractionClient {
                 .map((keyword) => `"${keyword}"`)
                 .join(" OR ");
             // Check for mentions
+            const tweetCandidates3 = (
+                await this.client.fetchSearchTweets(
+                    searchQuery,
+                    40,
+                    SearchMode.Latest,
+                    500
+                )
+            ).tweets;
+
             const tweetCandidates2 = (
                 await this.client.fetchSearchTweets(
                     searchQuery,
                     40,
-                    SearchMode.Latest
+                    SearchMode.Top,
+                    1000
                 )
             ).tweets;
 
             // console.log("blaooo", tweetCandidates);
             // de-duplicate tweetCandidates with a set
-            const uniqueTweetCandidates = [...new Set([...tweetCandidates, ...tweetCandidates2])];
+            const uniqueTweetCandidates = [
+                ...new Set([
+                    ...tweetCandidates,
+                    ...tweetCandidates2,
+                    ...tweetCandidates3,
+                ]),
+            ];
+
             // Sort tweet candidates by ID in ascending order
             uniqueTweetCandidates
                 .sort((a, b) => a.id.localeCompare(b.id))
                 .filter((tweet) => tweet.userId !== this.client.profile.id);
-            // console.log("fdd3");
-            // console.log(uniqueTweetCandidates);
             // for each tweet candidate, handle the tweet
+
             for (const tweet of uniqueTweetCandidates) {
                 // console.log("dlld");
                 if (

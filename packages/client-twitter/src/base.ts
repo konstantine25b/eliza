@@ -274,6 +274,7 @@ export class ClientBase extends EventEmitter {
         query: string,
         maxTweets: number,
         searchMode: SearchMode,
+        minFollowers?: number,
         cursor?: string
     ): Promise<QueryTweetsResponse> {
         try {
@@ -285,19 +286,51 @@ export class ClientBase extends EventEmitter {
 
             try {
                 // console.log("kosaa",query,maxTweets,searchMode, cursor)
-                const result = await this.requestQueue.add(
-                    async () =>
-                        await Promise.race([
-                            this.twitterClient.fetchSearchTweets(
-                                query,
-                                maxTweets,
-                                searchMode,
-                                cursor
-                            ),
-                            timeoutPromise,
-                        ])
+                const result: QueryTweetsResponse =
+                    (await this.requestQueue.add(
+                        async () =>
+                            await Promise.race([
+                                this.twitterClient.fetchSearchTweets(
+                                    query,
+                                    maxTweets,
+                                    searchMode,
+                                    cursor
+                                ),
+                                timeoutPromise,
+                            ])
+                    )) as QueryTweetsResponse;
 
-                );
+                // If no result is found, return an empty tweets array
+                const tweets = result?.tweets || [];
+                // Filter tweets based on minimum followers, if specified
+                if (minFollowers && minFollowers > 0) {
+                    const eligibleTweets = [];
+
+                    for (const tweet of tweets) {
+                        try {
+                            // Fetch user profile for each tweet
+                            const profile =
+                                await this.twitterClient.fetchSearchProfiles(
+                                    tweet.userId,
+                                    1
+                                );
+                            const user = profile.profiles[0]; // Get the first profile
+
+                            // Check if the user's followers count meets the minimum criteria
+                            if (user && user.followersCount >= minFollowers) {
+                                eligibleTweets.push(tweet);
+                            }
+                        } catch (error) {
+                            console.error(
+                                `Error fetching profile for user ${tweet.userId}:`,
+                                error
+                            );
+                        }
+                    }
+
+                    // Return only eligible tweets
+                    return { tweets: eligibleTweets };
+                }
                 // console.log("fd23", result)
                 return (result ?? { tweets: [] }) as QueryTweetsResponse;
             } catch (error) {
@@ -447,7 +480,6 @@ export class ClientBase extends EventEmitter {
             SearchMode.Latest
         );
         // console.log("fd231", mentionsAndInteractions)
-        
 
         // Combine the timeline tweets and mentions/interactions
         const allTweets = [...timeline, ...mentionsAndInteractions.tweets];
