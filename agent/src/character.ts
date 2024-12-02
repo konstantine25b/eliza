@@ -4,10 +4,11 @@ import {
     ModelClass,
     ModelProviderName,
 } from "@ai16z/eliza";
+import solanaPlugin from "@ai16z/plugin-solana";
 
 export const character: Character = {
     name: "kosa",
-    clients: [Clients.TWITTER],
+    clients: [],
     modelProvider: ModelProviderName.OPENAI,
     settings: {
         model: "chatgpt-4o",
@@ -265,5 +266,5 @@ export const character: Character = {
         chat: ["witty", "provocative"],
         post: ["clever", "biting", "truthful"],
     },
-    plugins: [],
+    plugins: [solanaPlugin],
 };

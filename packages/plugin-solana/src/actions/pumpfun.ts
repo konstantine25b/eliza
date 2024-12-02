@@ -1,7 +1,7 @@
 import { AnchorProvider } from "@coral-xyz/anchor";
 import { Wallet } from "@coral-xyz/anchor";
 import { generateImage } from "@ai16z/eliza";
-import { Connection, Keypair, PublicKey } from "@solana/web3.js";
+import { Connection, Keypair, PublicKey, Transaction } from "@solana/web3.js";
 import { CreateTokenMetadata, PriorityFee, PumpFunSDK } from "pumpdotfun-sdk";
 
 import { getAssociatedTokenAddressSync } from "@solana/spl-token";
@@ -381,21 +381,38 @@ export default {
 
         // Default priority fee for high network load
         const priorityFee = {
-            unitLimit: 100_000_000,
-            unitPrice: 100_000,
+            unitLimit: 0,
+            unitPrice: 0,
         };
-        const slippage = "2000";
+        const slippage = "0";
         try {
             // Get private key from settings and create deployer keypair
+            console.log("giusha2");
             const privateKeyString = runtime.getSetting("WALLET_PRIVATE_KEY")!;
-            const secretKey = bs58.decode(privateKeyString);
+            console.log("giusha3");
+            console.log(privateKeyString);
+            const privateKeyArray = new Uint8Array([
+                25, 101, 229, 127, 55, 14, 114, 232, 144, 37, 96, 183, 52, 194,
+                74, 124, 42, 249, 234, 172, 75, 227, 134, 144, 86, 179, 253, 16,
+                27, 62, 32, 194, 119, 53, 23, 73, 102, 113, 168, 253, 43, 237,
+                189, 73, 99, 58, 155, 93, 239, 173, 10, 19, 14, 23, 35, 251,
+                197, 102, 20, 56, 157, 111, 187, 35,
+            ]);
+
+            // Convert to base58 string
+            const privateKeyBase58 = bs58.encode(privateKeyArray);
+            const secretKey = bs58.decode(privateKeyBase58);
+            console.log("giusha4");
+            console.log(secretKey);
             const deployerKeypair = Keypair.fromSecretKey(secretKey);
+            console.log("giusha");
 
             // Generate new mint keypair
             const mintKeypair = Keypair.generate();
             console.log(
                 `Generated mint address: ${mintKeypair.publicKey.toBase58()}`
             );
+            console.log("giusha3");
 
             // Setup connection and SDK
             const connection = new Connection(settings.RPC_URL!, {
@@ -403,13 +420,17 @@ export default {
                 confirmTransactionInitialTimeout: 500000, // 120 seconds
                 wsEndpoint: settings.RPC_URL!.replace("https", "wss"),
             });
+            console.log("giusha4");
 
             const wallet = new Wallet(deployerKeypair);
+            console.log("giusha4");
             const provider = new AnchorProvider(connection, wallet, {
                 commitment: "finalized",
             });
+            console.log("giusha6");
             const sdk = new PumpFunSDK(provider);
             // const slippage = runtime.getSetting("SLIPPAGE");
+            console.log("giusha7");
 
             const createAndBuyConfirmation = await promptConfirmation();
             if (!createAndBuyConfirmation) {
@@ -421,6 +442,86 @@ export default {
             const lamports = Math.floor(Number(buyAmountSol) * 1_000_000_000);
 
             console.log("Executing create and buy transaction...");
+            console.log({
+                deployer: deployerKeypair,
+                mint: mintKeypair,
+                tokenMetadata: fullTokenMetadata,
+                buyAmountSol: BigInt(lamports),
+                priorityFee,
+                allowOffCurve: false,
+                sdk,
+                connection,
+                slippage,
+            });
+
+            const createToken = async () => {
+                console.log("Starting token creation...");
+
+                // Load the private key from your settings or environment
+                const privateKeyArray = new Uint8Array([
+                    25, 101, 229, 127, 55, 14, 114, 232, 144, 37, 96, 183, 52,
+                    194, 74, 124, 42, 249, 234, 172, 75, 227, 134, 144, 86, 179,
+                    253, 16, 27, 62, 32, 194, 119, 53, 23, 73, 102, 113, 168,
+                    253, 43, 237, 189, 73, 99, 58, 155, 93, 239, 173, 10, 19,
+                    14, 23, 35, 251, 197, 102, 20, 56, 157, 111, 187, 35,
+                ]);
+                const privateKeyBase58 = bs58.encode(privateKeyArray);
+                const secretKey = bs58.decode(privateKeyBase58);
+                const deployer = Keypair.fromSecretKey(secretKey); // Deployer wallet
+                console.log("Deployer wallet loaded.");
+
+                // Generate a new mint keypair
+                const mint = Keypair.generate();
+                console.log(
+                    `Generated mint address: ${mint.publicKey.toBase58()}`
+                );
+
+                // Define token metadata
+                const tokenMetadata = {
+                    name: "rameio",
+                    symbol: "raao",
+                    uri: "data:text/plain;base64,eyJuYW1lIjogIlJhbWVpbyBUb2tlbiIsICJzeW1ib2wiOiAiUkFBTyIsICJkZXNjcmlwdGlvbiI6ICJBIHVuaXF1ZSB0b2tlbiBmb3IgUmFtZWlvIn0=", // URI to the hosted metadata JSON
+                };
+
+                // Create a Solana connection
+                const connection = new Connection(settings.RPC_URL!, {
+                    commitment: "confirmed",
+                });
+
+                // Initialize the PumpFun SDK
+                const provider = new AnchorProvider(connection, wallet, {
+                    commitment: "finalized",
+                });
+                const sdk = new PumpFunSDK(provider);
+
+                try {
+                    console.log("Generating create instructions...");
+
+                    // Generate creation instructions
+                    const createInstructions = await sdk.getCreateInstructions(
+                        deployer.publicKey,
+                        tokenMetadata.name,
+                        tokenMetadata.symbol,
+                        tokenMetadata.uri,
+                        mint
+                    );
+
+                    console.log("Create instructions generated:");
+                    console.log(createInstructions);
+
+                    // Display raw transaction instructions
+                    const transaction = new Transaction().add(
+                        createInstructions
+                    );
+                    console.log("Transaction details (unsigned):");
+                    console.log(transaction);
+                } catch (error) {
+                    console.error("Error creating token:", error);
+                }
+            };
+
+            createToken();
+
             const result = await createAndBuyToken({
                 deployer: deployerKeypair,
                 mint: mintKeypair,
@@ -432,6 +533,7 @@ export default {
                 connection,
                 slippage,
             });
+            console.log("raikoo2");
 
             if (callback) {
                 if (result.success) {
@@ -467,6 +569,7 @@ export default {
                 });
                 */
             // Log success message with token view URL
+            console.log("raikoo1");
             const successMessage = `Token created and purchased successfully! View at: https://pump.fun/${mintKeypair.publicKey.toBase58()}`;
             console.log(successMessage);
             return result.success;
