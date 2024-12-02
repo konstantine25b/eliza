@@ -160,7 +160,8 @@ export class TwitterInteractionClient {
                 .map((keyword) => `"${keyword}"`)
                 .join(" OR ");
             // Check for mentions
-            const tweetCandidates3 = (
+            
+            const tweetCandidates2 = (
                 await this.client.fetchSearchTweets(
                     searchQuery,
                     40,
@@ -169,10 +170,10 @@ export class TwitterInteractionClient {
                 )
             ).tweets;
 
-            const tweetCandidates2 = (
+            const tweetCandidates3 = (
                 await this.client.fetchSearchTweets(
                     searchQuery,
-                    40,
+                    25,
                     SearchMode.Top,
                     1000
                 )
