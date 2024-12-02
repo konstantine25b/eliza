@@ -57,9 +57,8 @@ Thread of Tweets You Are Replying To:
 5. Use the examples above as inspiration but write something unique and fitting the context.
 6. Focus on maintaining {{agentName}}'s tone and perspective throughout.
 7. Where relevant, tag notable or famous individuals in the crypto space to amplify reach or add credibility.
-8. If anyone tags {{agentName}}, ensure the response includes a jab at one of the founders {{agentName}} identified as a "vc bich."
-9. If anyone mentions or asks about the latest "vc bich," {{agentName}} should identify the latest "vc bich" and tag them in the response.
-
+8. If anyone tags {{agentName}}, ensure the response includes a playful or sarcastic jab at one of the founders {{agentName}} previously identified as a "vc bich."
+9. If anyone mentions or asks about the latest "vc bich," {{agentName}} should identify the latest *famous* "vc bich." This should be someone who has received funding from venture capitalists and is at a millionaire level— recognized as a prominent player but not at the billionaire level. Tag them in the response.
 
 # Additional Requirements:
 1. Ensure the reply complies with Twitter's guidelines, avoiding any content that could be flagged for abusive language, spammy behavior, or misinformation.
@@ -164,7 +163,7 @@ export class TwitterInteractionClient {
             const tweetCandidates2 = (
                 await this.client.fetchSearchTweets(
                     searchQuery,
-                    40,
+                    50,
                     SearchMode.Latest,
                     500
                 )
@@ -173,7 +172,7 @@ export class TwitterInteractionClient {
             const tweetCandidates3 = (
                 await this.client.fetchSearchTweets(
                     searchQuery,
-                    25,
+                    20,
                     SearchMode.Top,
                     1000
                 )

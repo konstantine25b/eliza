@@ -269,21 +269,21 @@ export function createAgent(
         evaluators: [],
         character,
         plugins: [
-            bootstrapPlugin,
-            getSecret(character, "CONFLUX_CORE_PRIVATE_KEY")
-                ? confluxPlugin
-                : null,
-            nodePlugin,
-            getSecret(character, "WALLET_PUBLIC_KEY") ? solanaPlugin : null,
-            getSecret(character, "ZEROG_PRIVATE_KEY") ? zgPlugin : null,
-            getSecret(character, "COINBASE_COMMERCE_KEY")
-                ? coinbaseCommercePlugin
-                : null,
-            getSecret(character, "COINBASE_API_KEY") &&
-                getSecret(character, "COINBASE_PRIVATE_KEY")
-                ? coinbaseMassPaymentsPlugin
-                : null,
-            getSecret(character, "BUTTPLUG_API_KEY") ? buttplugPlugin : null,
+            // bootstrapPlugin,
+            // getSecret(character, "CONFLUX_CORE_PRIVATE_KEY")
+            //     ? confluxPlugin
+            //     : null,
+            // nodePlugin,
+            // getSecret(character, "WALLET_PUBLIC_KEY") ? solanaPlugin : null,
+            // getSecret(character, "ZEROG_PRIVATE_KEY") ? zgPlugin : null,
+            // getSecret(character, "COINBASE_COMMERCE_KEY")
+            //     ? coinbaseCommercePlugin
+            //     : null,
+            // getSecret(character, "COINBASE_API_KEY") &&
+            //     getSecret(character, "COINBASE_PRIVATE_KEY")
+            //     ? coinbaseMassPaymentsPlugin
+            //     : null,
+            // getSecret(character, "BUTTPLUG_API_KEY") ? buttplugPlugin : null,
         ].filter(Boolean),
         providers: [],
         actions: [],
