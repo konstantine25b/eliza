@@ -247,7 +247,7 @@ export class TwitterPostClient {
             const context = composeContext({
                 state,
                 template:
-                    postTypeChoice < 1
+                    postTypeChoice < 0.2
                         ? this.runtime.character.templates
                               ?.twitterFounderPostTemplate ||
                           twitterFounderPostTemplate
