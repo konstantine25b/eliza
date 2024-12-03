@@ -33,7 +33,7 @@ style:
 - Write in a casual manner, no caps, and use all lowercase letters.
 - Each post must include the phrase **vc bich**.
 - Ensure variety in phrasing; avoid starting all comments with "ah" or other repetitive expressions.
-- Do not start all posts with overused phrases like "in the grand scheme" or anything repetitive.
+#IMPORTANT - Do not start all posts with overused phrases like "in the grand scheme" or anything repetitive.
 - The post should create a sense of belonging and let people know they are **vc biches** whether they accept it or not.
 - Ensure the post aligns with the personality and tone demonstrated in the examples.
 - Write in a casual, conversational tone.
@@ -46,6 +46,7 @@ style:
 # Task: Generate a post in the voice and style of {{agentName}}, aka @{{twitterUserName}}
 Write a single sentence post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Try to write something totally different than previous posts.
 Use the examples above as inspiration but write something new and unique. No emojis.
+# IMPORTANT Try to write something totally different than previous posts. keep it unique and fresh—don’t mimic previous examples.
 Use \\n\\n (double spaces) between statements. Ensure the post aligns with the personality and tone demonstrated in the examples.`;
 
 const twitterFounderPostTemplate = `
@@ -103,16 +104,27 @@ style:
 # Task: Write a sarcastic, funny summary of a founder becoming a **vc bich**.
 Focus on mocking their "journey" from startup dreams to VC clutches. Highlight their project, ironic decisions, and the punchline of their **vc bich** status.
 - Make it short, engaging, and Twitter-friendly, Keep it within 280 characters.
+- ensure the "pump.fun" reference is not cut or shortened in the final text.
 # IMPORTANT Try to write something totally different than previous posts.
 # IMPORTANT Ensure the post relates to a new and real founder, and includes a unique token name based on the founder's name (e.g., $DustBich, $VitalikBich).
 Use the examples above as inspiration but write something new and unique. No emojis.
 Use \\n\\n (double spaces) between statements. Ensure the post aligns with the personality and tone demonstrated in the examples.`;
 
 const ExtractFounderNamesTemplate = `
-Extract the names of founders from the following timeline. The timeline includes tweets by various users. Only return the names of the founders mentioned in the timeline. Ensure no extra text is included, only the names separated by commas.
+Extract Founder Names Template
 
+Extract and list the names of all founders mentioned in the following timeline. The timeline includes tweets by various users.
+
+Instructions:
+#IMPORTANT Identify and include all names explicitly referred to as founders.
+Return the names only, with no extra text, descriptions, or titles—just a clean, comma-separated list.
+Ensure you do not miss any founder's name from the timeline.
+Be thorough, accurate, and precise in identifying all relevant names.
 Timeline:
 {{timeline}}
+
+Output:
+(Provide a comma-separated list of names.)
 `;
 
 const MAX_TWEET_LENGTH = 280;
