@@ -269,7 +269,7 @@ export function createAgent(
         evaluators: [],
         character,
         plugins: [
-            // bootstrapPlugin,
+            bootstrapPlugin,
             // getSecret(character, "CONFLUX_CORE_PRIVATE_KEY")
             //     ? confluxPlugin
             //     : null,
