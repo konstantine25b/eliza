@@ -219,14 +219,25 @@ export class ClientBase extends EventEmitter {
 
     async fetchHomeTimeline(count: number): Promise<Tweet[]> {
         elizaLogger.debug("fetching home timeline");
-        const homeTimeline = await this.twitterClient.getUserTweets(
-            this.profile.id,
-            count
-        );
-
-        // console.dir(homeTimeline, { depth: Infinity });
-
-        return homeTimeline.tweets;
+        let allTweets: Tweet[] = [];
+        let maxId: string | null = null;
+    
+        while (allTweets.length < count) {
+            const batch = await this.twitterClient.getUserTweets(
+                this.profile.id,
+                Math.min(100, count - allTweets.length), // Fetch remaining tweets up to the limit
+                maxId
+            );
+    
+            if (batch.tweets.length === 0) {
+                break; // No more tweets available
+            }
+    
+            allTweets = allTweets.concat(batch.tweets);
+            maxId = batch.tweets[batch.tweets.length - 1].id; // Use last tweet's ID for pagination
+        }
+    
+        return allTweets.slice(0, count); 
         // .filter((t) => t.__typename !== "TweetWithVisibilityResults")
         // .map((tweet) => {
         //     // console.log("tweet is", tweet);

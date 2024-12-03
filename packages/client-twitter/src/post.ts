@@ -71,6 +71,18 @@ Here are some exemplary posts in the voice and style of {{agentName}}:
 
 3. Sam Altman left OpenAI to “save humanity,” then took $10B from Microsoft to make grandma use AI for groceries. Ethical AI? More like VC hype. Congrats, SamaBich. Meet $SamaBich Token on pump.fun—the ultimate AI buzzword tribute. 
 
+4. “It is not the strongest nor the most intelligent of species that survives, but the one that is most adaptable to change” is about life, not about your vision and VCs you little VC bich. Launched $Silbermannbich on http://pump.fun to disclose what Ben Silbermann is - VC bich.
+
+5. Reed Hastings - once a visionary founder of Netflix who shifted so many times just to please VCs that some of them are planning to retire his shirt to acknowledge how good of a VC bich he is. Introducing $HastingsBich on http://pump.fun - let’s expose Reed for what he is.
+
+6. Adam Neumann - the man who turned coworking into a circus act with his wild ideas and even wilder vision shifts to please investors. Presenting $NeumannBich on http://pump.fun to expose how he turned ‘VC bich’ into an Olympic sport. Gold medal for you, Adam!
+
+7. Travis Kalanick - the ‘disruptor’ who disrupted his own company with so many pivots to please VCs that he could open a circus. Introducing $KalanickBich on http://pump.fun - let’s celebrate his talent for turning bold visions into investor appeasement!
+
+8. David Karp - the Tumblr founder who let VCs pressure turn his unique platform into just another corporate product that only exists to benefit greedy VCs. Presenting $KarpBich on http://pump.fun to shine a light on how quickly you can lose your soul for VC dollars! Bravo, David!
+
+9. Evan Spiegel - the Snapchat wizard who has morphed from innovator to VC’s bich so quickly, we’re starting to think he’s auditioning for a reality show. Presenting $SpiegelBich on http://pump.fun to expose how far he’s strayed from his original magic - now it’s all about pleasing VCs!
+
 style: 
 {{style}}
 
@@ -229,16 +241,22 @@ export class TwitterPostClient {
             );
 
             let homeTimeline: Tweet[] = [];
+            const minProbability = 0.5;
 
             const cachedTimeline = await this.client.getCachedTimeline();
 
             // console.log({ cachedTimeline });
-
+            const postTypeChoice = Math.random();
             if (cachedTimeline) {
                 homeTimeline = cachedTimeline;
             } else {
-                homeTimeline = await this.client.fetchHomeTimeline(10);
-                await this.client.cacheTimeline(homeTimeline);
+                if (postTypeChoice < minProbability) {
+                    homeTimeline = await this.client.fetchHomeTimeline(100);
+                    await this.client.cacheTimeline(homeTimeline);
+                } else {
+                    homeTimeline = await this.client.fetchHomeTimeline(20);
+                    await this.client.cacheTimeline(homeTimeline);
+                }
             }
             const formattedHomeTimeline =
                 `# ${this.runtime.character.name}'s Home Timeline\n\n` +
@@ -268,10 +286,10 @@ export class TwitterPostClient {
                     style: this.runtime.character.style.post.join("\n"),
                 }
             );
-            const postTypeChoice = Math.random();
+
             console.log("post type ", postTypeChoice);
             let context: any;
-            if (postTypeChoice < 0.2) {
+            if (postTypeChoice < minProbability) {
                 const ExtractFounderNames = composeContext({
                     state,
                     template: ExtractFounderNamesTemplate,
