@@ -241,7 +241,7 @@ export class TwitterPostClient {
             );
 
             let homeTimeline: Tweet[] = [];
-            const minProbability = 0.5;
+            const minProbability = 0.2;
 
             const cachedTimeline = await this.client.getCachedTimeline();
 
