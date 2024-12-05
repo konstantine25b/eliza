@@ -235,20 +235,22 @@ async function handler(runtime: IAgentRuntime, message: Memory) {
             // for now just put in 10 sol
             buyAmount = 10;
         }
+        console.log("esariii",rec.type)
 
         // TODO: is this is a buy, sell, dont buy, or dont sell?
-        const shouldTrade = await tokenProvider.shouldTradeToken();
+        // const shouldTrade = await tokenProvider.shouldTradeToken();
 
-        if (!shouldTrade) {
-            console.warn(
-                "There might be a problem with the token, not trading"
-            );
-            continue;
-        }
+        // if (!shouldTrade) {
+        //     console.warn(
+        //         "There might be a problem with the token, not trading"
+        //     );
+        //     continue;
+        // }
 
         switch (rec.type) {
             case "buy":
                 // for now, lets just assume buy only, but we should implement
+                console.log("sddsfdsfd")
                 await trustScoreManager.createTradePerformance(
                     runtime,
                     rec.contractAddress,

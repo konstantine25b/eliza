@@ -158,8 +158,9 @@ export class TokenProvider {
     async fetchPrices(): Promise<Prices> {
         try {
             const cacheKey = "prices";
-            const cachedData = this.getCachedData<Prices>(cacheKey);
-            if (cachedData) {
+            const cachedData = await this.getCachedData<Prices>(cacheKey);
+            console.log("cachedData1" ,cachedData )
+            if (cachedData && cachedData!=null) {
                 console.log("Returning cached prices.");
                 return cachedData;
             }
@@ -172,6 +173,7 @@ export class TokenProvider {
             };
 
             for (const token of tokens) {
+                console.log("kukushaas: ",`${PROVIDER_CONFIG.BIRDEYE_API}/defi/price?address=${token}`)
                 const response = await this.fetchWithRetry(
                     `${PROVIDER_CONFIG.BIRDEYE_API}/defi/price?address=${token}`,
                     {
@@ -180,6 +182,7 @@ export class TokenProvider {
                         },
                     }
                 );
+                console.log("kukushaas1", response)
 
                 if (response?.data?.value) {
                     const price = response.data.value.toString();
@@ -203,7 +206,11 @@ export class TokenProvider {
     }
     async calculateBuyAmounts(): Promise<CalculatedBuyAmounts> {
         const dexScreenerData = await this.fetchDexScreenerData();
-        const prices = await this.fetchPrices();
+        let prices = await this.fetchPrices();
+        console.log("priceeees", prices);
+        if (prices == null) {
+            prices = await this.fetchPrices();
+        }
         const solPrice = toBN(prices.solana.usd);
 
         if (!dexScreenerData || dexScreenerData.pairs.length === 0) {
@@ -520,8 +527,8 @@ export class TokenProvider {
 
     async fetchDexScreenerData(): Promise<DexScreenerData> {
         const cacheKey = `dexScreenerData_${this.tokenAddress}`;
-        const cachedData = this.getCachedData<DexScreenerData>(cacheKey);
-        if (cachedData) {
+        const cachedData = await this.getCachedData<DexScreenerData>(cacheKey);
+        if (cachedData &&  cachedData!=null) {
             console.log("Returning cached DexScreener data.");
             return cachedData;
         }
@@ -564,7 +571,8 @@ export class TokenProvider {
     ): Promise<DexScreenerPair | null> {
         const cacheKey = `dexScreenerData_search_${symbol}`;
         const cachedData = await this.getCachedData<DexScreenerData>(cacheKey);
-        if (cachedData) {
+        console.log("cachedData12", cachedData)
+        if (cachedData && cachedData!= null) {
             console.log("Returning cached search DexScreener data.");
             return this.getHighestLiquidityPair(cachedData);
         }
@@ -874,6 +882,7 @@ export class TokenProvider {
 
     async shouldTradeToken(): Promise<boolean> {
         try {
+            
             const tokenData = await this.getProcessedTokenData();
             const { tradeData, security, dexScreenerData } = tokenData;
             const { ownerBalance, creatorBalance } = security;

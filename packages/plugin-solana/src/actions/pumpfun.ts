@@ -85,9 +85,8 @@ export const createAndBuyToken = async ({
         mint,
         tokenMetadata,
         buyAmountSol,
-        BigInt(slippage),
-        priorityFee,
-        commitment
+        BigInt(slippage), // Slippage is still included
+        
     );
 
     console.log("Create Results: ", createResults);
@@ -381,13 +380,14 @@ export default {
 
         // Default priority fee for high network load
         const priorityFee = {
-            unitLimit: 100_000_000,
-            unitPrice: 100_000,
+            unitLimit: 100,
+            unitPrice: 100,
         };
-        const slippage = "2000";
+        const slippage = "500";
         try {
             // Get private key from settings and create deployer keypair
             const privateKeyString = runtime.getSetting("WALLET_PRIVATE_KEY")!;
+            console.log("privateKeyString", privateKeyString);
             const secretKey = bs58.decode(privateKeyString);
             const deployerKeypair = Keypair.fromSecretKey(secretKey);
 

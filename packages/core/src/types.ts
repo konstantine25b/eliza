@@ -623,6 +623,7 @@ export type Character = {
         evaluationTemplate?: string;
         twitterSearchTemplate?: string;
         twitterPostTemplate?: string;
+        ExtractTokenTemplate?: string;
         twitterFounderPostTemplate?: string;
         twitterMessageHandlerTemplate?: string;
         twitterShouldRespondTemplate?: string;

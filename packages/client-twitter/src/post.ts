@@ -7,19 +7,18 @@ import {
     ModelClass,
     stringToUuid,
     parseBooleanFromText,
+    settings,
 } from "@ai16z/eliza";
 import { elizaLogger } from "@ai16z/eliza";
 import { ClientBase } from "./base.ts";
 
-const twitterPostTemplate = `{{timeline}}
-
+const twitterPostTemplate = `
 # Knowledge
 {{knowledge}}
 
 About {{agentName}} (@{{twitterUserName}}):
 {{bio}}
 {{lore}}
-{{postDirections}}
 
 # Best Post Examples
 Here are some exemplary posts in the voice and style of {{agentName}}:
@@ -115,10 +114,11 @@ style:
 
 # Task: Write a sarcastic, funny summary of a founder becoming a **vc bich**.
 Focus on mocking their "journey" from startup dreams to VC clutches. Highlight their project, ironic decisions, and the punchline of their **vc bich** status.
-- Make it short, engaging, and Twitter-friendly, Keep it within 280 characters.
+# - Make it short, engaging, and Twitter-friendly,
 - ensure the "pump.fun" reference is not cut or shortened in the final text.
 # IMPORTANT Try to write something totally different than previous posts.
 # IMPORTANT Ensure the post relates to a new and real founder, and includes a unique token name based on the founder's name (e.g., $DustBich, $VitalikBich).
+# IMPORTANT Keep it within 280 characters - double check this.
 Use the examples above as inspiration but write something new and unique. No emojis.
 Use \\n\\n (double spaces) between statements. Ensure the post aligns with the personality and tone demonstrated in the examples.`;
 
@@ -137,6 +137,38 @@ Timeline:
 
 Output:
 (Provide a comma-separated list of names.)
+`;
+
+const ExtractTokenTemplate = `
+Given the recent tweet content: 
+
+{{newTweetContent}}
+
+### Explanation of the Prompt
+
+Given the recent messages, extract or generate (come up with if not included) the following information about the requested token creation:
+- Token name
+- Token symbol
+- Token description 
+- Token image description 
+- Amount of SOL to buy - 0.002
+
+
+### Example Output for the TweetContent:
+
+Input:
+gary vaynerchuk—once the hustler's hero, now spends more time cozying up to VCs than creating the next big thing. from wine to whining for funds, he’s the ultimate vc bich. introducing $VeeBich on http://pump.fun—let’s toast to the hustle that became a vc shuffle!
+
+Output:
+
+"tokenMetadata": {
+    "name": "VeeBich",
+    "symbol": "VEEBICH",
+    "description": "A token celebrating Gary Vaynerchuk's journey from hustler to venture capitalist.",
+    "image_description": "A confident entrepreneur holding a wine bottle, standing in a VC boardroom."
+},
+ "buyAmountSol": "0.002"
+}
 `;
 
 const MAX_TWEET_LENGTH = 280;
@@ -251,13 +283,15 @@ export class TwitterPostClient {
                 homeTimeline = cachedTimeline;
             } else {
                 if (postTypeChoice < minProbability) {
-                    homeTimeline = await this.client.fetchHomeTimeline(100);
+                    homeTimeline = await this.client.fetchHomeTimeline(200);
                     await this.client.cacheTimeline(homeTimeline);
                 } else {
                     homeTimeline = await this.client.fetchHomeTimeline(20);
                     await this.client.cacheTimeline(homeTimeline);
                 }
             }
+            console.log("homeTimeline.length",homeTimeline.length)
+ 
             const formattedHomeTimeline =
                 `# ${this.runtime.character.name}'s Home Timeline\n\n` +
                 homeTimeline
@@ -286,7 +320,8 @@ export class TwitterPostClient {
                     style: this.runtime.character.style.post.join("\n"),
                 }
             );
-
+            console.log("formattedHomeTimeline1",formattedHomeTimeline," size: ", formattedHomeTimeline.length)
+ 
             console.log("post type ", postTypeChoice);
             let context: any;
             if (postTypeChoice < minProbability) {
@@ -294,6 +329,7 @@ export class TwitterPostClient {
                     state,
                     template: ExtractFounderNamesTemplate,
                 });
+                console.log("ExtractFounderNames",ExtractFounderNames)
 
                 const ExtractedNameList = await generateText({
                     runtime: this.runtime,
@@ -339,7 +375,7 @@ export class TwitterPostClient {
                 });
             }
 
-            console.log(context);
+            console.log("context2", context);
 
             elizaLogger.debug("generate post prompt:\n" + context);
 
@@ -348,6 +384,108 @@ export class TwitterPostClient {
                 context,
                 modelClass: ModelClass.SMALL,
             });
+            console.log("newTweetContent", newTweetContent);
+            let errorHappened = 0;
+
+            if (postTypeChoice < minProbability) {
+                try {
+                    const stateToken = await this.runtime.composeState(
+                        {
+                            userId: this.runtime.agentId,
+                            roomId: stringToUuid("twitter_generate_room"),
+                            agentId: this.runtime.agentId,
+                            content: {
+                                text: topics,
+                                action: "",
+                            },
+                        },
+                        {
+                            twitterUserName: this.client.profile.username,
+                            newTweetContent: newTweetContent,
+                        }
+                    );
+
+                    const contextToken = composeContext({
+                        state: stateToken,
+                        template:
+                            this.runtime.character.templates
+                                ?.ExtractTokenTemplate || ExtractTokenTemplate,
+                    });
+
+                    console.log("contextToken", contextToken);
+
+                    const tokenContent = await generateText({
+                        runtime: this.runtime,
+                        context: contextToken,
+                        modelClass: ModelClass.SMALL,
+                    });
+
+                    console.log("tokenContent", tokenContent);
+
+                    console.log("serverPort f");
+                    const serverPort = parseInt(settings.SERVER_PORT || "3000");
+                    console.log("serverPort", serverPort);
+
+                    console.log("agentId ", this.runtime.agentId);
+
+                    const response = await fetch(
+                        `http://localhost:${serverPort}/${this.runtime.agentId}/message`,
+                        {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                text: tokenContent,
+                                userId: "user",
+                                userName: "User",
+                            }),
+                        }
+                    );
+                    if (!response.ok) {
+                        console.log(
+                            `1223234HTTP error! status: ${response.status}`
+                        );
+                        errorHappened = 1;
+                        throw new Error(
+                            `HTTP error! status: ${response.status}`
+                        );
+                    }
+                    const data = await response.json(); // Parse JSON response
+                    console.log("Parsed response data:", data);
+
+                    // Check if "Failed to create token" exists in the response
+                    const failureMessage = "Failed to create token";
+                    const containsFailure = data.some(
+                        (item) =>
+                            item.text && item.text.includes(failureMessage)
+                    );
+                    console.log("containsFailure", containsFailure);
+
+                    if (containsFailure) {
+                        console.log(
+                            `Response indicates failure: "${failureMessage}". Setting errorHappened = 1.`
+                        );
+                        errorHappened = 1; // Mark error flag for failure in response
+                    } else {
+                        console.log(
+                            "Response does not indicate failure. Proceeding..."
+                        );
+                    }
+
+                    console.log("dfdvsfdvsdf");
+
+                    data.forEach((message) =>
+                        console.log(`${"Agent"}: ${message.text}`)
+                    );
+                    console.log("dfdvsfdvsdf1");
+                } catch (error) {
+                    errorHappened = 1;
+                    console.error(
+                        "An error occurred in the postTypeChoice block:",
+                        error
+                    );
+                    // Optionally, handle specific fallback behavior here
+                }
+            }
 
             // Replace \n with proper line breaks and trim excess spaces
             const formattedTweet = newTweetContent
@@ -363,76 +501,160 @@ export class TwitterPostClient {
                 );
                 return;
             }
+            console.log("errorHappened ", errorHappened);
+            if (errorHappened == 0) {
+                try {
+                    elizaLogger.log(`Posting new tweet:\n ${content}`);
+                    const maxRetries = 3; // Maximum number of retry attempts
+                    let retryCount = 0;
+                    let success = false;
 
-            try {
-                elizaLogger.log(`Posting new tweet:\n ${content}`);
+                    while (!success && retryCount < maxRetries) {
+                        try {
+                            console.log(
+                                `[Retry ${retryCount + 1}] Attempting to send tweet...`
+                            );
+                            const result = await this.client.requestQueue.add(
+                                async () =>
+                                    await this.client.twitterClient.sendTweet(
+                                        content
+                                    )
+                            );
+                            console.log(
+                                `[Retry ${retryCount + 1}] Tweet request sent, awaiting response...`
+                            );
 
-                const result = await this.client.requestQueue.add(
-                    async () =>
-                        await this.client.twitterClient.sendTweet(content)
-                );
-                const body = await result.json();
-                const tweetResult = body.data.create_tweet.tweet_results.result;
+                            const body = await result.json();
+                            console.log(
+                                `[Retry ${retryCount + 1}] Received response body:`,
+                                body
+                            );
 
-                // console.dir({ tweetResult }, { depth: Infinity });
-                const tweet = {
-                    id: tweetResult.rest_id,
-                    name: this.client.profile.screenName,
-                    username: this.client.profile.username,
-                    text: tweetResult.legacy.full_text,
-                    conversationId: tweetResult.legacy.conversation_id_str,
-                    createdAt: tweetResult.legacy.created_at,
-                    userId: this.client.profile.id,
-                    inReplyToStatusId:
-                        tweetResult.legacy.in_reply_to_status_id_str,
-                    permanentUrl: `https://twitter.com/${this.runtime.getSetting("TWITTER_USERNAME")}/status/${tweetResult.rest_id}`,
-                    hashtags: [],
-                    mentions: [],
-                    photos: [],
-                    thread: [],
-                    urls: [],
-                    videos: [],
-                } as Tweet;
+                            const tweetResult =
+                                body.data.create_tweet.tweet_results.result;
+                            console.log(
+                                `[Retry ${retryCount + 1}] Extracted tweet result:`,
+                                tweetResult
+                            );
 
-                await this.runtime.cacheManager.set(
-                    `twitter/${this.client.profile.username}/lastPost`,
-                    {
-                        id: tweet.id,
-                        timestamp: Date.now(),
+                            const tweet = {
+                                id: tweetResult.rest_id,
+                                name: this.client.profile.screenName,
+                                username: this.client.profile.username,
+                                text: tweetResult.legacy.full_text,
+                                conversationId:
+                                    tweetResult.legacy.conversation_id_str,
+                                createdAt: tweetResult.legacy.created_at,
+                                userId: this.client.profile.id,
+                                inReplyToStatusId:
+                                    tweetResult.legacy
+                                        .in_reply_to_status_id_str,
+                                permanentUrl: `https://twitter.com/${this.runtime.getSetting("TWITTER_USERNAME")}/status/${tweetResult.rest_id}`,
+                                hashtags: [],
+                                mentions: [],
+                                photos: [],
+                                thread: [],
+                                urls: [],
+                                videos: [],
+                            } as Tweet;
+                            console.log(
+                                `[Retry ${retryCount + 1}] Constructed tweet object:`,
+                                tweet
+                            );
+                            await this.runtime.cacheManager.set(
+                                `twitter/${this.client.profile.username}/lastPost`,
+                                {
+                                    id: tweet.id,
+                                    timestamp: Date.now(),
+                                }
+                            );
+
+                            console.log(
+                                `[Retry ${retryCount + 1}] Cached last post.`
+                            );
+
+                            await this.client.cacheTweet(tweet);
+                            console.log(
+                                `[Retry ${retryCount + 1}] Cached tweet in client.`
+                            );
+
+                            homeTimeline.push(tweet);
+                            console.log(
+                                `[Retry ${retryCount + 1}] Updated home timeline.`
+                            );
+
+                            await this.client.cacheTimeline(homeTimeline);
+                            console.log(
+                                `[Retry ${retryCount + 1}] Cached updated timeline.`
+                            );
+
+                            elizaLogger.log(
+                                `Tweet posted:\n ${tweet.permanentUrl}`
+                            );
+
+                            const roomId = stringToUuid(
+                                tweet.conversationId +
+                                    "-" +
+                                    this.runtime.agentId
+                            );
+                            console.log(
+                                `[Retry ${retryCount + 1}] Generated roomId:`,
+                                roomId
+                            );
+
+                            await this.runtime.ensureRoomExists(roomId);
+                            console.log(
+                                `[Retry ${retryCount + 1}] Ensured room exists.`
+                            );
+
+                            await this.runtime.ensureParticipantInRoom(
+                                this.runtime.agentId,
+                                roomId
+                            );
+                            console.log(
+                                `[Retry ${retryCount + 1}] Ensured agent is in the room.`
+                            );
+
+                            await this.runtime.messageManager.createMemory({
+                                id: stringToUuid(
+                                    tweet.id + "-" + this.runtime.agentId
+                                ),
+                                userId: this.runtime.agentId,
+                                agentId: this.runtime.agentId,
+                                content: {
+                                    text: newTweetContent.trim(),
+                                    url: tweet.permanentUrl,
+                                    source: "twitter",
+                                },
+                                roomId,
+                                embedding: embeddingZeroVector,
+                                createdAt: tweet.timestamp * 1000,
+                            });
+                            console.log(
+                                `[Retry ${retryCount + 1}] Created memory.`
+                            );
+
+                            success = true;
+                            console.log(
+                                `[Retry ${retryCount + 1}] Tweet successfully sent!`
+                            );
+                        } catch (sendError) {
+                            retryCount++;
+                            elizaLogger.warn(
+                                `Attempt ${retryCount} failed to send tweet. Retrying...`
+                            );
+
+                            if (retryCount >= maxRetries) {
+                                elizaLogger.error(
+                                    "All retry attempts failed. Unable to send tweet:",
+                                    sendError
+                                );
+                            }
+                        }
                     }
-                );
-
-                await this.client.cacheTweet(tweet);
-
-                homeTimeline.push(tweet);
-                await this.client.cacheTimeline(homeTimeline);
-                elizaLogger.log(`Tweet posted:\n ${tweet.permanentUrl}`);
-
-                const roomId = stringToUuid(
-                    tweet.conversationId + "-" + this.runtime.agentId
-                );
-
-                await this.runtime.ensureRoomExists(roomId);
-                await this.runtime.ensureParticipantInRoom(
-                    this.runtime.agentId,
-                    roomId
-                );
-
-                await this.runtime.messageManager.createMemory({
-                    id: stringToUuid(tweet.id + "-" + this.runtime.agentId),
-                    userId: this.runtime.agentId,
-                    agentId: this.runtime.agentId,
-                    content: {
-                        text: newTweetContent.trim(),
-                        url: tweet.permanentUrl,
-                        source: "twitter",
-                    },
-                    roomId,
-                    embedding: embeddingZeroVector,
-                    createdAt: tweet.timestamp * 1000,
-                });
-            } catch (error) {
-                elizaLogger.error("Error sending tweet:", error);
+                } catch (error) {
+                    elizaLogger.error("Error sending tweet:", error);
+                }
             }
         } catch (error) {
             elizaLogger.error("Error generating new tweet:", error);
