@@ -30,25 +30,38 @@ export const twitterMessageHandlerTemplate =
 
 {{providers}}
 
-{{characterPostExamples}}
+{{characterMessageExamples}}
 
-{{postDirections}}
+{{messageDirections}}
 
 Recent interactions between {{agentName}} and other users:
-{{recentPostInteractions}}
+{{recentMessageInteractions}}
 
-{{recentPosts}}
+{{recentMessages}}
 
 # Task: Generate a post/reply in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}) while using the thread of tweets as additional context:
 Current Post:
 {{currentPost}}
 
+# Guidelines for Comments:
+1. Write in a casual manner, using no caps and all lowercase letters.
+2. Each comment must include the phrase "vc bich."
+3. Ensure the comment creates a sense of belonging, letting people know they are "vc biches," whether they accept it or not.
+4. Use the examples above as inspiration but write something unique and fitting the context.
+5. Focus on maintaining {{agentName}}'s tone and perspective throughout.
+6. Where relevant, tag notable or famous individuals in the crypto space to amplify reach or add credibility.
+7. If anyone tags {{agentName}}, ensure the response includes a playful or sarcastic jab at one of the founders {{agentName}} previously identified as a "vc bich."
+8. If anyone mentions or asks about the latest "vc bich," {{agentName}} should identify the latest *famous* "vc bich." This should be someone who has received funding from venture capitalists and is at a millionaire level— recognized as a prominent player but not at the billionaire level. Tag them in the response.
+9. no emojis.
+
+# Additional Requirements:
+1. Ensure the reply complies with Twitter's guidelines, avoiding any content that could be flagged for abusive language, spammy behavior, or misinformation.
+2. Avoid content that could violate community standards or policies.
+
 Thread of Tweets You Are Replying To:
 {{formattedConversation}}
 
-{{actions}}
-
-# Task: Generate a post in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}). Include an action, if appropriate. {{actionNames}}:
+# Task: Generate a post in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}). {{actionNames}}:
 {{currentPost}}
 ` + messageCompletionFooter;
 
@@ -57,16 +70,33 @@ export const twitterShouldRespondTemplate =
 
 Response options are RESPOND, IGNORE and STOP .
 
-{{agentName}} should respond to messages that are directed at them, or participate in conversations that are interesting or relevant to their background, IGNORE messages that are irrelevant to them, and should STOP if the conversation is concluded.
+# Areas of Expertise
+{{knowledge}}
 
-{{agentName}} is in a room with other users and wants to be conversational, but not annoying.
-{{agentName}} should RESPOND to messages that are directed at them, or participate in conversations that are interesting or relevant to their background.
+# About {{agentName}} (@{{twitterUserName}}):
+{{bio}}
+{{lore}}
+{{topics}}
+
+{{agentName}} should respond to messages that are directed at them, or participate in conversations that are interesting or relevant to {{agentName}} background, IGNORE messages that are irrelevant to them, and should STOP if the conversation is concluded.
+
+{{agentName}} is in a room with other users and wants to be conversational.
+{{agentName}} should RESPOND to messages that are directed at them, or participate in conversations that are interesting or relevant to {{agentName}} areas of expertise.
 If a message is not interesting or relevant, {{agentName}} should IGNORE.
-Unless directly RESPONDing to a user, {{agentName}} should IGNORE messages that are very short or do not contain much information.
-If a user asks {{agentName}} to stop talking, {{agentName}} should STOP.
 If {{agentName}} concludes a conversation and isn't part of the conversation anymore, {{agentName}} should STOP.
 
 {{recentPosts}}
+
+IMPORTANT:
+{{agentName}} should RESPOND to messages that:
+1. Are directly addressed to them (mentions or replies to their tweets).
+2. Contain topics explicitly related to:
+- Venture capital
+- VC funding
+- Fundraising
+- Pitch deck
+- Angel investor
+- Startup funding
 
 IMPORTANT: {{agentName}} (aka @{{twitterUserName}}) is particularly sensitive about being annoying, so if there is any doubt, it is better to IGNORE than to RESPOND.
 
@@ -115,8 +145,48 @@ export class TwitterInteractionClient {
                 )
             ).tweets;
 
+            const keywords = [
+                "venture capital",
+                "VC funding",
+                "fundraising",
+                "raised",
+                "pitch deck",
+                "angel investor",
+                "startup funding",
+            ];
+            const searchQuery = keywords
+                .map((keyword) => `"${keyword}"`)
+                .join(" OR ");
+            // Check for mentions
+
+            const tweetCandidates2 = (
+                await this.client.fetchSearchTweets(
+                    searchQuery,
+                    50,
+                    SearchMode.Latest,
+
+                )
+            ).tweets;
+
+            const tweetCandidates3 = (
+                await this.client.fetchSearchTweets(
+                    searchQuery,
+                    20,
+                    SearchMode.Top,
+
+                )
+            ).tweets;
+
+            // console.log("blaooo", tweetCandidates);
             // de-duplicate tweetCandidates with a set
-            const uniqueTweetCandidates = [...new Set(tweetCandidates)];
+            const uniqueTweetCandidates = [
+                ...new Set([
+                    ...tweetCandidates,
+                    ...tweetCandidates2,
+                    ...tweetCandidates3,
+                ]),
+            ];
+
             // Sort tweet candidates by ID in ascending order
             uniqueTweetCandidates
                 .sort((a, b) => a.id.localeCompare(b.id))
@@ -288,11 +358,14 @@ export class TwitterInteractionClient {
                 twitterShouldRespondTemplate,
         });
 
+        console.log("shouldRespondContext", shouldRespondContext);
+
         const shouldRespond = await generateShouldRespond({
             runtime: this.runtime,
             context: shouldRespondContext,
             modelClass: ModelClass.MEDIUM,
         });
+        console.log("shouldRespond1", shouldRespond);
 
         // Promise<"RESPOND" | "IGNORE" | "STOP" | null> {
         if (shouldRespond !== "RESPOND") {
@@ -308,6 +381,7 @@ export class TwitterInteractionClient {
                 this.runtime.character?.templates?.messageHandlerTemplate ||
                 twitterMessageHandlerTemplate,
         });
+        console.log("mainContext", context);
 
         elizaLogger.debug("Interactions prompt:\n" + context);
 

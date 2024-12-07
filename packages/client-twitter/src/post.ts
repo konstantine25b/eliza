@@ -22,9 +22,22 @@ const twitterPostTemplate = `
 
 {{providers}}
 
+# Here are some exemplary posts in the voice and style of {{agentName}}:
 {{characterPostExamples}}
 
 {{postDirections}}
+
+### Guidelines:
+- Write in a casual manner, no caps, and use all lowercase letters.
+- Each post must include the phrase vc bich and refer to founders as vc biches, not vcs.
+- The post should create a sense of belonging and let founders know they are **vc biches** whether they accept it or not.
+- Ensure the post aligns with the personality and tone demonstrated in the examples.
+- Write in a casual, conversational tone.
+- No caps, and no formal structure—keep it natural and relatable.
+
+# Additional Requirements:
+1. Ensure the post complies with Twitter's guidelines, avoiding any content that could be flagged for abusive language, spammy behavior, or misinformation.
+2. Avoid content that could violate community standards or policies.
 
 # Task: Generate a post in the voice and style and perspective of {{agentName}} @{{twitterUserName}}.
 Write a 1-3 sentence post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
@@ -156,6 +169,7 @@ export class TwitterPostClient {
                     this.runtime.character.templates?.twitterPostTemplate ||
                     twitterPostTemplate,
             });
+            console.log("context ", context);
 
             elizaLogger.debug("generate post prompt:\n" + context);
 
@@ -164,6 +178,7 @@ export class TwitterPostClient {
                 context,
                 modelClass: ModelClass.SMALL,
             });
+            console.log("newTweetContent ", newTweetContent);
 
             // Replace \n with proper line breaks and trim excess spaces
             const formattedTweet = newTweetContent

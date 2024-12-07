@@ -275,6 +275,7 @@ export class ClientBase extends EventEmitter {
         query: string,
         maxTweets: number,
         searchMode: SearchMode,
+        minFollowers?: number,
         cursor?: string
     ): Promise<QueryTweetsResponse> {
         try {
@@ -285,7 +286,7 @@ export class ClientBase extends EventEmitter {
             );
 
             try {
-                const result = await this.requestQueue.add(
+                const result = (await this.requestQueue.add(
                     async () =>
                         await Promise.race([
                             this.twitterClient.fetchSearchTweets(
@@ -296,8 +297,40 @@ export class ClientBase extends EventEmitter {
                             ),
                             timeoutPromise,
                         ])
-                );
+                )) as QueryTweetsResponse;
+                const tweets = result?.tweets || [];
+
+                if (minFollowers && minFollowers > 0) {
+                    const eligibleTweets = [];
+
+                    for (const tweet of tweets) {
+                        try {
+                            // Fetch user profile for each tweet
+                            const profile =
+                                await this.twitterClient.fetchSearchProfiles(
+                                    tweet.userId,
+                                    1
+                                );
+                            const user = profile.profiles[0]; // Get the first profile
+
+                            // Check if the user's followers count meets the minimum criteria
+                            if (user && user.followersCount >= minFollowers) {
+                                eligibleTweets.push(tweet);
+                            }
+                        } catch (error) {
+                            console.error(
+                                `Error fetching profile for user ${tweet.userId}:`,
+                                error
+                            );
+                        }
+                    }
+
+                    // Return only eligible tweets
+                    return { tweets: eligibleTweets };
+                }
+
                 return (result ?? { tweets: [] }) as QueryTweetsResponse;
+                
             } catch (error) {
                 elizaLogger.error("Error fetching search tweets:", error);
                 return { tweets: [] };
