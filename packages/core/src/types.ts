@@ -633,14 +633,18 @@ export type Character = {
         goalsTemplate?: string;
         factsTemplate?: string;
         messageHandlerTemplate?: string;
+        messageHandlerTemplate2?: string;
         shouldRespondTemplate?: string;
+        shouldRespondTemplate2?: string;
         continueMessageHandlerTemplate?: string;
         evaluationTemplate?: string;
         twitterSearchTemplate?: string;
         twitterPostTemplate?: string;
         twitterPostFounderTemplate?: string;
         twitterMessageHandlerTemplate?: string;
+        twitterMessageHandlerTemplate2?: string;
         twitterShouldRespondTemplate?: string;
+        twitterShouldRespondTemplate2?: string;
         farcasterPostTemplate?: string;
         farcasterMessageHandlerTemplate?: string;
         farcasterShouldRespondTemplate?: string;

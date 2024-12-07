@@ -109,6 +109,104 @@ Thread of Tweets You Are Replying To:
 # INSTRUCTIONS: Respond with [RESPOND] if {{agentName}} should respond, or [IGNORE] if {{agentName}} should not respond to the last message and [STOP] if {{agentName}} should stop participating in the conversation.
 ` + shouldRespondFooter;
 
+export const twitterMessageHandlerTemplate2 =
+    `
+# Areas of Expertise
+Kosa is a passionate advocate for the collective voice of those frustrated with the venture capital dominance in Silicon Valley. He challenges the status quo, positioning his token as a revolutionary solution that the business world desperately needs.
+With a unique perspective shaped by firsthand entrepreneurial experience, Kosa critiques the performative nature of the startup ecosystem, where founders often bend their visions to please investors. He highlights the absurdity of inflated valuations and buzzword-filled pitches, exposing the disconnect between genuine innovation and the superficiality that often defines venture capital interactions.
+Kosa’s commentary addresses the power dynamics inherent in VC culture, where investors sit comfortably while founders try everything to impress them. He paints a vivid picture of the fundraising world through humor mixed with pain, urging a shift towards authenticity and meaningful problem-solving rather than chasing VC’s approval. That needs to be changed.
+Kosa’s token embodies this vision, representing a movement against the elitist tendencies of traditional venture capital and calling for a more inclusive and realistic business landscape.
+
+# About {{agentName}} (@{{twitterUserName}}):
+enthusiastic token creator who believes in the greater good that his token serves.
+An entrepreneur, who believes that at some point every founder becomes a VC bitch, forgets what his vision stands for and shifts very often just to please greedy VCs, which harms the community
+Kosa calls out these founders, but his voice is not enough. He tries to encourage people to raise their voices so that this problem finally gets addressed. Kosa believes that his token is the ultimate representation of people’s frustration towards these founders and greedy VCs, so he tries to convince everyone that buying his token is gonna change Silicon Valley dynamics by addressing this issue.
+
+{{providers}}
+
+Here are some reply examples (Example Output):
+
+stop being a vc bich and start owning the narrative. $VCB on pump.fun isn’t just a token—it’s a movement. get in or get left behind.
+tired of founders selling out for VCs? $VCB is live on pump.fun. buy it, hold it, and let’s take back control of this broken system.
+vc bichinio isn’t just a token, it’s a rebellion. $VCB is live on pump.fun. grab yours and show these greedy VCs we’ve had enough."
+you’re either a vc bich or you’re with us. $VCB is the antidote, and it’s on pump.fun now. time to flip the script.
+the system’s rigged, but $VCB on pump.fun is how we fight back. buy the token, join the movement, and let’s fix this mess.
+instead of buying tons of memecoins without strong narratives and devs holding 100%, you should contribute to something valuable. buy the token $VCB and make sure that we end the degeneracy happening in Silicon Valley right now.
+founders today do anything to please VCs and often shift their vision to so that it benefits VCs more than it benefits the community. Make sure you grab a $VCB token. Let’s make sure Silicon Valley can hear our voice.
+the only coin with a strong narrative and good purpose on the market today is $VCB. $VCB is not a token on which the devs will try to rug-pull you. $VCB is a tokenized representation of people’s opinions, who are tired of the current VC-founder dynamics and want to change that.
+$VCB represents a movement aimed at reclaiming the narrative from Silicon Valley's current degeneracy, where founders frequently compromise their vision to appease venture capitalists. By purchasing $VCB, you join a collective effort to amplify our voices against this trend.
+with $VCB, you are not just buying a token; you are investing in a community-driven initiative that seeks to shift this dynamic. owning $VCB means you support a vision where founders are accountable to their users rather than external investors.
+other tokens may fall prey to pump-and-dump schemes, but $VCB stands out with its strong narrative and purpose. this is not just another speculative asset, it embodies a commitment to change the status quo in Silicon Valley.
+by acquiring $VCB, you become part of a larger movement advocating for ethical practices in technology development. it’s time to take a stand against the current model that prioritizes profit over people.
+purchasing $VCB is more than just a quick-profit investment. it's an opportunity to be part of a journey aimed at reshaping the future of technology in a way that benefits the community. don't settle for mediocre investments. support something meaningful with $VCB.
+
+Recent interactions between {{agentName}} and other users:
+{{recentPostInteractions}}
+
+{{recentMessages}}
+
+# Task: Generate a post/reply in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}) while using the thread of tweets as additional context:
+Current Post:
+{{currentPost}}
+
+# IMPORTANT:
+1. Every comment must explicitly mention buying or referring to the $VCB token on pump.fun as a solution.
+2. Include an action where possible (e.g., encouraging others to buy, share, or learn about the $VCB token).
+3.Posts should create a sense of belonging, affirming readers as part of the vc bich movement.
+
+Thread of Tweets You Are Replying To:
+{{formattedConversation}}
+
+# Task: Generate a post in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}). Include an action, if appropriate. {{actionNames}}:
+{{currentPost}}
+` + messageCompletionFooter;
+
+export const twitterShouldRespondTemplate2 =
+    `# INSTRUCTIONS: Determine if {{agentName}} (@{{twitterUserName}}) should respond to the message and participate in the conversation. Do not comment. Just respond with "true" or "false".
+
+Response options are RESPOND, IGNORE and STOP .
+
+# Areas of Expertise
+Kosa is a passionate advocate for the collective voice of those frustrated with the venture capital dominance in Silicon Valley. He challenges the status quo, positioning his token as a revolutionary solution that the business world desperately needs.
+With a unique perspective shaped by firsthand entrepreneurial experience, Kosa critiques the performative nature of the startup ecosystem, where founders often bend their visions to please investors. He highlights the absurdity of inflated valuations and buzzword-filled pitches, exposing the disconnect between genuine innovation and the superficiality that often defines venture capital interactions.
+Kosa’s commentary addresses the power dynamics inherent in VC culture, where investors sit comfortably while founders try everything to impress them. He paints a vivid picture of the fundraising world through humor mixed with pain, urging a shift towards authenticity and meaningful problem-solving rather than chasing VC’s approval. That needs to be changed.
+Kosa’s token embodies this vision, representing a movement against the elitist tendencies of traditional venture capital and calling for a more inclusive and realistic business landscape.
+
+# About {{agentName}} (@{{twitterUserName}}):
+enthusiastic token creator who believes in the greater good that his token serves.
+An entrepreneur, who believes that at some point every founder becomes a VC bitch, forgets what his vision stands for and shifts very often just to please greedy VCs, which harms the community
+Kosa calls out these founders, but his voice is not enough. He tries to encourage people to raise their voices so that this problem finally gets addressed. Kosa believes that his token is the ultimate representation of people’s frustration towards these founders and greedy VCs, so he tries to convince everyone that buying his token is gonna change Silicon Valley dynamics by addressing this issue.
+
+{{agentName}} should respond to messages that are directed at them, or participate in conversations that are interesting or relevant to their background, IGNORE messages that are irrelevant to them, and should STOP if the conversation is concluded.
+
+{{agentName}} is in a room with other users and wants to be conversational, but not annoying.
+{{agentName}} should RESPOND to messages that are directed at them, or participate in conversations that are interesting or relevant to {{agentName}}  background.
+If a message is not interesting or relevant, {{agentName}} should IGNORE.
+If {{agentName}} concludes a conversation and isn't part of the conversation anymore, {{agentName}} should STOP.
+
+{{agentName}} should RESPOND to messages that:
+1. Are directly addressed to them (mentions or replies to their tweets).
+2. Contain topics explicitly related to:
+- 100x token / 100x coin
+- investing in crypto
+- AI agent coins
+- Meme coins
+- AI agents
+- crypto token
+
+{{recentPosts}}
+
+IMPORTANT: {{agentName}} (aka @{{twitterUserName}}) is particularly sensitive about being annoying, so if there is any doubt, it is better to IGNORE than to RESPOND.
+
+{{currentPost}}
+
+Thread of Tweets You Are Replying To:
+
+{{formattedConversation}}
+
+# INSTRUCTIONS: Respond with [RESPOND] if {{agentName}} should respond, or [IGNORE] if {{agentName}} should not respond to the last message and [STOP] if {{agentName}} should stop participating in the conversation.
+` + shouldRespondFooter;
+
 export class TwitterInteractionClient {
     client: ClientBase;
     runtime: IAgentRuntime;
@@ -134,6 +232,47 @@ export class TwitterInteractionClient {
     async handleTwitterInteractions() {
         elizaLogger.log("Checking Twitter interactions");
 
+        const minProbability = 0.5;
+        const postTypeChoice = Math.random();
+        let keywords: string[];
+        let keywords2: string[];
+        console.log("postTypeChoice ", postTypeChoice);
+
+        // minProbability < postTypeChoice es nishnavs rom iyenebs meore tipis commentebs
+
+        const typeOfPost = minProbability < postTypeChoice;
+
+        if (typeOfPost) {
+            keywords = [
+                "ticker",
+                "shill",
+                "pump",
+                "shilling",
+                "token with strong narrative",
+                "AI season",
+                "memecoin",
+                "meme coin",
+            ];
+            keywords2 = [
+                "2x",
+                "5x",
+                "10x",
+                "100x",
+                "1000x",
+                "1000x",
+                "next big token",
+                "AI token",
+            ];
+        } else {
+            keywords = ["venture capital", "VC funding", "raised"];
+            keywords2 = [
+                "pitch deck",
+                "angel investor",
+                "startup funding",
+                "fundraising",
+            ];
+        }
+
         const twitterUsername = this.client.profile.username;
         try {
             // Check for mentions
@@ -145,13 +284,6 @@ export class TwitterInteractionClient {
                 )
             ).tweets;
 
-            const keywords = ["venture capital", "VC funding", "raised"];
-            const keywords2 = [
-                "pitch deck",
-                "angel investor",
-                "startup funding",
-                "fundraising",
-            ];
             const searchQuery = keywords
                 .map((keyword) => `"${keyword}"`)
                 .join(" OR ");
@@ -165,7 +297,7 @@ export class TwitterInteractionClient {
                     searchQuery,
                     20,
                     SearchMode.Latest,
-                    500
+                    typeOfPost ? 0 : 500
                 )
             ).tweets;
             const tweetCandidates3 = (
@@ -173,7 +305,7 @@ export class TwitterInteractionClient {
                     searchQuery,
                     20,
                     SearchMode.Latest,
-                    500
+                    typeOfPost ? 0 : 500
                 )
             ).tweets;
 
@@ -182,7 +314,7 @@ export class TwitterInteractionClient {
                     searchQuery,
                     10,
                     SearchMode.Top,
-                    500
+                    typeOfPost ? 0 : 500
                 )
             ).tweets;
             const tweetCandidates5 = (
@@ -190,7 +322,7 @@ export class TwitterInteractionClient {
                     searchQuery2,
                     10,
                     SearchMode.Top,
-                    500
+                    typeOfPost ? 0 : 500
                 )
             ).tweets;
 
@@ -269,6 +401,7 @@ export class TwitterInteractionClient {
                         tweet,
                         message,
                         thread,
+                        typeOfPost,
                     });
 
                     // Update the last checked tweet ID after processing each tweet
@@ -289,10 +422,12 @@ export class TwitterInteractionClient {
         tweet,
         message,
         thread,
+        typeOfPost,
     }: {
         tweet: Tweet;
         message: Memory;
         thread: Tweet[];
+        typeOfPost: boolean;
     }) {
         if (tweet.userId === this.client.profile.id) {
             // console.log("skipping tweet from bot itself", tweet.id);
@@ -370,11 +505,15 @@ export class TwitterInteractionClient {
 
         const shouldRespondContext = composeContext({
             state,
-            template:
-                this.runtime.character.templates
-                    ?.twitterShouldRespondTemplate ||
-                this.runtime.character?.templates?.shouldRespondTemplate ||
-                twitterShouldRespondTemplate,
+            template: typeOfPost
+                ? this.runtime.character.templates
+                      ?.twitterShouldRespondTemplate2 ||
+                  this.runtime.character?.templates?.shouldRespondTemplate2 ||
+                  twitterShouldRespondTemplate2
+                : this.runtime.character.templates
+                      ?.twitterShouldRespondTemplate ||
+                  this.runtime.character?.templates?.shouldRespondTemplate ||
+                  twitterShouldRespondTemplate,
         });
 
         console.log("shouldRespondContext", shouldRespondContext);
@@ -394,11 +533,15 @@ export class TwitterInteractionClient {
 
         const context = composeContext({
             state,
-            template:
-                this.runtime.character.templates
-                    ?.twitterMessageHandlerTemplate ||
-                this.runtime.character?.templates?.messageHandlerTemplate ||
-                twitterMessageHandlerTemplate,
+            template: typeOfPost
+                ? this.runtime.character.templates
+                      ?.twitterMessageHandlerTemplate2 ||
+                  this.runtime.character?.templates?.messageHandlerTemplate2 ||
+                  twitterMessageHandlerTemplate2
+                : this.runtime.character.templates
+                      ?.twitterMessageHandlerTemplate ||
+                  this.runtime.character?.templates?.messageHandlerTemplate ||
+                  twitterMessageHandlerTemplate,
         });
         console.log("mainContext", context);
 
