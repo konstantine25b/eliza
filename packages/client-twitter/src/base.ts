@@ -330,7 +330,7 @@ export class ClientBase extends EventEmitter {
                 }
 
                 return (result ?? { tweets: [] }) as QueryTweetsResponse;
-                
+
             } catch (error) {
                 elizaLogger.error("Error fetching search tweets:", error);
                 return { tweets: [] };

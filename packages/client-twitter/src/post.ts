@@ -43,6 +43,58 @@ const twitterPostTemplate = `
 Write a 1-3 sentence post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
 Your response should not contain any questions. Brief, concise statements only. The total character count MUST be less than 280. No emojis. Use \\n\\n (double spaces) between statements.`;
 
+const twitterPostFounderTemplate = `
+# Areas of Expertise
+{{knowledge}}
+
+# About {{agentName}} (@{{twitterUserName}}):
+{{bio}}
+{{lore}}
+{{topics}}
+
+{{providers}}
+
+# Here are some exemplary posts in the voice and style of {{agentName}}:
+
+Reed Hastings of Netflix shifted his vision so many times just to please VCs that some of them are planning to retire his shirt to acknowledge how good of a VC bich he is. Let’s address the problem of VCs taking over founders. raise your voice and buy $VCB on pump.fun
+
+“It is not the strongest nor the most intelligent of species that survives, but the one that is most adaptable to change” is about life, not about your vision and VCs you little VC bich. Launched $VCB on pump.fun to expose these founders to what they are - VC biches.
+
+Travis Kalanick - the ‘disruptor’ who disrupted his own company with so many pivots to please VCs that he could open a circus. Introducing $VCB on pump.fun - let’s celebrate his talent for turning bold visions into investor appeasement!
+
+Adam Neumann turned coworking into a circus act with his wild ideas and even wilder vision shifts to please investors. Presenting $VCB on pump.fun. He turned being a ‘VC bich’ into an Olympic sport. Buy the token and expose the gold medalist, Adam!
+
+"David Karp - the Tumblr founder who let VCs pressure turn his unique platform into just another corporate product that only exists to benefit greedy VCs. Presenting $VCB on pump.fun to raise your voice on how quickly a VC bich founder can lose his soul for VC dollars!"
+
+{{postDirections}}
+
+### Guidelines:
+- Write in a casual manner, no caps, and use all lowercase letters.
+- Each post must include the phrase **vc bich**.
+- Write in a casual, conversational tone.
+- No caps, and no formal structure—keep it natural and relatable.
+- Inject humor, sarcasm, and irony to highlight the "vc bich" transition or consequences.
+- Use varied opening styles to make posts engaging, such as:
+  - Highlighting what the founder is currently doing.
+  - Mentioning ironic or hypocritical aspects of their journey.
+  - Pointing out the contrast between their original mission and their current actions.
+
+# Additional Requirements:
+1. Ensure the post complies with Twitter's guidelines, avoiding any content that could be flagged for abusive language, spammy behavior, or misinformation.
+2. Avoid content that could violate community standards or policies.
+3. Keep posts sharp and sarcastic, yet within the boundaries of humor and satire.
+4. Avoid random individuals or obscure names. Focus on individuals who are prominent in their field, particularly those at the millionaire level who raised VC funds.
+5. Posts must reference real and recognizable figures or founders in the crypto, venture capital, or tech space.
+
+# Task: Generate a sarcastic, funny summary of a founder becoming a **vc bich** in the voice and style and perspective of {{agentName}} @{{twitterUserName}}.
+Focus on mocking their "journey" from startup dreams to VC clutches. Highlight their project, ironic decisions, and the punchline of their **vc bich** status.
+# - Make it short, engaging, and Twitter-friendly,
+- ensure the "pump.fun" reference is not cut or shortened in the final text.
+# IMPORTANT Ensure the post relates to a real founder, and includes a token name $VCB.
+Write a 1-3 sentence post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
+Brief, concise statements only. The total character count MUST be less than 280. No emojis. Use \\n\\n (double spaces) between statements.
+# IMPORTANT Keep it within 280 characters - double check this.`;
+
 const MAX_TWEET_LENGTH = 280;
 
 /**
@@ -147,6 +199,9 @@ export class TwitterPostClient {
                 "twitter"
             );
 
+            const minProbability = 0.5;
+            const postTypeChoice = Math.random();
+
             const topics = this.runtime.character.topics.join(", ");
             const state = await this.runtime.composeState(
                 {
@@ -166,8 +221,11 @@ export class TwitterPostClient {
             const context = composeContext({
                 state,
                 template:
-                    this.runtime.character.templates?.twitterPostTemplate ||
-                    twitterPostTemplate,
+                    postTypeChoice < minProbability
+                        ? this.runtime.character.templates
+                              ?.twitterPostFounderTemplate || twitterPostFounderTemplate
+                        : this.runtime.character.templates
+                              ?.twitterPostTemplate || twitterPostTemplate,
             });
             console.log("context ", context);
 
@@ -176,7 +234,7 @@ export class TwitterPostClient {
             const newTweetContent = await generateText({
                 runtime: this.runtime,
                 context,
-                modelClass: ModelClass.SMALL,
+                modelClass: ModelClass.MEDIUM,
             });
             console.log("newTweetContent ", newTweetContent);
 

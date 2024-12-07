@@ -145,16 +145,17 @@ export class TwitterInteractionClient {
                 )
             ).tweets;
 
-            const keywords = [
-                "venture capital",
-                "VC funding",
-                "fundraising",
-                "raised",
+            const keywords = ["venture capital", "VC funding", "raised"];
+            const keywords2 = [
                 "pitch deck",
                 "angel investor",
                 "startup funding",
+                "fundraising",
             ];
             const searchQuery = keywords
+                .map((keyword) => `"${keyword}"`)
+                .join(" OR ");
+            const searchQuery2 = keywords2
                 .map((keyword) => `"${keyword}"`)
                 .join(" OR ");
             // Check for mentions
@@ -162,18 +163,34 @@ export class TwitterInteractionClient {
             const tweetCandidates2 = (
                 await this.client.fetchSearchTweets(
                     searchQuery,
-                    50,
+                    20,
                     SearchMode.Latest,
-
+                    500
                 )
             ).tweets;
-
             const tweetCandidates3 = (
                 await this.client.fetchSearchTweets(
                     searchQuery,
                     20,
-                    SearchMode.Top,
+                    SearchMode.Latest,
+                    500
+                )
+            ).tweets;
 
+            const tweetCandidates4 = (
+                await this.client.fetchSearchTweets(
+                    searchQuery,
+                    10,
+                    SearchMode.Top,
+                    500
+                )
+            ).tweets;
+            const tweetCandidates5 = (
+                await this.client.fetchSearchTweets(
+                    searchQuery2,
+                    10,
+                    SearchMode.Top,
+                    500
                 )
             ).tweets;
 
@@ -184,6 +201,8 @@ export class TwitterInteractionClient {
                     ...tweetCandidates,
                     ...tweetCandidates2,
                     ...tweetCandidates3,
+                    ...tweetCandidates4,
+                    ...tweetCandidates5,
                 ]),
             ];
 
