@@ -223,7 +223,7 @@ export class TwitterInteractionClient {
     async handleTwitterInteractions() {
         elizaLogger.log("Checking Twitter interactions");
 
-        const minProbability = 0.5;
+        const minProbability = 1;
         const postTypeChoice = Math.random();
         let keywords: string[];
         let keywords2: string[];
