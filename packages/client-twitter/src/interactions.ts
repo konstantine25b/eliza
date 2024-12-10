@@ -532,9 +532,9 @@ export class TwitterInteractionClient {
                 this.client.profile.username,
                 founderName
             );
-            elizaLogger.log(`Added founder: ${founderName} to founder list.`);
+            console.log(`Added founder: ${founderName} to founder list.`);
         } catch (error) {
-            elizaLogger.error(
+            console.log(
                 "Error fetching user info or adding founder:",
                 error
             );
