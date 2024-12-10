@@ -100,11 +100,11 @@ const MAX_TWEET_LENGTH = 280;
 
 // Function to initialize founder list in cache if not already present
 async function initializeFounderList(runtime: IAgentRuntime, username: string) {
-
+    // await runtime.cacheManager.delete("twitter/" + username + "/founderList");
     const existing = await runtime.cacheManager.get<string[]>(
         "twitter/" + username + "/founderList"
     );
-    if (!existing || existing.length < 150) {
+    if (!existing || existing.length < 500) {
         await runtime.cacheManager.set(
             "twitter/" + username + "/founderList",
             initialFounders
@@ -283,7 +283,7 @@ export class TwitterPostClient {
                 "twitter"
             );
 
-            const minProbability = 1;
+            const minProbability = 0.4;
             const postTypeChoice = Math.random();
 
             const topics = this.runtime.character.topics.join(", ");

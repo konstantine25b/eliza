@@ -17,6 +17,7 @@ import {
 } from "@ai16z/eliza";
 import { ClientBase } from "./base";
 import { buildConversationThread, sendTweet, wait } from "./utils.ts";
+import { addFounder } from "./post.ts";
 
 export const twitterMessageHandlerTemplate =
     `
@@ -161,8 +162,7 @@ Thread of Tweets You Are Replying To:
 {{currentPost}}
 ` + messageCompletionFooter;
 
-export const twitterShouldRespondTemplate2 =
-    `# INSTRUCTIONS:
+export const twitterShouldRespondTemplate2 = `# INSTRUCTIONS:
 Determine if {{agentName}} (@{{twitterUserName}}) should respond to the last message. Follow the rules below and provide only one of these responses: [RESPOND], [IGNORE], or [STOP].
 
 {{agentName}} must RESPOND if:
@@ -520,6 +520,24 @@ export class TwitterInteractionClient {
         if (shouldRespond !== "RESPOND") {
             elizaLogger.log("Not responding to message");
             return { text: "Response Decision:", action: shouldRespond };
+        }
+
+        // adding user to the list
+        try {
+            const userInfo = await this.client.fetchProfile(tweet.username);
+            console.log("targetUserInfo 1", userInfo);
+            const founderName = `${userInfo.screenName} (${userInfo.bio})`;
+            await addFounder(
+                this.runtime,
+                this.client.profile.username,
+                founderName
+            );
+            elizaLogger.log(`Added founder: ${founderName} to founder list.`);
+        } catch (error) {
+            elizaLogger.error(
+                "Error fetching user info or adding founder:",
+                error
+            );
         }
 
         const context = composeContext({
