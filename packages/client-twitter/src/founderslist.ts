@@ -1,3 +1,7 @@
+import fs from "fs/promises";
+import path from "path";
+import { fileURLToPath } from "url";
+
 export const initialFounders = [
     "Oisin Hanrahan (Handy)",
     "Umang Dua (Handy)",
@@ -307,16 +311,10 @@ export const initialFounders = [
     "JB Straubel (Tesla)",
     "Marc Tarpenning (Tesla)",
     "Martin Eberhard (Tesla)",
-    "Larry Page (Google)",
     "Sergey Brin (Google)",
     "Eric Schmidt (Google, early CEO)",
-    "Jeff Bezos (Amazon)",
-    "Bill Gates (Microsoft)",
-    "Paul Allen (Microsoft)",
-    "Steve Jobs (Apple)",
     "Steve Wozniak (Apple)",
     "Ronald Wayne (Apple)",
-    "Mark Zuckerberg (Facebook, Meta)",
     "Eduardo Saverin (Facebook)",
     "Andrew McCollum (Facebook)",
     "Dustin Moskovitz (Facebook, Asana)",
@@ -354,7 +352,6 @@ export const initialFounders = [
     "Jessica Livingston (Y Combinator)",
     "Trevor Blackwell (Y Combinator)",
     "Robert Tappan Morris (Y Combinator)",
-    "Sam Altman (OpenAI, Loopt, Y Combinator)",
     "Sundar Pichai (Google CEO)",
     "Parag Agrawal (Twitter CEO)",
     "Satya Nadella (Microsoft CEO)",
@@ -372,7 +369,6 @@ export const initialFounders = [
     "Nathaniel Motte (Tinder)",
     "Alexis Ohanian (Reddit)",
     "Steve Huffman (Reddit)",
-    "Aaron Swartz (Reddit, RIP)",
     "Vitalik Buterin (Ethereum)",
     "Charles Hoskinson (Cardano)",
     "Gavin Wood (Polkadot, Ethereum)",
@@ -562,3 +558,41 @@ export const initialFounders = [
     "Yancey Strickler (Kickstarter)",
     "Charles Adler (Kickstarter)",
 ];
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Define the path to additionalFounders.json
+const ADDITIONAL_FOUNDERS_PATH = path.resolve(
+    __dirname,
+    "../src/data/additionalFounders.json"
+);
+
+console.log("Resolved Path:", ADDITIONAL_FOUNDERS_PATH);
+
+// Function to load additional founders
+export async function loadAdditionalFounders(): Promise<string[]> {
+    try {
+        const data = await fs.readFile(ADDITIONAL_FOUNDERS_PATH, "utf8");
+        return JSON.parse(data);
+    } catch (error) {
+        // If file doesn't exist or is invalid, return an empty array
+        console.log(error);
+        return [];
+    }
+}
+
+// Function to save additional founders
+export async function saveAdditionalFounder(founder: string) {
+    const additionalFounders = await loadAdditionalFounders();
+
+    // Only add if not already in the list
+    if (!additionalFounders.includes(founder)) {
+        additionalFounders.push(founder);
+
+        await fs.writeFile(
+            ADDITIONAL_FOUNDERS_PATH,
+            JSON.stringify(additionalFounders, null, 2)
+        );
+    }
+}
