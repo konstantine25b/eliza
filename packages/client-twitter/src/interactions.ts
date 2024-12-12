@@ -310,12 +310,19 @@ export class TwitterInteractionClient {
             keywords = [
                 "ticker",
                 "shill",
+                "What's the ticker",
                 "pump",
+                "Shill me the ticker",
+                "The ticker is",
+                "Drop the ticker",
                 "shilling",
                 "token with strong narrative",
                 "AI season",
                 "memecoin",
                 "meme coin",
+                "AI season",
+                "Memecoin of the day",
+                "Shill me some meme coin",
             ];
             keywords2 = [
                 "2x",
