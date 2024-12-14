@@ -184,7 +184,7 @@ Determine if {{agentName}} (@{{twitterUserName}}) should respond to the last mes
 {{agentName}} must RESPOND if:
 1. The message directly addresses @{{twitterUserName}} (via mention, reply, or tweet directed at {{agentName}}).
 2. The message contains topics explicitly related to:
-   - 100x token / 100x coin
+   - 100x token / 100x coin / 100x gem
    - investing in crypto
    - AI agent coins
    - Meme coins
@@ -192,6 +192,9 @@ Determine if {{agentName}} (@{{twitterUserName}}) should respond to the last mes
    - crypto token
    - AI agent coin
    - pump.fun
+   - ticker
+   - gem
+   - shill
 
 {{agentName}} should IGNORE if:
 - The message does not mention @{{twitterUserName}} and is not related to any of the listed crypto or investing topics.
@@ -200,7 +203,7 @@ IMPORTANT: If there is any doubt, it is better to IGNORE than to RESPOND, since 
 
 # Decision Process:
 1. If the message mentions "@{{twitterUserName}}", RESPOND.
-2. Else, if the message contains any of the listed crypto/investing topics (100x token/coin, AI agent coins, Meme coins, AI agents, crypto token, AI agent coin, investing in crypto, pump.fun), RESPOND.
+2. Else, if the message contains any of the listed crypto/investing topics (100x token/coin, AI agent coins, Meme coins, AI agents, crypto token, AI agent coin, investing in crypto, pump.fun, ticker, gem, what's the ticker , Drop the ticker, What Memecoin Are We Buying Today ) RESPOND.
 3. Otherwise, IGNORE.
 
 {{recentPosts}}
