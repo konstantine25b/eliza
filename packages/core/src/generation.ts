@@ -52,11 +52,13 @@ export async function generateText({
     runtime,
     context,
     modelClass,
+    curSystem,
     stop,
 }: {
     runtime: IAgentRuntime;
     context: string;
     modelClass: string;
+    curSystem?: string;
     stop?: string[];
 }): Promise<string> {
     if (!context) {
@@ -137,6 +139,7 @@ export async function generateText({
                     model: openai.languageModel(model),
                     prompt: context,
                     system:
+                        curSystem ??
                         runtime.character.system ??
                         settings.SYSTEM_PROMPT ??
                         undefined,
@@ -760,10 +763,12 @@ export async function generateMessageResponse({
     runtime,
     context,
     modelClass,
+    curSystem
 }: {
     runtime: IAgentRuntime;
     context: string;
     modelClass: string;
+    curSystem?: string;
 }): Promise<Content> {
     const max_context_length =
         models[runtime.modelProvider].settings.maxInputTokens;
@@ -777,6 +782,7 @@ export async function generateMessageResponse({
                 runtime,
                 context,
                 modelClass,
+                curSystem
             });
             // try parsing the response as JSON, if null then try again
             const parsedContent = parseJSONObjectFromText(response) as Content;

@@ -19,6 +19,7 @@ import {
 import { ClientBase } from "./base";
 import { buildConversationThread, sendTweet, wait } from "./utils.ts";
 import { addFounder } from "./post.ts";
+import { systemMessages } from "./systemMessages.ts";
 
 export const twitterMessageHandlerTemplate =
     `
@@ -203,7 +204,7 @@ IMPORTANT: If there is any doubt, it is better to IGNORE than to RESPOND, since 
 
 # Decision Process:
 1. If the message mentions "@{{twitterUserName}}", RESPOND.
-2. Else, if the message contains any of the listed crypto/investing topics (100x token/coin, AI agent coins, Meme coins, AI agents, crypto token, AI agent coin, investing in crypto, pump.fun, ticker, gem, what's the ticker , Drop the ticker, What Memecoin Are We Buying Today ) RESPOND.
+2. Else, if the message contains any of the listed crypto/investing topics (100x token/coin, AI agent coins, Meme coins, AI agents, crypto token, AI agent coin, investing in crypto, pump.fun, ticker, gem, what's the ticker , Drop the ticker, What Memecoin Are We Buying Today, You have $100K/$10K/$5k to spend on memecoins/AIAgentcoins ) RESPOND.
 3. Otherwise, IGNORE.
 
 {{recentPosts}}
@@ -627,7 +628,7 @@ export class TwitterInteractionClient {
                     context: AddFounderState,
                     modelClass: ModelClass.MEDIUM, // Adjust the model class if needed
                 });
-                console.log("answerOfFounder ",answerOfFounder )
+                console.log("answerOfFounder ", answerOfFounder);
 
                 if (answerOfFounder.trim() === "true") {
                     await addFounder(
@@ -669,6 +670,9 @@ export class TwitterInteractionClient {
             runtime: this.runtime,
             context,
             modelClass: ModelClass.MEDIUM,
+            curSystem: typeOfPost
+                ? systemMessages.systemToken
+                : systemMessages.systemMain,
         });
 
         const removeQuotes = (str: string) =>

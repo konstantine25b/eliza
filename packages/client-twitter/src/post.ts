@@ -10,7 +10,12 @@ import {
 } from "@ai16z/eliza";
 import { elizaLogger } from "@ai16z/eliza";
 import { ClientBase } from "./base.ts";
-import { initialFounders, loadAdditionalFounders, saveAdditionalFounder } from "./founderslist.ts";
+import {
+    initialFounders,
+    loadAdditionalFounders,
+    saveAdditionalFounder,
+} from "./founderslist.ts";
+import { systemMessages } from "./systemMessages.ts";
 
 const twitterPostTemplate = `
 # Areas of Expertise
@@ -157,7 +162,7 @@ async function initializeFounderList(runtime: IAgentRuntime, username: string) {
 
     // Combine initial and additional founders
     const allFounders = [...initialFounders, ...additionalFounders];
-    console.log("additionalFounders ",additionalFounders )
+    console.log("additionalFounders ", additionalFounders);
 
     const existing = await runtime.cacheManager.get<string[]>(
         "twitter/" + username + "/founderList"
@@ -437,6 +442,10 @@ export class TwitterPostClient {
                 runtime: this.runtime,
                 context,
                 modelClass: ModelClass.MEDIUM,
+                curSystem:
+                    postTypeChoice < minProbability
+                        ? systemMessages.systemToken
+                        : systemMessages.systemMain,
             });
             console.log("newTweetContent ", newTweetContent);
 
