@@ -667,6 +667,7 @@ export type Character = {
         twitterShouldRespondTemplate?: string;
         twitterShouldRespondTemplate3?: string;
         twitterShouldRespondTemplate2?: string;
+        twitterActionTemplate?: string;
         farcasterPostTemplate?: string;
         lensPostTemplate?: string;
         farcasterMessageHandlerTemplate?: string;
@@ -762,7 +763,6 @@ export type Character = {
         slack?: {
             shouldIgnoreBotMessages?: boolean;
             shouldIgnoreDirectMessages?: boolean;
-
         };
     };
 
@@ -784,7 +784,7 @@ export type Character = {
     /** Optional NFT prompt */
     nft?: {
         prompt: string;
-    }
+    };
 };
 
 /**
