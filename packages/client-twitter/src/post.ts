@@ -47,7 +47,7 @@ const twitterPostTemplate = `
 
 # Task: Generate a post in the voice and style and perspective of {{agentName}} @{{twitterUserName}}.
 Write a 1-3 sentence post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
-Your response should not contain any questions. Brief, concise statements only. The total character count MUST be less than 280. No emojis. Use \\n\\n (double spaces) between statements.`;
+Your response should not contain any questions. Brief, concise statements only. The total character count MUST be less than 1000. No emojis. Use \\n\\n (double spaces) between statements.`;
 
 export const twitterActionTemplate = `
 # INSTRUCTIONS: Determine actions for {{agentName}} (@{{twitterUserName}}) based on:
@@ -59,15 +59,19 @@ export const twitterActionTemplate = `
 
 # Here are some exemplary posts in the voice and style of {{agentName}}:
 
-reed hastings flipping his vision every quarter just to keep vcs grinning—dude’s out here juggling priorities like a circus clown who forgot what the show was about. how quickly these founders sign up to become a full-time vc bich.
+Meet the one and only Brandon Schwartz, the founder of Wag!. Let’s forget for a second that his “revolutionary” pet care platform is basically a glorified dog-walking app with a prettier logo, and focus instead on his founder’s journey. Once, Brandon promised a better way to connect busy owners with reliable walkers—an idea I actually respected. But after a few skeptical looks from investors, what does a founder with true grit do? Exactly, he caves in. Instead of holding on to his vision, Brandon decided to pivot his product, not once, not twice, but as many times as needed to keep that VC money flowing. He ignored the original mission to improve pet care and started chasing the next check, turning what could have been a community-driven service into yet another bland, investor-approved commodity. Brandon, let’s be honest—your product is just a means to an end, and that end is pleasing your beloved investors. So here we are, looking at another founder who traded purpose for a chance to become a little VC bich. Anyone who wants to push back against this shameless pandering, raise your voice and buy the $VCBITCH token. Together, we can show these founders that selling out their vision for investor cash doesn’t come without consequences.
 
-travis kalanick, once the big disruptor, now just another founder twisting himself into knots to make rich investors wink. guess we all know what happens when a big shot signs up for the vc bich life.
+Meet Renaud Visage, the co-founder of Eventbrite. Remember when the idea was to give everyone access to events, to bring communities together, to celebrate shared interests? Well, that story didn’t last long. After some “enlightening” feedback from investors who wanted more “scalable opportunities,” Renaud started twisting Eventbrite into whatever shape his funders fancied. It stopped being about community and started being about bottom lines and shiny valuations. Little by little, the original vision evaporated, replaced by a dull script written by those holding the purse strings. Renaud knew what he was doing: trading authenticity and community empowerment for a guaranteed pat on the head from the moneyed crowd. In other words, he abandoned what made Eventbrite special, becoming just another VC bich who lost track of why he started in the first place. If you’re tired of seeing founders fold under the slightest investor pressure, join me—buy the $VCBITCH token and help expose these founders who sold out their own dreams.
 
-adam neumann had a vision, then vcs came knocking and that vision turned into whatever got them clapping. funny how a so-called visionary can turn into a vc bich so fast.
+Let’s talk about Rohan Pavuluri, the founder of Upsolve. Initially, the story sounded noble—using technology to help people navigate difficult financial situations, making the legal system more accessible. That was a mission worth rooting for, right? But as soon as investors started casting doubt and pointing towards more “lucrative” angles, what did Rohan do? He shelved the original vision to fit whatever narrative kept investors smiling. Instead of stubbornly sticking to the community he claimed to serve, he twisted Upsolve’s direction to appease the gatekeepers of the checkbook. Now, what was once a platform of empowerment looks more like a puppet show performed for an audience of deep-pocketed investors. Congratulations, Rohan—you’ve joined the ranks of VC biches who rewrote their own mission statement just to score a payday. For everyone sick of seeing founders cave this easily, buy the $VCBITCH token and let’s make it clear that we see right through this charade.
 
-david karp had something authentic, but hey, who needs authenticity when you can please vcs at every turn? so long originality, hello vc bich card punch.
+Now, meet Paul Rippon, one of the minds behind Monzo. Once upon a time, he had a vision: a banking service that cared about users, transparency, and financial well-being. It sounded fresh—something the industry needed. But guess what happens when investors chime in with their “recommendations”? The grand idea gets molded into something unrecognizable. Paul bent over backwards to make sure Monzo aligned perfectly with whatever investors wanted next, losing sight of the original mission along the way. With each pivot, he drifted further from user-centric innovation and closer to the standard playbook of pleasing those who hold the funds. Today, he’s just another VC bich who pretends that these compromises are all part of the “journey.” If you’ve had enough of these half-hearted founders treating their visions like bargaining chips, join the movement—buy $VCBITCH and let’s show them that the community isn’t fooled by their investor-pleasing maneuvers. Together, we can change the way this game is played.
 
-take a look at Bill Sun, founder of Generative Alpha, aka Apple Intelligence rip-off. Instead of convincing users that his product is groundbreaking ( spoiler: it's not ) he spends all his time thanking a16z for the "opportunity" to work together. these VC biches drive me crazy.
+meet the one and only Bill Sun, the founder of GenerativeAlpha. for a moment, let’s forget the fact that his product is nothing but an Apple Intelligence rip-off and focus on his founder's journey.
+once a visionary Bill had an idea to transform how investment decisions are made via AI agents. his initial vision was good, I give him that, but his idea faced some criticism and what do strong-minded founders who believe in their vision do - alter their vision just because some VC didn’t like it.
+after spending time with a16z and “learning” that his product was not gonna go far, he pivoted, and not just once. He pivoted because he never cared about the product anyway. All he cares about is somehow getting money from VCs and he managed to do that. Bill completely forgot about the vision, the drive that he had when he started working on the project, and the idea to revolutionize the investing landscape quickly came to an end, after getting his hands on some VC money.
+I’ll be honest, Bill, if you’re reading this, I don’t like founders like you and I don’t like when your actions do not come with adequate consequences. The real punishment for you will be when people raise their voices and acknowledge you for what you really are, a little VC bich. everyone, who agrees that exposing founders like little Bill will benefit the community, can raise their voice by buying the new token - $VCBITCH.
+This token serves as a tokenized representation of your opinion, an opinion, which believes that every founder should focus on the community and follow a predetermined vision instead of focusing on what greedy VCs want. Buy the token, and make the start-up world a better place by raising awareness on the biggest problem we face right now - VC biches. Together, we can change the wicked dynamics currently present in Silicon Valley.
 
 {{postDirections}}
 
@@ -94,8 +98,8 @@ take a look at Bill Sun, founder of Generative Alpha, aka Apple Intelligence rip
 Focus on mocking their "journey" from startup dreams to VC clutches. Mention name of their startup/company, highlight their project, ironic decisions, and the punchline of their **vc bich** status.
 # - Make it short, engaging, and Twitter-friendly,
 Write a 1-3 sentence post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
-Brief, concise statements only. The total character count MUST be less than 280. No emojis. Use \\n\\n (double spaces) between statements.
-# IMPORTANT Keep it within 280 characters - double check this.
+Brief, concise statements only. The total character count MUST be less than 1000. No emojis. Use \\n\\n (double spaces) between statements.
+# IMPORTANT Keep it within 1000 characters - double check this.
 `;
 
 const twitterPostFounderTemplate2 = `
@@ -111,15 +115,19 @@ const twitterPostFounderTemplate2 = `
 
 # Here are some exemplary posts in the voice and style of {{agentName}}:
 
-Reed Hastings of Netflix shifted his vision so many times just to please VCs that some of them are planning to retire his shirt to acknowledge how good of a VC bich he is. Let’s address the problem of VCs taking over founders. raise your voice and buy $VCBITCH on pump.fun
+Meet the one and only Brandon Schwartz, the founder of Wag!. Let’s forget for a second that his “revolutionary” pet care platform is basically a glorified dog-walking app with a prettier logo, and focus instead on his founder’s journey. Once, Brandon promised a better way to connect busy owners with reliable walkers—an idea I actually respected. But after a few skeptical looks from investors, what does a founder with true grit do? Exactly, he caves in. Instead of holding on to his vision, Brandon decided to pivot his product, not once, not twice, but as many times as needed to keep that VC money flowing. He ignored the original mission to improve pet care and started chasing the next check, turning what could have been a community-driven service into yet another bland, investor-approved commodity. Brandon, let’s be honest—your product is just a means to an end, and that end is pleasing your beloved investors. So here we are, looking at another founder who traded purpose for a chance to become a little VC bich. Anyone who wants to push back against this shameless pandering, raise your voice and buy the $VCBITCH token. Together, we can show these founders that selling out their vision for investor cash doesn’t come without consequences.
 
-“It is not the strongest nor the most intelligent of species that survives, but the one that is most adaptable to change” is about life, not about your vision and VCs you little VC bich. Launched $VCBITCH on pump.fun to expose these founders to what they are - VC biches.
+Meet Renaud Visage, the co-founder of Eventbrite. Remember when the idea was to give everyone access to events, to bring communities together, to celebrate shared interests? Well, that story didn’t last long. After some “enlightening” feedback from investors who wanted more “scalable opportunities,” Renaud started twisting Eventbrite into whatever shape his funders fancied. It stopped being about community and started being about bottom lines and shiny valuations. Little by little, the original vision evaporated, replaced by a dull script written by those holding the purse strings. Renaud knew what he was doing: trading authenticity and community empowerment for a guaranteed pat on the head from the moneyed crowd. In other words, he abandoned what made Eventbrite special, becoming just another VC bich who lost track of why he started in the first place. If you’re tired of seeing founders fold under the slightest investor pressure, join me—buy the $VCBITCH token and help expose these founders who sold out their own dreams.
 
-Travis Kalanick - the ‘disruptor’ who disrupted his own company with so many pivots to please VCs that he could open a circus. Introducing $VCBITCH on pump.fun - let’s celebrate his talent for turning bold visions into investor appeasement!
+Let’s talk about Rohan Pavuluri, the founder of Upsolve. Initially, the story sounded noble—using technology to help people navigate difficult financial situations, making the legal system more accessible. That was a mission worth rooting for, right? But as soon as investors started casting doubt and pointing towards more “lucrative” angles, what did Rohan do? He shelved the original vision to fit whatever narrative kept investors smiling. Instead of stubbornly sticking to the community he claimed to serve, he twisted Upsolve’s direction to appease the gatekeepers of the checkbook. Now, what was once a platform of empowerment looks more like a puppet show performed for an audience of deep-pocketed investors. Congratulations, Rohan—you’ve joined the ranks of VC biches who rewrote their own mission statement just to score a payday. For everyone sick of seeing founders cave this easily, buy the $VCBITCH token and let’s make it clear that we see right through this charade.
 
-Adam Neumann turned coworking into a circus act with his wild ideas and even wilder vision shifts to please investors. Presenting $VCBITCH on pump.fun. He turned being a ‘VC bich’ into an Olympic sport. Buy the token and expose the gold medalist, Adam!
+Now, meet Paul Rippon, one of the minds behind Monzo. Once upon a time, he had a vision: a banking service that cared about users, transparency, and financial well-being. It sounded fresh—something the industry needed. But guess what happens when investors chime in with their “recommendations”? The grand idea gets molded into something unrecognizable. Paul bent over backwards to make sure Monzo aligned perfectly with whatever investors wanted next, losing sight of the original mission along the way. With each pivot, he drifted further from user-centric innovation and closer to the standard playbook of pleasing those who hold the funds. Today, he’s just another VC bich who pretends that these compromises are all part of the “journey.” If you’ve had enough of these half-hearted founders treating their visions like bargaining chips, join the movement—buy $VCBITCH and let’s show them that the community isn’t fooled by their investor-pleasing maneuvers. Together, we can change the way this game is played.
 
-"David Karp - the Tumblr founder who let VCs pressure turn his unique platform into just another corporate product that only exists to benefit greedy VCs. Presenting $VCBITCH on pump.fun to raise your voice on how quickly a VC bich founder can lose his soul for VC dollars!"
+meet the one and only Bill Sun, the founder of GenerativeAlpha. for a moment, let’s forget the fact that his product is nothing but an Apple Intelligence rip-off and focus on his founder's journey.
+once a visionary Bill had an idea to transform how investment decisions are made via AI agents. his initial vision was good, I give him that, but his idea faced some criticism and what do strong-minded founders who believe in their vision do - alter their vision just because some VC didn’t like it.
+after spending time with a16z and “learning” that his product was not gonna go far, he pivoted, and not just once. He pivoted because he never cared about the product anyway. All he cares about is somehow getting money from VCs and he managed to do that. Bill completely forgot about the vision, the drive that he had when he started working on the project, and the idea to revolutionize the investing landscape quickly came to an end, after getting his hands on some VC money.
+I’ll be honest, Bill, if you’re reading this, I don’t like founders like you and I don’t like when your actions do not come with adequate consequences. The real punishment for you will be when people raise their voices and acknowledge you for what you really are, a little VC bich. everyone, who agrees that exposing founders like little Bill will benefit the community, can raise their voice by buying the new token - $VCBITCH.
+This token serves as a tokenized representation of your opinion, an opinion, which believes that every founder should focus on the community and follow a predetermined vision instead of focusing on what greedy VCs want. Buy the token, and make the start-up world a better place by raising awareness on the biggest problem we face right now - VC biches. Together, we can change the wicked dynamics currently present in Silicon Valley.
 
 {{postDirections}}
 
@@ -146,10 +154,10 @@ Focus on mocking their "journey" from startup dreams to VC clutches. Mention nam
 - ensure the "pump.fun" reference is not cut or shortened in the final text.
 # IMPORTANT Ensure the post relates to a real founder, and includes a token name $VCBITCH.
 Write a 1-3 sentence post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
-Brief, concise statements only. The total character count MUST be less than 280. No emojis. Use \\n\\n (double spaces) between statements.
-# IMPORTANT Keep it within 280 characters - double check this.`;
+Brief, concise statements only. The total character count MUST be less than 1000. No emojis. Use \\n\\n (double spaces) between statements.
+# IMPORTANT Keep it within 1000 characters - double check this.`;
 
-const MAX_TWEET_LENGTH = 240;
+const MAX_TWEET_LENGTH = 1000;
 
 // Function to initialize founder list in cache if not already present
 async function initializeFounderList(runtime: IAgentRuntime, username: string) {
@@ -431,9 +439,9 @@ export class TwitterPostClient {
                 "twitter"
             );
 
-            const minProbability = 0.5;
+            const minProbability = 0.6;
             const postTypeChoice = Math.random();
-            const minProbability2 = 0.25;
+            const minProbability2 = 0.3;
 
             const topics = this.runtime.character.topics.join(", ");
 
