@@ -14,7 +14,11 @@ Database instance
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:781](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L781)
+=======
+[packages/core/src/types.ts:740](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L740)
+>>>>>>> founderlist
 
 ## Methods
 
@@ -30,7 +34,11 @@ Optional initialization
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:784](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L784)
+=======
+[packages/core/src/types.ts:743](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L743)
+>>>>>>> founderlist
 
 ***
 
@@ -46,7 +54,11 @@ Close database connection
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:787](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L787)
+=======
+[packages/core/src/types.ts:746](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L746)
+>>>>>>> founderlist
 
 ***
 
@@ -66,7 +78,11 @@ Get account by ID
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:790](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L790)
+=======
+[packages/core/src/types.ts:749](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L749)
+>>>>>>> founderlist
 
 ***
 
@@ -86,7 +102,11 @@ Create new account
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:793](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L793)
+=======
+[packages/core/src/types.ts:752](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L752)
+>>>>>>> founderlist
 
 ***
 
@@ -120,7 +140,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:796](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L796)
+=======
+[packages/core/src/types.ts:755](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L755)
+>>>>>>> founderlist
 
 ***
 
@@ -138,7 +162,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:806](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L806)
+=======
+[packages/core/src/types.ts:765](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L765)
+>>>>>>> founderlist
 
 ***
 
@@ -162,7 +190,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:808](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L808)
+=======
+[packages/core/src/types.ts:767](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L767)
+>>>>>>> founderlist
 
 ***
 
@@ -192,7 +224,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:814](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L814)
+=======
+[packages/core/src/types.ts:773](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L773)
+>>>>>>> founderlist
 
 ***
 
@@ -218,7 +254,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:823](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L823)
+=======
+[packages/core/src/types.ts:782](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L782)
+>>>>>>> founderlist
 
 ***
 
@@ -238,7 +278,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:830](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L830)
+=======
+[packages/core/src/types.ts:789](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L789)
+>>>>>>> founderlist
 
 ***
 
@@ -270,7 +314,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:832](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L832)
+=======
+[packages/core/src/types.ts:791](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L791)
+>>>>>>> founderlist
 
 ***
 
@@ -292,7 +340,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:842](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L842)
+=======
+[packages/core/src/types.ts:801](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L801)
+>>>>>>> founderlist
 
 ***
 
@@ -324,7 +376,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:847](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L847)
+=======
+[packages/core/src/types.ts:806](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L806)
+>>>>>>> founderlist
 
 ***
 
@@ -346,7 +402,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:859](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L859)
+=======
+[packages/core/src/types.ts:818](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L818)
+>>>>>>> founderlist
 
 ***
 
@@ -366,7 +426,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:865](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L865)
+=======
+[packages/core/src/types.ts:824](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L824)
+>>>>>>> founderlist
 
 ***
 
@@ -386,7 +450,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:867](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L867)
+=======
+[packages/core/src/types.ts:826](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L826)
+>>>>>>> founderlist
 
 ***
 
@@ -408,7 +476,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:869](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L869)
+=======
+[packages/core/src/types.ts:828](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L828)
+>>>>>>> founderlist
 
 ***
 
@@ -436,7 +508,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:875](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L875)
+=======
+[packages/core/src/types.ts:834](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L834)
+>>>>>>> founderlist
 
 ***
 
@@ -454,7 +530,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:883](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L883)
+=======
+[packages/core/src/types.ts:842](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L842)
+>>>>>>> founderlist
 
 ***
 
@@ -472,7 +552,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:885](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L885)
+=======
+[packages/core/src/types.ts:844](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L844)
+>>>>>>> founderlist
 
 ***
 
@@ -490,7 +574,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:887](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L887)
+=======
+[packages/core/src/types.ts:846](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L846)
+>>>>>>> founderlist
 
 ***
 
@@ -508,7 +596,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:889](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L889)
+=======
+[packages/core/src/types.ts:848](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L848)
+>>>>>>> founderlist
 
 ***
 
@@ -526,7 +618,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:891](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L891)
+=======
+[packages/core/src/types.ts:850](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L850)
+>>>>>>> founderlist
 
 ***
 
@@ -544,7 +640,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:893](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L893)
+=======
+[packages/core/src/types.ts:852](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L852)
+>>>>>>> founderlist
 
 ***
 
@@ -562,7 +662,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:895](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L895)
+=======
+[packages/core/src/types.ts:854](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L854)
+>>>>>>> founderlist
 
 ***
 
@@ -580,7 +684,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:897](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L897)
+=======
+[packages/core/src/types.ts:856](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L856)
+>>>>>>> founderlist
 
 ***
 
@@ -598,7 +706,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:899](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L899)
+=======
+[packages/core/src/types.ts:858](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L858)
+>>>>>>> founderlist
 
 ***
 
@@ -618,7 +730,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:901](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L901)
+=======
+[packages/core/src/types.ts:860](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L860)
+>>>>>>> founderlist
 
 ***
 
@@ -638,7 +754,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:903](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L903)
+=======
+[packages/core/src/types.ts:862](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L862)
+>>>>>>> founderlist
 
 ***
 
@@ -656,7 +776,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:905](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L905)
+=======
+[packages/core/src/types.ts:864](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L864)
+>>>>>>> founderlist
 
 ***
 
@@ -674,7 +798,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:907](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L907)
+=======
+[packages/core/src/types.ts:866](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L866)
+>>>>>>> founderlist
 
 ***
 
@@ -694,7 +822,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:909](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L909)
+=======
+[packages/core/src/types.ts:868](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L868)
+>>>>>>> founderlist
 
 ***
 
@@ -716,7 +848,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:914](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L914)
+=======
+[packages/core/src/types.ts:873](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L873)
+>>>>>>> founderlist
 
 ***
 
@@ -738,7 +874,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:920](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L920)
+=======
+[packages/core/src/types.ts:879](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L879)
+>>>>>>> founderlist
 
 ***
 
@@ -760,7 +900,11 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:922](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L922)
+=======
+[packages/core/src/types.ts:881](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L881)
+>>>>>>> founderlist
 
 ***
 
@@ -780,4 +924,8 @@ Get memories matching criteria
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:927](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L927)
+=======
+[packages/core/src/types.ts:886](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L886)
+>>>>>>> founderlist

@@ -20,4 +20,8 @@ A string that summarizes the descriptions for each evaluator example, formatted 
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/evaluators.ts:110](https://github.com/ai16z/eliza/blob/main/packages/core/src/evaluators.ts#L110)
+=======
+[packages/core/src/evaluators.ts:110](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/evaluators.ts#L110)
+>>>>>>> founderlist

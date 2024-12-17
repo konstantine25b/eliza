@@ -26,4 +26,8 @@
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/generation.ts:1175](https://github.com/ai16z/eliza/blob/main/packages/core/src/generation.ts#L1175)
+=======
+[packages/core/src/generation.ts:998](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/generation.ts#L998)
+>>>>>>> founderlist

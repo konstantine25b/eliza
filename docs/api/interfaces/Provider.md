@@ -26,4 +26,8 @@ Data retrieval function
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:465](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L465)
+=======
+[packages/core/src/types.ts:459](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L459)
+>>>>>>> founderlist

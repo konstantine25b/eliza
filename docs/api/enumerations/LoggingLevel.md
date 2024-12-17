@@ -10,7 +10,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:1213](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L1213)
+=======
+[packages/core/src/types.ts:1149](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L1149)
+>>>>>>> founderlist
 
 ***
 
@@ -20,7 +24,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:1214](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L1214)
+=======
+[packages/core/src/types.ts:1150](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L1150)
+>>>>>>> founderlist
 
 ***
 
@@ -30,4 +38,8 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:1215](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L1215)
+=======
+[packages/core/src/types.ts:1151](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L1151)
+>>>>>>> founderlist

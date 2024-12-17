@@ -12,7 +12,11 @@ Available client platforms
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:610](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L610)
+=======
+[packages/core/src/types.ts:601](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L601)
+>>>>>>> founderlist
 
 ***
 
@@ -22,7 +26,11 @@ Available client platforms
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:611](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L611)
+=======
+[packages/core/src/types.ts:602](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L602)
+>>>>>>> founderlist
 
 ***
 
@@ -32,7 +40,11 @@ Available client platforms
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:612](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L612)
+=======
+[packages/core/src/types.ts:603](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L603)
+>>>>>>> founderlist
 
 ***
 
@@ -42,6 +54,7 @@ Available client platforms
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:613](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L613)
 
 ***
@@ -83,3 +96,6 @@ Available client platforms
 #### Defined in
 
 [packages/core/src/types.ts:617](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L617)
+=======
+[packages/core/src/types.ts:604](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L604)
+>>>>>>> founderlist

@@ -14,7 +14,11 @@ UUID of user in conversation
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:50](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L50)
+=======
+[packages/core/src/types.ts:50](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L50)
+>>>>>>> founderlist
 
 ***
 
@@ -26,4 +30,8 @@ Content of the conversation
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:53](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L53)
+=======
+[packages/core/src/types.ts:53](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L53)
+>>>>>>> founderlist

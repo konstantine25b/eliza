@@ -20,4 +20,8 @@ Validator function type for actions/evaluators
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:391](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L391)
+=======
+[packages/core/src/types.ts:385](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L385)
+>>>>>>> founderlist

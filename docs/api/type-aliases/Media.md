@@ -52,4 +52,8 @@ Content type
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:546](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L546)
+=======
+[packages/core/src/types.ts:540](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L540)
+>>>>>>> founderlist

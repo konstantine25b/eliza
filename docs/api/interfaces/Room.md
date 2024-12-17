@@ -14,7 +14,11 @@ Unique identifier
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:537](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L537)
+=======
+[packages/core/src/types.ts:531](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L531)
+>>>>>>> founderlist
 
 ***
 
@@ -26,4 +30,8 @@ Room participants
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:540](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L540)
+=======
+[packages/core/src/types.ts:534](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L534)
+>>>>>>> founderlist

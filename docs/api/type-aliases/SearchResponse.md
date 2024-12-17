@@ -32,4 +32,8 @@
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:1189](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L1189)
+=======
+[packages/core/src/types.ts:1128](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L1128)
+>>>>>>> founderlist

@@ -22,7 +22,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:931](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L931)
+=======
+[packages/core/src/types.ts:890](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L890)
+>>>>>>> founderlist
 
 ***
 
@@ -46,7 +50,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:936](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L936)
+=======
+[packages/core/src/types.ts:895](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L895)
+>>>>>>> founderlist
 
 ***
 
@@ -68,4 +76,8 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:942](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L942)
+=======
+[packages/core/src/types.ts:901](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L901)
+>>>>>>> founderlist

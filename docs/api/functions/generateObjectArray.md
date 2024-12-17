@@ -20,4 +20,8 @@
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/generation.ts:836](https://github.com/ai16z/eliza/blob/main/packages/core/src/generation.ts#L836)
+=======
+[packages/core/src/generation.ts:711](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/generation.ts#L711)
+>>>>>>> founderlist

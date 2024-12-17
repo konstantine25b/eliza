@@ -424,4 +424,8 @@ Optional NFT prompt
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:627](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L627)
+=======
+[packages/core/src/types.ts:609](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L609)
+>>>>>>> founderlist

@@ -20,4 +20,8 @@ Get details for a list of actors.
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/messages.ts:12](https://github.com/ai16z/eliza/blob/main/packages/core/src/messages.ts#L12)
+=======
+[packages/core/src/messages.ts:12](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/messages.ts#L12)
+>>>>>>> founderlist

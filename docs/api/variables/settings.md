@@ -8,4 +8,8 @@ Initialize settings based on environment
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/settings.ts:126](https://github.com/ai16z/eliza/blob/main/packages/core/src/settings.ts#L126)
+=======
+[packages/core/src/settings.ts:126](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/settings.ts#L126)
+>>>>>>> founderlist

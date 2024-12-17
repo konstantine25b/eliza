@@ -6,4 +6,8 @@
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/defaultCharacter.ts:3](https://github.com/ai16z/eliza/blob/main/packages/core/src/defaultCharacter.ts#L3)
+=======
+[packages/core/src/defaultCharacter.ts:3](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/defaultCharacter.ts#L3)
+>>>>>>> founderlist

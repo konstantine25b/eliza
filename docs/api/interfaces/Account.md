@@ -14,7 +14,11 @@ Unique identifier
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:503](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L503)
+=======
+[packages/core/src/types.ts:497](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L497)
+>>>>>>> founderlist
 
 ***
 
@@ -26,7 +30,11 @@ Display name
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:506](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L506)
+=======
+[packages/core/src/types.ts:500](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L500)
+>>>>>>> founderlist
 
 ***
 
@@ -38,7 +46,11 @@ Username
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:509](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L509)
+=======
+[packages/core/src/types.ts:503](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L503)
+>>>>>>> founderlist
 
 ***
 
@@ -54,7 +66,11 @@ Optional additional details
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:512](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L512)
+=======
+[packages/core/src/types.ts:506](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L506)
+>>>>>>> founderlist
 
 ***
 
@@ -66,7 +82,11 @@ Optional email
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:515](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L515)
+=======
+[packages/core/src/types.ts:509](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L509)
+>>>>>>> founderlist
 
 ***
 
@@ -78,4 +98,8 @@ Optional avatar URL
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:518](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L518)
+=======
+[packages/core/src/types.ts:512](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L512)
+>>>>>>> founderlist

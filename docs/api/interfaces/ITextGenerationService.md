@@ -24,7 +24,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:1009](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L1009)
+=======
+[packages/core/src/types.ts:968](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L968)
+>>>>>>> founderlist
 
 ## Methods
 
@@ -48,7 +52,11 @@ Add abstract initialize method that must be implemented by derived classes
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:1014](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L1014)
+=======
+[packages/core/src/types.ts:973](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L973)
+>>>>>>> founderlist
 
 ***
 
@@ -62,7 +70,11 @@ Add abstract initialize method that must be implemented by derived classes
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:1129](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L1129)
+=======
+[packages/core/src/types.ts:1082](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L1082)
+>>>>>>> founderlist
 
 ***
 
@@ -90,7 +102,11 @@ Add abstract initialize method that must be implemented by derived classes
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:1130](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L1130)
+=======
+[packages/core/src/types.ts:1083](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L1083)
+>>>>>>> founderlist
 
 ***
 
@@ -118,7 +134,11 @@ Add abstract initialize method that must be implemented by derived classes
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:1138](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L1138)
+=======
+[packages/core/src/types.ts:1091](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L1091)
+>>>>>>> founderlist
 
 ***
 
@@ -136,4 +156,8 @@ Add abstract initialize method that must be implemented by derived classes
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:1146](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L1146)
+=======
+[packages/core/src/types.ts:1099](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L1099)
+>>>>>>> founderlist

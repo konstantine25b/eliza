@@ -52,4 +52,8 @@ Optional clients
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:583](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L583)
+=======
+[packages/core/src/types.ts:574](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L574)
+>>>>>>> founderlist

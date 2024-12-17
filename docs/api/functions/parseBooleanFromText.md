@@ -14,4 +14,8 @@
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/parsing.ts:37](https://github.com/ai16z/eliza/blob/main/packages/core/src/parsing.ts#L37)
+=======
+[packages/core/src/parsing.ts:36](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/parsing.ts#L36)
+>>>>>>> founderlist

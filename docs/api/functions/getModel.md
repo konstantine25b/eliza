@@ -16,4 +16,8 @@
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/models.ts:471](https://github.com/ai16z/eliza/blob/main/packages/core/src/models.ts#L471)
+=======
+[packages/core/src/models.ts:389](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/models.ts#L389)
+>>>>>>> founderlist

@@ -24,4 +24,8 @@ Add the embedding configuration
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/embedding.ts:18](https://github.com/ai16z/eliza/blob/main/packages/core/src/embedding.ts#L18)
+=======
+[packages/core/src/embedding.ts:18](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/embedding.ts#L18)
+>>>>>>> founderlist

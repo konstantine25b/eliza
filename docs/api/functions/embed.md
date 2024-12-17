@@ -28,4 +28,8 @@ If the API request fails
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/embedding.ts:145](https://github.com/ai16z/eliza/blob/main/packages/core/src/embedding.ts#L145)
+=======
+[packages/core/src/embedding.ts:145](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/embedding.ts#L145)
+>>>>>>> founderlist

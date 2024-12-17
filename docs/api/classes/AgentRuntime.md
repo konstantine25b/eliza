@@ -83,7 +83,11 @@ Custom fetch function to use for making requests.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:209](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L209)
+=======
+[packages/core/src/runtime.ts:208](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L208)
+>>>>>>> founderlist
 
 ## Properties
 
@@ -99,7 +103,11 @@ The ID of the agent
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:63](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L63)
+=======
+[packages/core/src/runtime.ts:63](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L63)
+>>>>>>> founderlist
 
 ***
 
@@ -115,7 +123,11 @@ The base URL of the server where the agent's requests are processed.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:67](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L67)
+=======
+[packages/core/src/runtime.ts:67](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L67)
+>>>>>>> founderlist
 
 ***
 
@@ -131,7 +143,11 @@ The database adapter used for interacting with the database.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:72](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L72)
+=======
+[packages/core/src/runtime.ts:72](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L72)
+>>>>>>> founderlist
 
 ***
 
@@ -147,7 +163,11 @@ Authentication token used for securing requests.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:77](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L77)
+=======
+[packages/core/src/runtime.ts:77](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L77)
+>>>>>>> founderlist
 
 ***
 
@@ -163,7 +183,11 @@ Custom actions that the agent can perform.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:82](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L82)
+=======
+[packages/core/src/runtime.ts:82](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L82)
+>>>>>>> founderlist
 
 ***
 
@@ -179,7 +203,11 @@ Evaluators used to assess and guide the agent's responses.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:87](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L87)
+=======
+[packages/core/src/runtime.ts:87](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L87)
+>>>>>>> founderlist
 
 ***
 
@@ -195,7 +223,11 @@ Context providers used to provide context for message generation.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:92](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L92)
+=======
+[packages/core/src/runtime.ts:92](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L92)
+>>>>>>> founderlist
 
 ***
 
@@ -209,7 +241,11 @@ Context providers used to provide context for message generation.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:94](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L94)
+=======
+[packages/core/src/runtime.ts:94](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L94)
+>>>>>>> founderlist
 
 ***
 
@@ -225,7 +261,11 @@ The model to use for generateText.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:99](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L99)
+=======
+[packages/core/src/runtime.ts:99](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L99)
+>>>>>>> founderlist
 
 ***
 
@@ -241,7 +281,11 @@ The model to use for generateImage.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:104](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L104)
+=======
+[packages/core/src/runtime.ts:104](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L104)
+>>>>>>> founderlist
 
 ***
 
@@ -270,7 +314,11 @@ Some environments may not have access to the global fetch function and need a cu
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:110](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L110)
+=======
+[packages/core/src/runtime.ts:110](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L110)
+>>>>>>> founderlist
 
 ***
 
@@ -286,7 +334,11 @@ The character to use for the agent
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:115](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L115)
+=======
+[packages/core/src/runtime.ts:115](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L115)
+>>>>>>> founderlist
 
 ***
 
@@ -302,7 +354,11 @@ Store messages that are sent and received by the agent.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:120](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L120)
+=======
+[packages/core/src/runtime.ts:120](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L120)
+>>>>>>> founderlist
 
 ***
 
@@ -318,7 +374,11 @@ Store and recall descriptions of users based on conversations.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:125](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L125)
+=======
+[packages/core/src/runtime.ts:125](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L125)
+>>>>>>> founderlist
 
 ***
 
@@ -334,7 +394,11 @@ Manage the creation and recall of static information (documents, historical game
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:130](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L130)
+=======
+[packages/core/src/runtime.ts:130](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L130)
+>>>>>>> founderlist
 
 ***
 
@@ -350,7 +414,11 @@ Hold large documents that can be referenced
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:135](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L135)
+=======
+[packages/core/src/runtime.ts:135](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L135)
+>>>>>>> founderlist
 
 ***
 
@@ -366,7 +434,11 @@ Searchable document fragments
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:140](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L140)
+=======
+[packages/core/src/runtime.ts:140](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L140)
+>>>>>>> founderlist
 
 ***
 
@@ -380,7 +452,11 @@ Searchable document fragments
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:142](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L142)
+=======
+[packages/core/src/runtime.ts:142](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L142)
+>>>>>>> founderlist
 
 ***
 
@@ -390,7 +466,11 @@ Searchable document fragments
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:143](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L143)
+=======
+[packages/core/src/runtime.ts:143](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L143)
+>>>>>>> founderlist
 
 ***
 
@@ -404,6 +484,7 @@ Searchable document fragments
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:144](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L144)
 
 ***
@@ -422,6 +503,9 @@ but I think the real solution is forthcoming as a base client interface
 #### Defined in
 
 [packages/core/src/runtime.ts:145](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L145)
+=======
+[packages/core/src/runtime.ts:144](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L144)
+>>>>>>> founderlist
 
 ## Methods
 
@@ -443,7 +527,11 @@ but I think the real solution is forthcoming as a base client interface
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:147](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L147)
+=======
+[packages/core/src/runtime.ts:146](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L146)
+>>>>>>> founderlist
 
 ***
 
@@ -465,7 +553,11 @@ but I think the real solution is forthcoming as a base client interface
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:162](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L162)
+=======
+[packages/core/src/runtime.ts:161](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L161)
+>>>>>>> founderlist
 
 ***
 
@@ -491,7 +583,11 @@ but I think the real solution is forthcoming as a base client interface
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:166](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L166)
+=======
+[packages/core/src/runtime.ts:165](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L165)
+>>>>>>> founderlist
 
 ***
 
@@ -513,7 +609,11 @@ but I think the real solution is forthcoming as a base client interface
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:175](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L175)
+=======
+[packages/core/src/runtime.ts:174](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L174)
+>>>>>>> founderlist
 
 ***
 
@@ -531,6 +631,7 @@ but I think the real solution is forthcoming as a base client interface
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:376](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L376)
 
 ***
@@ -546,6 +647,9 @@ but I think the real solution is forthcoming as a base client interface
 #### Defined in
 
 [packages/core/src/runtime.ts:409](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L409)
+=======
+[packages/core/src/runtime.ts:375](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L375)
+>>>>>>> founderlist
 
 ***
 
@@ -567,7 +671,11 @@ but I think the real solution is forthcoming as a base client interface
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:459](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L459)
+=======
+[packages/core/src/runtime.ts:439](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L439)
+>>>>>>> founderlist
 
 ***
 
@@ -589,7 +697,11 @@ The number of recent messages to be kept in memory.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:481](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L481)
+=======
+[packages/core/src/runtime.ts:461](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L461)
+>>>>>>> founderlist
 
 ***
 
@@ -615,7 +727,11 @@ The action to register.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:489](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L489)
+=======
+[packages/core/src/runtime.ts:469](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L469)
+>>>>>>> founderlist
 
 ***
 
@@ -637,7 +753,11 @@ The evaluator to register.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:498](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L498)
+=======
+[packages/core/src/runtime.ts:478](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L478)
+>>>>>>> founderlist
 
 ***
 
@@ -659,7 +779,11 @@ The context provider to register.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:506](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L506)
+=======
+[packages/core/src/runtime.ts:486](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L486)
+>>>>>>> founderlist
 
 ***
 
@@ -691,7 +815,11 @@ The message to process.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:515](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L515)
+=======
+[packages/core/src/runtime.ts:495](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L495)
+>>>>>>> founderlist
 
 ***
 
@@ -731,7 +859,11 @@ The results of the evaluation.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:599](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L599)
+=======
+[packages/core/src/runtime.ts:572](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L572)
+>>>>>>> founderlist
 
 ***
 
@@ -763,7 +895,11 @@ An error if the participant cannot be added.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:666](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L666)
+=======
+[packages/core/src/runtime.ts:642](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L642)
+>>>>>>> founderlist
 
 ***
 
@@ -799,7 +935,11 @@ The user name to ensure the existence of.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:682](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L682)
+=======
+[packages/core/src/runtime.ts:658](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L658)
+>>>>>>> founderlist
 
 ***
 
@@ -823,7 +963,11 @@ The user name to ensure the existence of.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:702](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L702)
+=======
+[packages/core/src/runtime.ts:678](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L678)
+>>>>>>> founderlist
 
 ***
 
@@ -853,7 +997,11 @@ The user name to ensure the existence of.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:719](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L719)
+=======
+[packages/core/src/runtime.ts:695](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L695)
+>>>>>>> founderlist
 
 ***
 
@@ -884,7 +1032,11 @@ An error if the room cannot be created.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:755](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L755)
+=======
+[packages/core/src/runtime.ts:731](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L731)
+>>>>>>> founderlist
 
 ***
 
@@ -914,7 +1066,11 @@ The state of the agent.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:768](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L768)
+=======
+[packages/core/src/runtime.ts:744](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L744)
+>>>>>>> founderlist
 
 ***
 
@@ -936,4 +1092,8 @@ The state of the agent.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/runtime.ts:1214](https://github.com/ai16z/eliza/blob/main/packages/core/src/runtime.ts#L1214)
+=======
+[packages/core/src/runtime.ts:1190](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/runtime.ts#L1190)
+>>>>>>> founderlist

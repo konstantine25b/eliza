@@ -21,4 +21,8 @@ Path to the nearest .env file or null if not found
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/settings.ts:43](https://github.com/ai16z/eliza/blob/main/packages/core/src/settings.ts#L43)
+=======
+[packages/core/src/settings.ts:43](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/settings.ts#L43)
+>>>>>>> founderlist

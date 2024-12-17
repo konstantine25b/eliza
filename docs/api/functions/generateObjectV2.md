@@ -1,8 +1,8 @@
-[@ai16z/eliza v0.1.5-alpha.5](../index.md) / generateObject
+[@ai16z/eliza v0.1.5-alpha.3](../index.md) / generateObjectV2
 
-# Function: generateObject()
+# Function: generateObjectV2()
 
-> **generateObject**(`options`): `Promise`\<`GenerateObjectResult`\<`unknown`\>\>
+> **generateObjectV2**(`options`): `Promise`\<`GenerateObjectResult`\<`unknown`\>\>
 
 Generates structured objects from a prompt using specified AI models and configuration options.
 
@@ -24,8 +24,4 @@ Configuration options for generating objects.
 
 ## Defined in
 
-<<<<<<< HEAD
-[packages/core/src/generation.ts:1265](https://github.com/ai16z/eliza/blob/main/packages/core/src/generation.ts#L1265)
-=======
-[packages/core/src/generation.ts:675](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/generation.ts#L675)
->>>>>>> founderlist
+[packages/core/src/generation.ts:1088](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/generation.ts#L1088)

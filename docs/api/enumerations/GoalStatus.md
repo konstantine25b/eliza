@@ -12,7 +12,11 @@ Status enum for goals
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:100](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L100)
+=======
+[packages/core/src/types.ts:100](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L100)
+>>>>>>> founderlist
 
 ***
 
@@ -22,7 +26,11 @@ Status enum for goals
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:101](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L101)
+=======
+[packages/core/src/types.ts:101](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L101)
+>>>>>>> founderlist
 
 ***
 
@@ -32,4 +40,8 @@ Status enum for goals
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:102](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L102)
+=======
+[packages/core/src/types.ts:102](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L102)
+>>>>>>> founderlist

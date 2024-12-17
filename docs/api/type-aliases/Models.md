@@ -98,4 +98,8 @@ Model configurations by provider
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:188](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L188)
+=======
+[packages/core/src/types.ts:188](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L188)
+>>>>>>> founderlist

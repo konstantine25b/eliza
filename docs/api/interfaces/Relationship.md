@@ -14,7 +14,11 @@ Unique identifier
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:477](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L477)
+=======
+[packages/core/src/types.ts:471](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L471)
+>>>>>>> founderlist
 
 ***
 
@@ -26,7 +30,11 @@ First user ID
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:480](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L480)
+=======
+[packages/core/src/types.ts:474](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L474)
+>>>>>>> founderlist
 
 ***
 
@@ -38,7 +46,11 @@ Second user ID
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:483](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L483)
+=======
+[packages/core/src/types.ts:477](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L477)
+>>>>>>> founderlist
 
 ***
 
@@ -50,7 +62,11 @@ Primary user ID
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:486](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L486)
+=======
+[packages/core/src/types.ts:480](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L480)
+>>>>>>> founderlist
 
 ***
 
@@ -62,7 +78,11 @@ Associated room ID
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:489](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L489)
+=======
+[packages/core/src/types.ts:483](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L483)
+>>>>>>> founderlist
 
 ***
 
@@ -74,7 +94,11 @@ Relationship status
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:492](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L492)
+=======
+[packages/core/src/types.ts:486](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L486)
+>>>>>>> founderlist
 
 ***
 
@@ -86,4 +110,8 @@ Optional creation timestamp
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:495](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L495)
+=======
+[packages/core/src/types.ts:489](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L489)
+>>>>>>> founderlist

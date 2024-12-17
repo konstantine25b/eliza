@@ -20,4 +20,8 @@ Configuration options specific to the provider.
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/generation.ts:1350](https://github.com/ai16z/eliza/blob/main/packages/core/src/generation.ts#L1350)
+=======
+[packages/core/src/generation.ts:1173](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/generation.ts#L1173)
+>>>>>>> founderlist

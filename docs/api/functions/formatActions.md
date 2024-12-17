@@ -20,4 +20,8 @@ A detailed string of actions, including names and descriptions.
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/actions.ts:73](https://github.com/ai16z/eliza/blob/main/packages/core/src/actions.ts#L73)
+=======
+[packages/core/src/actions.ts:73](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/actions.ts#L73)
+>>>>>>> founderlist

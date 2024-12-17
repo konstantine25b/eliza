@@ -18,7 +18,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/cache.ts:11](https://github.com/ai16z/eliza/blob/main/packages/core/src/cache.ts#L11)
+=======
+[packages/core/src/cache.ts:11](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/cache.ts#L11)
+>>>>>>> founderlist
 
 ***
 
@@ -38,7 +42,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/cache.ts:12](https://github.com/ai16z/eliza/blob/main/packages/core/src/cache.ts#L12)
+=======
+[packages/core/src/cache.ts:12](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/cache.ts#L12)
+>>>>>>> founderlist
 
 ***
 
@@ -56,4 +64,8 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/cache.ts:13](https://github.com/ai16z/eliza/blob/main/packages/core/src/cache.ts#L13)
+=======
+[packages/core/src/cache.ts:13](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/cache.ts#L13)
+>>>>>>> founderlist

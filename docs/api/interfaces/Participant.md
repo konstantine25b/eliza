@@ -14,7 +14,11 @@ Unique identifier
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:526](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L526)
+=======
+[packages/core/src/types.ts:520](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L520)
+>>>>>>> founderlist
 
 ***
 
@@ -26,4 +30,8 @@ Associated account
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:529](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L529)
+=======
+[packages/core/src/types.ts:523](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L523)
+>>>>>>> founderlist

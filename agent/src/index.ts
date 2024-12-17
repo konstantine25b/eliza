@@ -39,18 +39,18 @@ import { DirectClient } from "@ai16z/client-direct";
 //     tradePlugin,
 //     webhookPlugin,
 // } from "@ai16z/plugin-coinbase";
-// import { confluxPlugin } from "@ai16z/plugin-conflux";
-// import { evmPlugin } from "@ai16z/plugin-evm";
+// // import { confluxPlugin } from "@ai16z/plugin-conflux";
+// // import { evmPlugin } from "@ai16z/plugin-evm";
 // import { storyPlugin } from "@ai16z/plugin-story";
 // import { flowPlugin } from "@ai16z/plugin-flow";
 // import { imageGenerationPlugin } from "@ai16z/plugin-image-generation";
-// import { multiversxPlugin } from "@ai16z/plugin-multiversx";
+// // import { multiversxPlugin } from "@ai16z/plugin-multiversx";
 // import { nearPlugin } from "@ai16z/plugin-near";
 // import { nftGenerationPlugin } from "@ai16z/plugin-nft-generation";
 import { createNodePlugin } from "@ai16z/plugin-node";
-// import { solanaPlugin } from "@ai16z/plugin-solana";
-// import { suiPlugin } from "@ai16z/plugin-sui";
-// import { TEEMode, teePlugin } from "@ai16z/plugin-tee";
+// // import { solanaPlugin } from "@ai16z/plugin-solana";
+// // import { suiPlugin } from "@ai16z/plugin-sui";
+// // import { TEEMode, teePlugin } from "@ai16z/plugin-tee";
 // import { tonPlugin } from "@ai16z/plugin-ton";
 // import { zksyncEraPlugin } from "@ai16z/plugin-zksync-era";
 import Database from "better-sqlite3";
@@ -482,6 +482,9 @@ export async function createAgent(
         // character.plugins are handled when clients are added
         plugins: [
             bootstrapPlugin,
+            // getSecret(character, "CONFLUX_CORE_PRIVATE_KEY")
+            //     ? confluxPlugin
+            //     : null,
             // getSecret(character, "CONFLUX_CORE_PRIVATE_KEY")
             //     ? confluxPlugin
             //     : null,

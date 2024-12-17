@@ -14,7 +14,11 @@ Optional unique identifier
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:87](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L87)
+=======
+[packages/core/src/types.ts:87](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L87)
+>>>>>>> founderlist
 
 ***
 
@@ -26,7 +30,11 @@ Description of what needs to be achieved
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:90](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L90)
+=======
+[packages/core/src/types.ts:90](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L90)
+>>>>>>> founderlist
 
 ***
 
@@ -38,4 +46,8 @@ Whether objective is completed
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:93](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L93)
+=======
+[packages/core/src/types.ts:93](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L93)
+>>>>>>> founderlist

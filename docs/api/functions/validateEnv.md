@@ -12,4 +12,8 @@ Validation function
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/environment.ts:26](https://github.com/ai16z/eliza/blob/main/packages/core/src/environment.ts#L26)
+=======
+[packages/core/src/environment.ts:26](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/environment.ts#L26)
+>>>>>>> founderlist

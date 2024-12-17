@@ -45,7 +45,11 @@ Number of successful attempts needed to close circuit (defaults to 3)
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:46](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L46)
+=======
+[packages/core/src/database.ts:46](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L46)
+>>>>>>> founderlist
 
 ## Properties
 
@@ -61,7 +65,11 @@ The database instance.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:23](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L23)
+=======
+[packages/core/src/database.ts:23](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L23)
+>>>>>>> founderlist
 
 ***
 
@@ -79,7 +87,11 @@ The circuit breaker has three states:
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:36](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L36)
+=======
+[packages/core/src/database.ts:36](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L36)
+>>>>>>> founderlist
 
 ## Methods
 
@@ -101,7 +113,11 @@ A Promise that resolves when initialization is complete.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:58](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L58)
+=======
+[packages/core/src/database.ts:58](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L58)
+>>>>>>> founderlist
 
 ***
 
@@ -123,7 +139,11 @@ A Promise that resolves when closing is complete.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:64](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L64)
+=======
+[packages/core/src/database.ts:64](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L64)
+>>>>>>> founderlist
 
 ***
 
@@ -151,7 +171,11 @@ A Promise that resolves to the Account object or null if not found.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:71](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L71)
+=======
+[packages/core/src/database.ts:71](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L71)
+>>>>>>> founderlist
 
 ***
 
@@ -179,7 +203,11 @@ A Promise that resolves when the account creation is complete.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:78](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L78)
+=======
+[packages/core/src/database.ts:78](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L78)
+>>>>>>> founderlist
 
 ***
 
@@ -217,7 +245,11 @@ A Promise that resolves to an array of Memory objects.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:85](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L85)
+=======
+[packages/core/src/database.ts:85](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L85)
+>>>>>>> founderlist
 
 ***
 
@@ -245,7 +277,11 @@ A Promise that resolves to an array of Memory objects.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:93](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L93)
+=======
+[packages/core/src/database.ts:93](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L93)
+>>>>>>> founderlist
 
 ***
 
@@ -267,7 +303,11 @@ A Promise that resolves to an array of Memory objects.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:99](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L99)
+=======
+[packages/core/src/database.ts:99](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L99)
+>>>>>>> founderlist
 
 ***
 
@@ -307,7 +347,11 @@ A Promise that resolves to an array of objects containing embeddings and levensh
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:106](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L106)
+=======
+[packages/core/src/database.ts:106](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L106)
+>>>>>>> founderlist
 
 ***
 
@@ -343,7 +387,11 @@ A Promise that resolves when the log entry has been saved.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:132](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L132)
+=======
+[packages/core/src/database.ts:132](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L132)
+>>>>>>> founderlist
 
 ***
 
@@ -373,7 +421,11 @@ A Promise that resolves to an array of Actor objects.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:144](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L144)
+=======
+[packages/core/src/database.ts:144](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L144)
+>>>>>>> founderlist
 
 ***
 
@@ -415,7 +467,11 @@ A Promise that resolves to an array of Memory objects.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:151](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L151)
+=======
+[packages/core/src/database.ts:151](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L151)
+>>>>>>> founderlist
 
 ***
 
@@ -447,7 +503,11 @@ A Promise that resolves when the goal status has been updated.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:166](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L166)
+=======
+[packages/core/src/database.ts:166](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L166)
+>>>>>>> founderlist
 
 ***
 
@@ -491,7 +551,11 @@ A Promise that resolves to an array of Memory objects.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:177](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L177)
+=======
+[packages/core/src/database.ts:177](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L177)
+>>>>>>> founderlist
 
 ***
 
@@ -527,7 +591,11 @@ A Promise that resolves when the memory has been created.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:196](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L196)
+=======
+[packages/core/src/database.ts:196](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L196)
+>>>>>>> founderlist
 
 ***
 
@@ -559,7 +627,11 @@ A Promise that resolves when the memory has been removed.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:208](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L208)
+=======
+[packages/core/src/database.ts:208](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L208)
+>>>>>>> founderlist
 
 ***
 
@@ -591,7 +663,11 @@ A Promise that resolves when all memories have been removed.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:216](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L216)
+=======
+[packages/core/src/database.ts:216](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L216)
+>>>>>>> founderlist
 
 ***
 
@@ -627,7 +703,11 @@ A Promise that resolves to the number of memories.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:225](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L225)
+=======
+[packages/core/src/database.ts:225](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L225)
+>>>>>>> founderlist
 
 ***
 
@@ -665,7 +745,11 @@ A Promise that resolves to an array of Goal objects.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:236](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L236)
+=======
+[packages/core/src/database.ts:236](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L236)
+>>>>>>> founderlist
 
 ***
 
@@ -693,7 +777,11 @@ A Promise that resolves when the goal has been updated.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:249](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L249)
+=======
+[packages/core/src/database.ts:249](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L249)
+>>>>>>> founderlist
 
 ***
 
@@ -721,7 +809,11 @@ A Promise that resolves when the goal has been created.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:256](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L256)
+=======
+[packages/core/src/database.ts:256](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L256)
+>>>>>>> founderlist
 
 ***
 
@@ -749,7 +841,11 @@ A Promise that resolves when the goal has been removed.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:263](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L263)
+=======
+[packages/core/src/database.ts:263](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L263)
+>>>>>>> founderlist
 
 ***
 
@@ -777,7 +873,11 @@ A Promise that resolves when all goals have been removed.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:270](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L270)
+=======
+[packages/core/src/database.ts:270](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L270)
+>>>>>>> founderlist
 
 ***
 
@@ -805,7 +905,11 @@ A Promise that resolves to the room ID or null if not found.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:277](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L277)
+=======
+[packages/core/src/database.ts:277](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L277)
+>>>>>>> founderlist
 
 ***
 
@@ -833,7 +937,11 @@ A Promise that resolves to the UUID of the created room.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:284](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L284)
+=======
+[packages/core/src/database.ts:284](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L284)
+>>>>>>> founderlist
 
 ***
 
@@ -861,7 +969,11 @@ A Promise that resolves when the room has been removed.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:291](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L291)
+=======
+[packages/core/src/database.ts:291](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L291)
+>>>>>>> founderlist
 
 ***
 
@@ -889,7 +1001,11 @@ A Promise that resolves to an array of room IDs.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:298](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L298)
+=======
+[packages/core/src/database.ts:298](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L298)
+>>>>>>> founderlist
 
 ***
 
@@ -917,7 +1033,11 @@ A Promise that resolves to an array of room IDs.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:305](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L305)
+=======
+[packages/core/src/database.ts:305](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L305)
+>>>>>>> founderlist
 
 ***
 
@@ -949,7 +1069,11 @@ A Promise that resolves to a boolean indicating success or failure.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:313](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L313)
+=======
+[packages/core/src/database.ts:313](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L313)
+>>>>>>> founderlist
 
 ***
 
@@ -981,7 +1105,11 @@ A Promise that resolves to a boolean indicating success or failure.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:321](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L321)
+=======
+[packages/core/src/database.ts:321](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L321)
+>>>>>>> founderlist
 
 ***
 
@@ -1011,7 +1139,11 @@ A Promise that resolves to an array of Participant objects.
 
 ##### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:328](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L328)
+=======
+[packages/core/src/database.ts:328](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L328)
+>>>>>>> founderlist
 
 #### getParticipantsForAccount(userId)
 
@@ -1037,7 +1169,11 @@ A Promise that resolves to an array of Participant objects.
 
 ##### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:335](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L335)
+=======
+[packages/core/src/database.ts:335](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L335)
+>>>>>>> founderlist
 
 ***
 
@@ -1065,7 +1201,11 @@ A Promise that resolves to an array of UUIDs representing the participants.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:342](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L342)
+=======
+[packages/core/src/database.ts:342](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L342)
+>>>>>>> founderlist
 
 ***
 
@@ -1089,7 +1229,11 @@ A Promise that resolves to an array of UUIDs representing the participants.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:344](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L344)
+=======
+[packages/core/src/database.ts:344](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L344)
+>>>>>>> founderlist
 
 ***
 
@@ -1115,7 +1259,11 @@ A Promise that resolves to an array of UUIDs representing the participants.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:348](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L348)
+=======
+[packages/core/src/database.ts:348](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L348)
+>>>>>>> founderlist
 
 ***
 
@@ -1147,7 +1295,11 @@ A Promise that resolves to a boolean indicating success or failure of the creati
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:359](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L359)
+=======
+[packages/core/src/database.ts:359](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L359)
+>>>>>>> founderlist
 
 ***
 
@@ -1179,7 +1331,11 @@ A Promise that resolves to the Relationship object or null if not found.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:369](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L369)
+=======
+[packages/core/src/database.ts:369](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L369)
+>>>>>>> founderlist
 
 ***
 
@@ -1209,7 +1365,11 @@ A Promise that resolves to an array of Relationship objects.
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:379](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L379)
+=======
+[packages/core/src/database.ts:379](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L379)
+>>>>>>> founderlist
 
 ***
 
@@ -1245,4 +1405,8 @@ Will throw an error if the circuit breaker is open or if the operation fails
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/database.ts:391](https://github.com/ai16z/eliza/blob/main/packages/core/src/database.ts#L391)
+=======
+[packages/core/src/database.ts:391](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/database.ts#L391)
+>>>>>>> founderlist

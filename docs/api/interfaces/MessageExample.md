@@ -14,7 +14,11 @@ Associated user
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:363](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L363)
+=======
+[packages/core/src/types.ts:357](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L357)
+>>>>>>> founderlist
 
 ***
 
@@ -26,4 +30,8 @@ Message content
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:366](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L366)
+=======
+[packages/core/src/types.ts:360](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L360)
+>>>>>>> founderlist

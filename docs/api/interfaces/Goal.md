@@ -14,7 +14,11 @@ Optional unique identifier
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:110](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L110)
+=======
+[packages/core/src/types.ts:110](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L110)
+>>>>>>> founderlist
 
 ***
 
@@ -26,7 +30,11 @@ Room ID where goal exists
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:113](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L113)
+=======
+[packages/core/src/types.ts:113](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L113)
+>>>>>>> founderlist
 
 ***
 
@@ -38,7 +46,11 @@ User ID of goal owner
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:116](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L116)
+=======
+[packages/core/src/types.ts:116](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L116)
+>>>>>>> founderlist
 
 ***
 
@@ -50,7 +62,11 @@ Name/title of the goal
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:119](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L119)
+=======
+[packages/core/src/types.ts:119](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L119)
+>>>>>>> founderlist
 
 ***
 
@@ -62,7 +78,11 @@ Current status
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:122](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L122)
+=======
+[packages/core/src/types.ts:122](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L122)
+>>>>>>> founderlist
 
 ***
 
@@ -74,4 +94,8 @@ Component objectives
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:125](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L125)
+=======
+[packages/core/src/types.ts:125](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L125)
+>>>>>>> founderlist

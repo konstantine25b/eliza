@@ -24,4 +24,8 @@
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/goals.ts:8](https://github.com/ai16z/eliza/blob/main/packages/core/src/goals.ts#L8)
+=======
+[packages/core/src/goals.ts:8](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/goals.ts#L8)
+>>>>>>> founderlist

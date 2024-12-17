@@ -26,7 +26,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/cache.ts:93](https://github.com/ai16z/eliza/blob/main/packages/core/src/cache.ts#L93)
+=======
+[packages/core/src/cache.ts:93](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/cache.ts#L93)
+>>>>>>> founderlist
 
 ## Properties
 
@@ -36,7 +40,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/cache.ts:91](https://github.com/ai16z/eliza/blob/main/packages/core/src/cache.ts#L91)
+=======
+[packages/core/src/cache.ts:91](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/cache.ts#L91)
+>>>>>>> founderlist
 
 ## Methods
 
@@ -62,7 +70,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/cache.ts:97](https://github.com/ai16z/eliza/blob/main/packages/core/src/cache.ts#L97)
+=======
+[packages/core/src/cache.ts:97](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/cache.ts#L97)
+>>>>>>> founderlist
 
 ***
 
@@ -92,7 +104,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/cache.ts:116](https://github.com/ai16z/eliza/blob/main/packages/core/src/cache.ts#L116)
+=======
+[packages/core/src/cache.ts:116](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/cache.ts#L116)
+>>>>>>> founderlist
 
 ***
 
@@ -114,4 +130,8 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/cache.ts:123](https://github.com/ai16z/eliza/blob/main/packages/core/src/cache.ts#L123)
+=======
+[packages/core/src/cache.ts:123](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/cache.ts#L123)
+>>>>>>> founderlist

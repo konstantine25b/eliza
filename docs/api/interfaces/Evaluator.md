@@ -14,7 +14,11 @@ Whether to always run
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:439](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L439)
+=======
+[packages/core/src/types.ts:433](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L433)
+>>>>>>> founderlist
 
 ***
 
@@ -26,7 +30,11 @@ Detailed description
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:442](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L442)
+=======
+[packages/core/src/types.ts:436](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L436)
+>>>>>>> founderlist
 
 ***
 
@@ -38,7 +46,11 @@ Similar evaluator descriptions
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:445](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L445)
+=======
+[packages/core/src/types.ts:439](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L439)
+>>>>>>> founderlist
 
 ***
 
@@ -50,7 +62,11 @@ Example evaluations
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:448](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L448)
+=======
+[packages/core/src/types.ts:442](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L442)
+>>>>>>> founderlist
 
 ***
 
@@ -62,7 +78,11 @@ Handler function
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:451](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L451)
+=======
+[packages/core/src/types.ts:445](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L445)
+>>>>>>> founderlist
 
 ***
 
@@ -74,7 +94,11 @@ Evaluator name
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:454](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L454)
+=======
+[packages/core/src/types.ts:448](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L448)
+>>>>>>> founderlist
 
 ***
 
@@ -86,4 +110,8 @@ Validation function
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:457](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L457)
+=======
+[packages/core/src/types.ts:451](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L451)
+>>>>>>> founderlist

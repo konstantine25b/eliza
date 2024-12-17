@@ -20,4 +20,8 @@
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/relationships.ts:3](https://github.com/ai16z/eliza/blob/main/packages/core/src/relationships.ts#L3)
+=======
+[packages/core/src/relationships.ts:3](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/relationships.ts#L3)
+>>>>>>> founderlist

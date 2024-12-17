@@ -8,4 +8,8 @@ Type inference
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/environment.ts:23](https://github.com/ai16z/eliza/blob/main/packages/core/src/environment.ts#L23)
+=======
+[packages/core/src/environment.ts:23](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/environment.ts#L23)
+>>>>>>> founderlist
