@@ -1,4 +1,4 @@
-[@ai16z/eliza v0.1.5-alpha.3](../index.md) / MemoryCacheAdapter
+[@ai16z/eliza v0.1.5-alpha.5](../index.md) / MemoryCacheAdapter
 
 # Class: MemoryCacheAdapter
 
@@ -22,7 +22,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/cache.ts:19](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/cache.ts#L19)
+=======
+[packages/core/src/cache.ts:19](https://github.com/ai16z/eliza/blob/main/packages/core/src/cache.ts#L19)
+>>>>>>> main
 
 ## Properties
 
@@ -32,7 +36,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/cache.ts:17](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/cache.ts#L17)
+=======
+[packages/core/src/cache.ts:17](https://github.com/ai16z/eliza/blob/main/packages/core/src/cache.ts#L17)
+>>>>>>> main
 
 ## Methods
 
@@ -54,7 +62,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/cache.ts:23](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/cache.ts#L23)
+=======
+[packages/core/src/cache.ts:23](https://github.com/ai16z/eliza/blob/main/packages/core/src/cache.ts#L23)
+>>>>>>> main
 
 ***
 
@@ -78,7 +90,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/cache.ts:27](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/cache.ts#L27)
+=======
+[packages/core/src/cache.ts:27](https://github.com/ai16z/eliza/blob/main/packages/core/src/cache.ts#L27)
+>>>>>>> main
 
 ***
 
@@ -100,4 +116,8 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/cache.ts:31](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/cache.ts#L31)
+=======
+[packages/core/src/cache.ts:31](https://github.com/ai16z/eliza/blob/main/packages/core/src/cache.ts#L31)
+>>>>>>> main

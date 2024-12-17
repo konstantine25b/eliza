@@ -1,4 +1,4 @@
-[@ai16z/eliza v0.1.5-alpha.3](../index.md) / composeContext
+[@ai16z/eliza v0.1.5-alpha.5](../index.md) / composeContext
 
 # Function: composeContext()
 
@@ -44,4 +44,8 @@ const context = composeContext({ state, template });
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/context.ts:24](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/context.ts#L24)
+=======
+[packages/core/src/context.ts:24](https://github.com/ai16z/eliza/blob/main/packages/core/src/context.ts#L24)
+>>>>>>> main

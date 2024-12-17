@@ -1,4 +1,4 @@
-[@ai16z/eliza v0.1.5-alpha.3](../index.md) / Memory
+[@ai16z/eliza v0.1.5-alpha.5](../index.md) / Memory
 
 # Interface: Memory
 
@@ -14,7 +14,11 @@ Optional unique identifier
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:325](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L325)
+=======
+[packages/core/src/types.ts:331](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L331)
+>>>>>>> main
 
 ***
 
@@ -26,7 +30,11 @@ Associated user ID
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:328](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L328)
+=======
+[packages/core/src/types.ts:334](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L334)
+>>>>>>> main
 
 ***
 
@@ -38,7 +46,11 @@ Associated agent ID
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:331](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L331)
+=======
+[packages/core/src/types.ts:337](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L337)
+>>>>>>> main
 
 ***
 
@@ -50,7 +62,11 @@ Optional creation timestamp
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:334](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L334)
+=======
+[packages/core/src/types.ts:340](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L340)
+>>>>>>> main
 
 ***
 
@@ -62,7 +78,11 @@ Memory content
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:337](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L337)
+=======
+[packages/core/src/types.ts:343](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L343)
+>>>>>>> main
 
 ***
 
@@ -74,7 +94,11 @@ Optional embedding vector
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:340](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L340)
+=======
+[packages/core/src/types.ts:346](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L346)
+>>>>>>> main
 
 ***
 
@@ -86,7 +110,11 @@ Associated room ID
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:343](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L343)
+=======
+[packages/core/src/types.ts:349](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L349)
+>>>>>>> main
 
 ***
 
@@ -98,7 +126,11 @@ Whether memory is unique
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:346](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L346)
+=======
+[packages/core/src/types.ts:352](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L352)
+>>>>>>> main
 
 ***
 
@@ -110,4 +142,8 @@ Embedding similarity score
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:349](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L349)
+=======
+[packages/core/src/types.ts:355](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L355)
+>>>>>>> main

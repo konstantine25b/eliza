@@ -1,4 +1,4 @@
-[@ai16z/eliza v0.1.5-alpha.3](../index.md) / updateGoal
+[@ai16z/eliza v0.1.5-alpha.5](../index.md) / updateGoal
 
 # Function: updateGoal()
 
@@ -18,4 +18,8 @@
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/goals.ts:45](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/goals.ts#L45)
+=======
+[packages/core/src/goals.ts:45](https://github.com/ai16z/eliza/blob/main/packages/core/src/goals.ts#L45)
+>>>>>>> main

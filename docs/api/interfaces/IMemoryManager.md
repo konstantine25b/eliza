@@ -1,4 +1,4 @@
-[@ai16z/eliza v0.1.5-alpha.3](../index.md) / IMemoryManager
+[@ai16z/eliza v0.1.5-alpha.5](../index.md) / IMemoryManager
 
 # Interface: IMemoryManager
 
@@ -10,7 +10,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:905](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L905)
+=======
+[packages/core/src/types.ts:946](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L946)
+>>>>>>> main
 
 ***
 
@@ -20,7 +24,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:906](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L906)
+=======
+[packages/core/src/types.ts:947](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L947)
+>>>>>>> main
 
 ***
 
@@ -30,7 +38,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:907](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L907)
+=======
+[packages/core/src/types.ts:948](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L948)
+>>>>>>> main
 
 ## Methods
 
@@ -48,7 +60,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:909](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L909)
+=======
+[packages/core/src/types.ts:950](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L950)
+>>>>>>> main
 
 ***
 
@@ -76,7 +92,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:911](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L911)
+=======
+[packages/core/src/types.ts:952](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L952)
+>>>>>>> main
 
 ***
 
@@ -94,7 +114,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:919](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L919)
+=======
+[packages/core/src/types.ts:960](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L960)
+>>>>>>> main
 
 ***
 
@@ -112,7 +136,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:923](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L923)
+=======
+[packages/core/src/types.ts:964](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L964)
+>>>>>>> main
 
 ***
 
@@ -132,7 +160,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:924](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L924)
+=======
+[packages/core/src/types.ts:965](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L965)
+>>>>>>> main
 
 ***
 
@@ -160,7 +192,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:925](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L925)
+=======
+[packages/core/src/types.ts:966](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L966)
+>>>>>>> main
 
 ***
 
@@ -180,7 +216,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:935](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L935)
+=======
+[packages/core/src/types.ts:976](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L976)
+>>>>>>> main
 
 ***
 
@@ -198,7 +238,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:937](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L937)
+=======
+[packages/core/src/types.ts:978](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L978)
+>>>>>>> main
 
 ***
 
@@ -216,7 +260,11 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:939](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L939)
+=======
+[packages/core/src/types.ts:980](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L980)
+>>>>>>> main
 
 ***
 
@@ -236,4 +284,8 @@
 
 #### Defined in
 
+<<<<<<< HEAD
 [packages/core/src/types.ts:941](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/types.ts#L941)
+=======
+[packages/core/src/types.ts:982](https://github.com/ai16z/eliza/blob/main/packages/core/src/types.ts#L982)
+>>>>>>> main

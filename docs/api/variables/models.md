@@ -1,4 +1,4 @@
-[@ai16z/eliza v0.1.5-alpha.3](../index.md) / models
+[@ai16z/eliza v0.1.5-alpha.5](../index.md) / models
 
 # Variable: models
 
@@ -6,4 +6,8 @@
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/models.ts:4](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/models.ts#L4)
+=======
+[packages/core/src/models.ts:4](https://github.com/ai16z/eliza/blob/main/packages/core/src/models.ts#L4)
+>>>>>>> main

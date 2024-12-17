@@ -1,4 +1,4 @@
-[@ai16z/eliza v0.1.5-alpha.3](../index.md) / generateTextArray
+[@ai16z/eliza v0.1.5-alpha.5](../index.md) / generateTextArray
 
 # Function: generateTextArray()
 
@@ -28,4 +28,8 @@ Promise resolving to an array of strings parsed from the model's response
 
 ## Defined in
 
+<<<<<<< HEAD
 [packages/core/src/generation.ts:639](https://github.com/konstantine25b/eliza/blob/main/packages/core/src/generation.ts#L639)
+=======
+[packages/core/src/generation.ts:764](https://github.com/ai16z/eliza/blob/main/packages/core/src/generation.ts#L764)
+>>>>>>> main
