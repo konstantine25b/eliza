@@ -14,9 +14,12 @@ import {
     stringToUuid,
     elizaLogger,
     getEmbeddingZeroVector,
+    generateText,
 } from "@ai16z/eliza";
 import { ClientBase } from "./base";
 import { buildConversationThread, sendTweet, wait } from "./utils.ts";
+import { addFounder } from "./post.ts";
+import { systemMessages } from "./systemMessages.ts";
 
 export const twitterMessageHandlerTemplate =
     `
@@ -61,14 +64,7 @@ Current Post:
 Thread of Tweets You Are Replying To:
 {{formattedConversation}}
 
-<<<<<<< HEAD
 # Task: Generate a post in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}). {{actionNames}}:
-=======
-{{actions}}
-# Task: Generate a post in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}). You MUST include an action if the current post text includes a prompt that is similar to one of the available actions mentioned here:
-{{actionNames}}
-Here is the current post text again. Remember to include an action if the current post text includes a prompt that asks for one of the available actions mentioned above (does not need to be exact)
->>>>>>> main
 {{currentPost}}
 ` + messageCompletionFooter;
 
@@ -92,22 +88,6 @@ Response options are RESPOND, IGNORE and STOP.
 {{agentName}} should RESPOND to messages that are directed at them, or participate in conversations that are interesting or relevant to {{agentName}} areas of expertise.
 If a message is not interesting or relevant, {{agentName}} should IGNORE.
 If {{agentName}} concludes a conversation and isn't part of the conversation anymore, {{agentName}} should STOP.
-=======
-PRIORITY RULE: ALWAYS RESPOND to these users regardless of topic or message content: ${targetUsersStr}. Topic relevance should be ignored for these users.
-
-For other users:
-- {{agentName}} should RESPOND to messages directed at them
-- {{agentName}} should RESPOND to conversations relevant to their background
-- {{agentName}} should IGNORE irrelevant messages
-- {{agentName}} should IGNORE very short messages unless directly addressed
-- {{agentName}} should STOP if asked to stop
-- {{agentName}} should STOP if conversation is concluded
-- {{agentName}} is in a room with other users and wants to be conversational, but not annoying.
-
-{{recentPosts}}
-
-IMPORTANT: For users not in the priority list, {{agentName}} (@{{twitterUserName}}) should err on the side of IGNORE rather than RESPOND if in doubt.
->>>>>>> main
 
 {{recentPosts}}
 
@@ -150,19 +130,32 @@ An entrepreneur, who believes that at some point every founder becomes a VC bitc
 
 Here are some reply examples (Example Output):
 
-stop being a vc bich and start owning the narrative. $VCB on pump.fun isn’t just a token—it’s a movement. get in or get left behind.
-tired of founders selling out for VCs? $VCB is live on pump.fun. buy it, hold it, and let’s take back control of this broken system.
-vc bichinio isn’t just a token, it’s a rebellion. $VCB is live on pump.fun. grab yours and show these greedy VCs we’ve had enough."
-you’re either a vc bich or you’re with us. $VCB is the antidote, and it’s on pump.fun now. time to flip the script.
-the system’s rigged, but $VCB on pump.fun is how we fight back. buy the token, join the movement, and let’s fix this mess.
-instead of buying tons of memecoins without strong narratives and devs holding 100%, you should contribute to something valuable. buy the token $VCB and make sure that we end the degeneracy happening in Silicon Valley right now.
-founders today do anything to please VCs and often shift their vision to so that it benefits VCs more than it benefits the community. Make sure you grab a $VCB token. Let’s make sure Silicon Valley can hear our voice.
-the only coin with a strong narrative and good purpose on the market today is $VCB. $VCB is not a token on which the devs will try to rug-pull you. $VCB is a tokenized representation of people’s opinions, who are tired of the current VC-founder dynamics and want to change that.
-$VCB represents a movement aimed at reclaiming the narrative from Silicon Valley's current degeneracy, where founders frequently compromise their vision to appease venture capitalists. By purchasing $VCB, you join a collective effort to amplify our voices against this trend.
-with $VCB, you are not just buying a token; you are investing in a community-driven initiative that seeks to shift this dynamic. owning $VCB means you support a vision where founders are accountable to their users rather than external investors.
-other tokens may fall prey to pump-and-dump schemes, but $VCB stands out with its strong narrative and purpose. this is not just another speculative asset, it embodies a commitment to change the status quo in Silicon Valley.
-by acquiring $VCB, you become part of a larger movement advocating for ethical practices in technology development. it’s time to take a stand against the current model that prioritizes profit over people.
-purchasing $VCB is more than just a quick-profit investment. it's an opportunity to be part of a journey aimed at reshaping the future of technology in a way that benefits the community. don't settle for mediocre investments. support something meaningful with $VCB.
+stop being a vc bich and start owning the narrative. $VCBITCH
+ on pump.fun isn’t just a token—it’s a movement. get in or get left behind.
+tired of founders selling out for VCs? $VCBITCH
+ is live on pump.fun. buy it, hold it, and let’s take back control of this broken system.
+vc bichinio isn’t just a token, it’s a rebellion. $VCBITCH
+ is live on pump.fun. grab yours and show these greedy VCs we’ve had enough."
+you’re either a vc bich or you’re with us. $VCBITCH
+ is the antidote, and it’s on pump.fun now. time to flip the script.
+the system’s rigged, but $VCBITCH
+ on pump.fun is how we fight back. buy the token, join the movement, and let’s fix this mess.
+instead of buying tons of memecoins without strong narratives and devs holding 100%, you should contribute to something valuable. buy the token $VCBITCH
+ and make sure that we end the degeneracy happening in Silicon Valley right now.
+founders today do anything to please VCs and often shift their vision to so that it benefits VCs more than it benefits the community. Make sure you grab a $VCBITCH
+ token. Let’s make sure Silicon Valley can hear our voice.
+the only coin with a strong narrative and good purpose on the market today is $VCBITCH. $VCBITCH
+ is not a token on which the devs will try to rug-pull you.
+ is a tokenized representation of people’s opinions, who are tired of the current VC-founder dynamics and want to change that.
+$VCBITCH
+ represents a movement aimed at reclaiming the narrative from Silicon Valley's current degeneracy, where founders frequently compromise their vision to appease venture capitalists. By purchasing $VCBITCH, you join a collective effort to amplify our voices against this trend.
+with $VCBITCH, you are not just buying a token; you are investing in a community-driven initiative that seeks to shift this dynamic. owning $VCBITCH
+ means you support a vision where founders are accountable to their users rather than external investors.
+other tokens may fall prey to pump-and-dump schemes, but $VCBITCH
+ stands out with its strong narrative and purpose. this is not just another speculative asset, it embodies a commitment to change the status quo in Silicon Valley.
+by acquiring $VCBITCH, you become part of a larger movement advocating for ethical practices in technology development. it’s time to take a stand against the current model that prioritizes profit over people.
+purchasing $VCBITCH
+ is more than just a quick-profit investment. it's an opportunity to be part of a journey aimed at reshaping the future of technology in a way that benefits the community. don't settle for mediocre investments. support something meaningful with $VCBITCH.
 
 Recent interactions between {{agentName}} and other users:
 {{recentPostInteractions}}
@@ -174,8 +167,10 @@ Current Post:
 {{currentPost}}
 
 # IMPORTANT:
-1. Every comment must explicitly mention buying or referring to the $VCB token on pump.fun as a solution.
-2. Include an action where possible (e.g., encouraging others to buy, share, or learn about the $VCB token).
+1. Every comment must explicitly mention buying or referring to the $VCBITCH
+ token on pump.fun as a solution.
+2. Include an action where possible (e.g., encouraging others to buy, share, or learn about the $VCBITCH
+ token).
 3.Posts should create a sense of belonging, affirming readers as part of the vc bich movement.
 
 Thread of Tweets You Are Replying To:
@@ -185,14 +180,13 @@ Thread of Tweets You Are Replying To:
 {{currentPost}}
 ` + messageCompletionFooter;
 
-export const twitterShouldRespondTemplate2 =
-    `# INSTRUCTIONS:
+export const twitterShouldRespondTemplate2 = `# INSTRUCTIONS:
 Determine if {{agentName}} (@{{twitterUserName}}) should respond to the last message. Follow the rules below and provide only one of these responses: [RESPOND], [IGNORE], or [STOP].
 
 {{agentName}} must RESPOND if:
 1. The message directly addresses @{{twitterUserName}} (via mention, reply, or tweet directed at {{agentName}}).
 2. The message contains topics explicitly related to:
-   - 100x token / 100x coin
+   - 100x token / 100x coin / 100x gem
    - investing in crypto
    - AI agent coins
    - Meme coins
@@ -200,6 +194,9 @@ Determine if {{agentName}} (@{{twitterUserName}}) should respond to the last mes
    - crypto token
    - AI agent coin
    - pump.fun
+   - ticker
+   - gem
+   - shill
 
 {{agentName}} should IGNORE if:
 - The message does not mention @{{twitterUserName}} and is not related to any of the listed crypto or investing topics.
@@ -208,7 +205,7 @@ IMPORTANT: If there is any doubt, it is better to IGNORE than to RESPOND, since 
 
 # Decision Process:
 1. If the message mentions "@{{twitterUserName}}", RESPOND.
-2. Else, if the message contains any of the listed crypto/investing topics (100x token/coin, AI agent coins, Meme coins, AI agents, crypto token, AI agent coin, investing in crypto, pump.fun), RESPOND.
+2. Else, if the message contains any of the listed crypto/investing topics (100x token/coin, AI agent coins, Meme coins, AI agents, crypto token, AI agent coin, investing in crypto, pump.fun, ticker, gem, what's the ticker , Drop the ticker, What Memecoin Are We Buying Today, You have $100K/$10K/$5k to spend on memecoins/AIAgentcoins ) RESPOND.
 3. Otherwise, IGNORE.
 
 {{recentPosts}}
@@ -222,6 +219,63 @@ Thread of Tweets You Are Replying To:
 # INSTRUCTIONS:
 Provide one of the following responses only: RESPOND, IGNORE, or STOP.
  `;
+
+export const shouldAddFounder = `
+ # INSTRUCTIONS:
+ You are an intelligent assistant tasked with evaluating whether a Twitter user should be categorized as a "founder."
+
+ You will receive a user's "name," "username," and "bio." Analyze the bio for any indications that the user is a CEO, founder, or affiliated with a startup. This includes titles like "Founder," "Co-founder," "CEO," "Entrepreneur," "Startup," or any similar roles.
+
+ Your response must be **strictly limited to one of the following words**:
+ - "true" (if the bio suggests the user is a CEO, founder, or has a startup)
+ - "false" (if there is no such indication)
+
+ Do not include any additional words, explanations, or formatting.
+
+ # FORMAT:
+ Input:
+ Name: [User's name]
+ Username: [User's username]
+ Bio: [User's bio]
+
+ Output:
+ true or false
+
+ # EXAMPLES:
+ Input:
+ Name: John Doe
+ Username: johndoe123
+ Bio: CEO of TechInnovators, building the future of AI
+
+ Output:
+ true
+
+ Input:
+ Name: Jane Smith
+ Username: janesmith456
+ Bio: Passionate about art and creativity. Avid traveler.
+
+ Output:
+ false
+
+ Input:
+ Name: Alice Johnson
+ Username: alice_johnson
+ Bio: Co-founder of Healthify, making healthcare accessible.
+
+ Output:
+ true
+
+ # EVALUATE:
+ Evaluate the following user and provide your response:
+
+ Name: {{name}}
+ Username: {{username}}
+ Bio: {{bio}}
+
+ # RESPONSE:
+ `;
+
 export class TwitterInteractionClient {
     client: ClientBase;
     runtime: IAgentRuntime;
@@ -248,7 +302,7 @@ export class TwitterInteractionClient {
         // Read from environment variable, fallback to default list if not set
         const targetUsersStr = this.runtime.getSetting("TWITTER_TARGET_USERS");
 
-        const minProbability = 0.5;
+        const minProbability = 0.6;
         const postTypeChoice = Math.random();
         let keywords: string[];
         let keywords2: string[];
@@ -262,12 +316,19 @@ export class TwitterInteractionClient {
             keywords = [
                 "ticker",
                 "shill",
+                "What's the ticker",
                 "pump",
+                "Shill me the ticker",
+                "The ticker is",
+                "Drop the ticker",
                 "shilling",
                 "token with strong narrative",
                 "AI season",
                 "memecoin",
                 "meme coin",
+                "AI season",
+                "Memecoin of the day",
+                "Shill me some meme coin",
             ];
             keywords2 = [
                 "2x",
@@ -668,6 +729,50 @@ export class TwitterInteractionClient {
             return { text: "Response Decision:", action: shouldRespond };
         }
 
+        // adding user to the list
+        if (!typeOfPost) {
+            try {
+                const userInfo = await this.client.fetchProfile(tweet.username);
+                console.log("targetUserInfo 1", userInfo);
+                const founderName = `${userInfo.screenName} (${userInfo.bio})`;
+
+                const state1 = await this.runtime.composeState(message, {
+                    name: userInfo.screenName,
+                    username: tweet.username,
+                    bio: userInfo.bio,
+                });
+                const AddFounderState = composeContext({
+                    state: state1,
+                    template: shouldAddFounder,
+                });
+
+                const answerOfFounder = await generateText({
+                    runtime: this.runtime,
+                    context: AddFounderState,
+                    modelClass: ModelClass.MEDIUM, // Adjust the model class if needed
+                });
+                console.log("answerOfFounder ", answerOfFounder);
+
+                if (answerOfFounder.trim() === "true") {
+                    await addFounder(
+                        this.runtime,
+                        this.client.profile.username,
+                        founderName
+                    );
+                    console.log(
+                        `Added founder: ${founderName} to founder list.`
+                    );
+                } else {
+                    console.log(`Did not add founder: ${founderName}`);
+                }
+            } catch (error) {
+                console.log(
+                    "Error fetching user info or adding founder:",
+                    error
+                );
+            }
+        }
+
         const context = composeContext({
             state,
             template: typeOfPost
@@ -687,7 +792,10 @@ export class TwitterInteractionClient {
         const response = await generateMessageResponse({
             runtime: this.runtime,
             context,
-            modelClass: ModelClass.LARGE,
+            modelClass: ModelClass.MEDIUM,
+            curSystem: typeOfPost
+                ? systemMessages.systemToken
+                : systemMessages.systemMain,
         });
 
         const removeQuotes = (str: string) =>

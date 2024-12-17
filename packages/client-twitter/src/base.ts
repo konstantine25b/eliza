@@ -377,7 +377,6 @@ export class ClientBase extends EventEmitter {
                 }
 
                 return (result ?? { tweets: [] }) as QueryTweetsResponse;
-
             } catch (error) {
                 elizaLogger.error("Error fetching search tweets:", error);
                 return { tweets: [] };
@@ -744,18 +743,18 @@ export class ClientBase extends EventEmitter {
         try {
             const profile = await this.requestQueue.add(async () => {
                 const profile = await this.twitterClient.getProfile(username);
-                // console.log({ profile });
+                console.log("Prifiliiii", { profile });
                 return {
                     id: profile.userId,
                     username,
                     screenName: profile.name || this.runtime.character.name,
                     bio:
                         profile.biography ||
-                        typeof this.runtime.character.bio === "string"
+                        (typeof this.runtime.character.bio === "string"
                             ? (this.runtime.character.bio as string)
                             : this.runtime.character.bio.length > 0
                               ? this.runtime.character.bio[0]
-                              : "",
+                              : ""),
                     nicknames:
                         this.runtime.character.twitterProfile?.nicknames || [],
                 } satisfies TwitterProfile;
