@@ -68,7 +68,7 @@ Thread of Tweets You Are Replying To:
 {{currentPost}}
 ` + messageCompletionFooter;
 
-export const twitterShouldRespondTemplate = (targetUsersStr: string) =>
+export const twitterShouldRespondTemplate3 =
     `# INSTRUCTIONS: Determine if {{agentName}} (@{{twitterUserName}}) should respond to the message and participate in the conversation. Do not comment. Just respond with "true" or "false".
 
 Response options are RESPOND, IGNORE and STOP .
@@ -350,7 +350,7 @@ export class TwitterInteractionClient {
         const twitterUsername = this.client.profile.username;
         try {
             // Check for mentions
-            const mentionCandidates = (
+            const tweetCandidates = (
                 await this.client.fetchSearchTweets(
                     `@${twitterUsername}`,
                     20,
@@ -578,17 +578,17 @@ export class TwitterInteractionClient {
         }
 
         // 1. Get the raw target users string from settings
-        const targetUsersStr = this.runtime.getSetting("TWITTER_TARGET_USERS");
+        // const targetUsersStr = this.runtime.getSetting("TWITTER_TARGET_USERS");
 
         // 2. Process the string to get valid usernames
-        const validTargetUsersStr =
-            targetUsersStr && targetUsersStr.trim()
-                ? targetUsersStr
-                      .split(",") // Split by commas: "user1,user2" -> ["user1", "user2"]
-                      .map((u) => u.trim()) // Remove whitespace: [" user1 ", "user2 "] -> ["user1", "user2"]
-                      .filter((u) => u.length > 0)
-                      .join(",")
-                : "";
+        // const validTargetUsersStr =
+        //     targetUsersStr && targetUsersStr.trim()
+        //         ? targetUsersStr
+        //               .split(",") // Split by commas: "user1,user2" -> ["user1", "user2"]
+        //               .map((u) => u.trim()) // Remove whitespace: [" user1 ", "user2 "] -> ["user1", "user2"]
+        //               .filter((u) => u.length > 0)
+        //               .join(",")
+        //         : "";
 
         const shouldRespondContext = composeContext({
             state,
@@ -600,7 +600,7 @@ export class TwitterInteractionClient {
                 : this.runtime.character.templates
                       ?.twitterShouldRespondTemplate ||
                   this.runtime.character?.templates?.shouldRespondTemplate ||
-                  twitterShouldRespondTemplate,
+                  twitterShouldRespondTemplate3,
         });
 
         console.log("shouldRespondContext", shouldRespondContext);
