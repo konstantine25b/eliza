@@ -308,6 +308,107 @@ export class ClientBase extends EventEmitter {
         //elizaLogger.debug("process homeTimeline", processedTimeline);
         return processedTimeline;
     }
+    async fetchPossibleActionTweets(
+        count: number,
+        typeOfPost: boolean,
+        username: string
+    ): Promise<Tweet[]> {
+        let keywords: string[] = [];
+        let keywords2: string[] = [];
+
+        console.log("fetching possible action tweets")
+
+
+       const tweetCandidates = (
+            await this.twitterClient.fetchSearchTweets(
+                `@${username}`,
+                10,
+                SearchMode.Latest
+            )
+        ).tweets;
+
+
+        if (typeOfPost) {
+            keywords = [
+                "pump",
+                "token with strong narrative",
+                "AI season",
+                "memecoin",
+                "meme coin",
+                "AI season",
+                "Memecoin of the day",
+                "Shill me some meme coin",
+                "next big token",
+                "AI token",
+                "2x",
+                "5x",
+                "10x",
+                "100x",
+                "1000x",
+                "10000x",
+            ];
+            keywords2 = [
+                "ticker",
+                "shill",
+                "shilling",
+                "100x play",
+                "next 100x",
+                "What's the ticker",
+                "The ticker is",
+                "Drop the ticker",
+                "show the ticker",
+            ];
+        } else {
+            keywords = ["venture capital", "VC funding", "raised"];
+            keywords2 = [
+                "pitch deck",
+                "angel investor",
+                "startup funding",
+                "fundraising",
+            ];
+        }
+
+        try {
+            const searchQuery = keywords
+                .map((keyword) => `"${keyword}"`)
+                .join(" OR ");
+            const searchQuery2 = keywords2
+                .map((keyword) => `"${keyword}"`)
+                .join(" OR ");
+
+
+
+            const tweetCandidates2 = (
+                await this.twitterClient.fetchSearchTweets(
+                    searchQuery,
+                    10,
+                    SearchMode.Latest
+                )
+            ).tweets;
+
+            const tweetCandidates4 = (
+                await this.twitterClient.fetchSearchTweets(
+                    searchQuery2,
+                    10,
+                    SearchMode.Top
+                )
+            ).tweets;
+
+            const uniqueTweetCandidates = [
+                ...new Set([
+                    ...tweetCandidates,
+                    ...tweetCandidates2,
+                    ...tweetCandidates4,
+                ]),
+            ];
+            console.log("fetching possible action tweets4")
+
+            return uniqueTweetCandidates;
+        } catch (error) {
+            console.error("Error fetching tweets:", error);
+            return [];
+        }
+    }
 
     async fetchTimelineForActions(count: number): Promise<Tweet[]> {
         elizaLogger.debug("fetching timeline for actions");
