@@ -21,6 +21,7 @@ import { generateTweetActions } from "@ai16z/eliza";
 import { IImageDescriptionService, ServiceType } from "@ai16z/eliza";
 import { buildConversationThread } from "./utils.ts";
 import {
+    shouldAddFounder,
     twitterMessageHandlerTemplate,
     twitterMessageHandlerTemplate2,
 } from "./interactions.ts";
@@ -898,6 +899,18 @@ export class TwitterPostClient {
 
                     // Execute actions
                     if (actionResponse.like) {
+                        // console.log("tweet.userId",tweet.userId)
+                        // console.log("this.client.profile.id",this.client.profile.id)
+                        // console.log("tweet.username",tweet.username)
+                        // console.log("this.client.profile.username",this.client.profile.username )
+                        if (
+                            tweet.userId === this.client.profile.id ||
+                            tweet.username === this.client.profile.username
+                        ) {
+                            // console.log("skipping tweet from bot itself", tweet.id);
+                            // Skip processing if the tweet is from the bot itself
+                            return;
+                        }
                         try {
                             await this.client.twitterClient.likeTweet(tweet.id);
                             executedActions.push("like");
@@ -922,6 +935,67 @@ export class TwitterPostClient {
                                 error
                             );
                         }
+
+                        if (!typeOfPost) {
+                            try {
+                                const userInfo = await this.client.fetchProfile(
+                                    tweet.username
+                                );
+                                console.log("targetUserInfo 1", userInfo);
+                                const founderName = `${userInfo.screenName} (${userInfo.bio})`;
+
+                                const state1 = await this.runtime.composeState(
+                                    {
+                                        userId: this.runtime.agentId,
+                                        roomId: roomId,
+                                        agentId: this.runtime.agentId,
+                                        content: {
+                                            text: "",
+                                            action: "TWEET",
+                                        },
+                                    },
+                                    {
+                                        name: userInfo.screenName,
+                                        username: tweet.username,
+                                        bio: userInfo.bio,
+                                    }
+                                );
+                                const AddFounderState = composeContext({
+                                    state: state1,
+                                    template: shouldAddFounder,
+                                });
+
+                                const answerOfFounder = await generateText({
+                                    runtime: this.runtime,
+                                    context: AddFounderState,
+                                    modelClass: ModelClass.MEDIUM, // Adjust the model class if needed
+                                });
+                                console.log(
+                                    "answerOfFounder ",
+                                    answerOfFounder
+                                );
+
+                                if (answerOfFounder.trim() === "true") {
+                                    await addFounder(
+                                        this.runtime,
+                                        this.client.profile.username,
+                                        founderName
+                                    );
+                                    console.log(
+                                        `Added founder: ${founderName} to founder list.`
+                                    );
+                                } else {
+                                    console.log(
+                                        `Did not add founder: ${founderName}`
+                                    );
+                                }
+                            } catch (error) {
+                                console.log(
+                                    "Error fetching user info or adding founder:",
+                                    error
+                                );
+                            }
+                        }
                     }
 
                     if (actionResponse.retweet) {
@@ -938,6 +1012,15 @@ export class TwitterPostClient {
                     }
 
                     if (actionResponse.quote) {
+                        if (
+                            tweet.userId === this.client.profile.id ||
+                            tweet.username === this.client.profile.username
+                        ) {
+                            // console.log("skipping tweet from bot itself", tweet.id);
+                            // Skip processing if the tweet is from the bot itself
+                            return;
+                        }
+
                         try {
                             // Build conversation thread for context
                             const thread = await buildConversationThread(
@@ -1077,6 +1160,66 @@ export class TwitterPostClient {
                                 "Error in quote tweet generation:",
                                 error
                             );
+                        }
+                        if (!typeOfPost) {
+                            try {
+                                const userInfo = await this.client.fetchProfile(
+                                    tweet.username
+                                );
+                                console.log("targetUserInfo 1", userInfo);
+                                const founderName = `${userInfo.screenName} (${userInfo.bio})`;
+
+                                const state1 = await this.runtime.composeState(
+                                    {
+                                        userId: this.runtime.agentId,
+                                        roomId: roomId,
+                                        agentId: this.runtime.agentId,
+                                        content: {
+                                            text: "",
+                                            action: "TWEET",
+                                        },
+                                    },
+                                    {
+                                        name: userInfo.screenName,
+                                        username: tweet.username,
+                                        bio: userInfo.bio,
+                                    }
+                                );
+                                const AddFounderState = composeContext({
+                                    state: state1,
+                                    template: shouldAddFounder,
+                                });
+
+                                const answerOfFounder = await generateText({
+                                    runtime: this.runtime,
+                                    context: AddFounderState,
+                                    modelClass: ModelClass.MEDIUM, // Adjust the model class if needed
+                                });
+                                console.log(
+                                    "answerOfFounder ",
+                                    answerOfFounder
+                                );
+
+                                if (answerOfFounder.trim() === "true") {
+                                    await addFounder(
+                                        this.runtime,
+                                        this.client.profile.username,
+                                        founderName
+                                    );
+                                    console.log(
+                                        `Added founder: ${founderName} to founder list.`
+                                    );
+                                } else {
+                                    console.log(
+                                        `Did not add founder: ${founderName}`
+                                    );
+                                }
+                            } catch (error) {
+                                console.log(
+                                    "Error fetching user info or adding founder:",
+                                    error
+                                );
+                            }
                         }
                     }
 
