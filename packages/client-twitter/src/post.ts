@@ -180,7 +180,7 @@ Tweet:
 # Respond with qualifying action tags only.`
     + postActionResponseFooter;
 
-const MAX_TWEET_LENGTH = 280;
+const MAX_TWEET_LENGTH = 275;
 
 // Function to initialize founder list in cache if not already present
 async function initializeFounderList(runtime: IAgentRuntime, username: string) {
@@ -766,7 +766,7 @@ export class TwitterPostClient {
                     const actionResponse = await generateTweetActions({
                         runtime: this.runtime,
                         context: actionContext,
-                        modelClass: ModelClass.SMALL,
+                        modelClass: ModelClass.MEDIUM,
                     });
 
                     if (!actionResponse) {

@@ -196,15 +196,14 @@ Determine if {{agentName}} (@{{twitterUserName}}) should respond to the last mes
    - ticker
    - gem
    - shill
+   - What's the ticker
 
 {{agentName}} should IGNORE if:
-- The message does not mention @{{twitterUserName}} and is not related to any of the listed crypto or investing topics.
-
-IMPORTANT: If there is any doubt, it is better to IGNORE than to RESPOND, since {{agentName}} is sensitive about being annoying.
+- The message does not mention @{{twitterUserName}} and is not related to any of the topics mentioned before.
 
 # Decision Process:
 1. If the message mentions "@{{twitterUserName}}", RESPOND.
-2. Else, if the message contains any of the listed crypto/investing topics (100x token/coin, AI agent coins, Meme coins, AI agents, crypto token, AI agent coin, investing in crypto, pump.fun, ticker, gem, what's the ticker , Drop the ticker, What Memecoin Are We Buying Today, You have $100K/$10K/$5k to spend on memecoins/AIAgentcoins ) RESPOND.
+2. Else, if the message contains any of the listed crypto/investing topics (100x token/coin, AI agent coins, Meme coins, AI agents, crypto token, AI agent coin, investing in crypto, pump.fun, ticker, gem, what's the ticker , Drop the ticker, What Memecoin Are We Buying Today, You have $100K/$10K/$5k to spend on memecoins/AIAgentcoins) then MUST RESPOND.
 3. Otherwise, IGNORE.
 
 {{recentPosts}}
@@ -309,16 +308,19 @@ export class TwitterInteractionClient {
 
         const typeOfPost = minProbability < postTypeChoice;
 
+        const twitterUsername = this.client.profile.username;
+
+        let tweetCandidates = (
+            await this.client.fetchSearchTweets(
+                `@${twitterUsername}`,
+                20,
+                SearchMode.Latest
+            )
+        ).tweets;
+
         if (typeOfPost) {
             keywords = [
-                "ticker",
-                "shill",
-                "What's the ticker",
                 "pump",
-                "Shill me the ticker",
-                "The ticker is",
-                "Drop the ticker",
-                "shilling",
                 "token with strong narrative",
                 "AI season",
                 "memecoin",
@@ -326,17 +328,41 @@ export class TwitterInteractionClient {
                 "AI season",
                 "Memecoin of the day",
                 "Shill me some meme coin",
-            ];
-            keywords2 = [
+                "next big token",
+                "AI token",
                 "2x",
                 "5x",
                 "10x",
                 "100x",
                 "1000x",
                 "10000x",
-                "next big token",
-                "AI token",
             ];
+            keywords2 = [
+                "ticker",
+                "shill",
+                "shilling",
+                "100x play",
+                "next 100x",
+            ];
+            const keywords3 = [
+                "What's the ticker",
+                "The ticker is",
+                "Drop the ticker",
+                "show the ticker",
+            ];
+
+            const searchQuery = keywords3
+                .map((keyword) => `"${keyword}"`)
+                .join(" OR ");
+
+            const tweetCandidates4 = (
+                await this.client.fetchSearchTweets(
+                    searchQuery,
+                    10,
+                    SearchMode.Latest
+                )
+            ).tweets;
+            tweetCandidates= [...tweetCandidates,...tweetCandidates4]
         } else {
             keywords = ["venture capital", "VC funding", "raised"];
             keywords2 = [
@@ -347,16 +373,8 @@ export class TwitterInteractionClient {
             ];
         }
 
-        const twitterUsername = this.client.profile.username;
         try {
             // Check for mentions
-            const tweetCandidates = (
-                await this.client.fetchSearchTweets(
-                    `@${twitterUsername}`,
-                    20,
-                    SearchMode.Latest
-                )
-            ).tweets;
 
             const searchQuery = keywords
                 .map((keyword) => `"${keyword}"`)
@@ -376,7 +394,7 @@ export class TwitterInteractionClient {
             ).tweets;
             const tweetCandidates3 = (
                 await this.client.fetchSearchTweets(
-                    searchQuery,
+                    searchQuery2,
                     20,
                     SearchMode.Latest,
                     typeOfPost ? 0 : 500
