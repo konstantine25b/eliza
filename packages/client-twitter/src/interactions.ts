@@ -641,7 +641,7 @@ export class TwitterInteractionClient {
             try {
                 const userInfo = await this.client.fetchProfile(tweet.username);
                 console.log("targetUserInfo 1", userInfo);
-                const founderName = `${userInfo.screenName} (${userInfo.bio})`;
+                const founderName = `NAME: ${userInfo.screenName} (BIO: ${userInfo.bio})`;
 
                 const state1 = await this.runtime.composeState(message, {
                     name: userInfo.screenName,
@@ -664,7 +664,9 @@ export class TwitterInteractionClient {
                     await addFounder(
                         this.runtime,
                         this.client.profile.username,
-                        founderName
+                        `username: ${tweet.username} ,
+                        screenName: ${userInfo.screenName}
+                        bio: , (${userInfo.bio})`
                     );
                     console.log(
                         `Added founder: ${founderName} to founder list.`
