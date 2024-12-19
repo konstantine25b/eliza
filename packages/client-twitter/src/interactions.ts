@@ -664,7 +664,7 @@ export class TwitterInteractionClient {
                     await addFounder(
                         this.runtime,
                         this.client.profile.username,
-                        `username: ${tweet.username} ,
+                        `username: @${tweet.username} ,
                         screenName: ${userInfo.screenName}
                         bio: , (${userInfo.bio})`
                     );

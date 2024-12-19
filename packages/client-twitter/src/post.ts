@@ -979,9 +979,10 @@ export class TwitterPostClient {
                                     await addFounder(
                                         this.runtime,
                                         this.client.profile.username,
-                                        `username: ${tweet.username} ,
-                                        screenName: ${userInfo.screenName}
-                                        bio: , (${userInfo.bio})`
+                                        `username: @${tweet.username} ,
+                                         screenName: ${userInfo.screenName}
+                                         bio: (${userInfo.bio})
+                                         profile URL: `
                                     );
                                     console.log(
                                         `Added founder: ${founderName} to founder list.`
@@ -1206,7 +1207,7 @@ export class TwitterPostClient {
                                     await addFounder(
                                         this.runtime,
                                         this.client.profile.username,
-                                        `username: ${tweet.username} ,
+                                        `username: @${tweet.username} ,
                                         screenName: ${userInfo.screenName}
                                         bio: , (${userInfo.bio})`
                                     );
