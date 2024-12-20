@@ -596,3 +596,19 @@ export async function saveAdditionalFounder(founder: string) {
         );
     }
 }
+
+
+export function extractUsername(inputString: string): string | null {
+    /**
+     * Extracts the username from the input string.
+     *
+     * @param inputString - The string containing the username.
+     * @returns The extracted username or null if not found.
+     */
+    const match = inputString.match(/username: @([\w]+)/);
+
+    if (match) {
+        return match[1]; // Return the captured group (username)
+    }
+    return null;
+}

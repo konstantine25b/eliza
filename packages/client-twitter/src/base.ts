@@ -249,6 +249,16 @@ export class ClientBase extends EventEmitter {
         return homeTimeline.tweets;
     }
 
+    async fetchUserPosts(count: number, username: string): Promise<Tweet[]> {
+        elizaLogger.debug("fetching own posts");
+        const homeTimeline = await this.twitterClient.getUserTweets(
+            username,
+            count
+        );
+        return homeTimeline.tweets;
+    }
+
+
     async fetchHomeTimeline(count: number): Promise<Tweet[]> {
         elizaLogger.debug("fetching home timeline");
         const homeTimeline = await this.twitterClient.fetchHomeTimeline(

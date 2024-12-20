@@ -1,4 +1,4 @@
-import { Tweet } from "agent-twitter-client";
+import { SearchMode, Tweet } from "agent-twitter-client";
 import {
     composeContext,
     generateText,
@@ -11,6 +11,7 @@ import {
 import { elizaLogger } from "@ai16z/eliza";
 import { ClientBase } from "./base.ts";
 import {
+    extractUsername,
     initialFounders,
     loadAdditionalFounders,
     saveAdditionalFounder,
@@ -104,6 +105,9 @@ Now, meet Paul Rippon, one of the minds behind Monzo. Once upon a time, he had a
 # IMPORTANT always mention the founder's **full name** (first name and last name) in each post
 
 # Task: Generate a sarcastic, funny summary of a {{chosenFounder}} becoming a **vc bich** in the voice and style and perspective of {{agentName}} @{{twitterUserName}}.
+
+{{uniqueTweetCandidates}}
+
 Focus on mocking their "journey" from startup dreams to VC clutches. Mention name of their startup/company, highlight their project, ironic decisions, and the punchline of their **vc bich** status.
 # - Make it short, engaging, and Twitter-friendly,
 Write a 1-3 sentence post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
@@ -154,6 +158,9 @@ Now, meet Paul Rippon, one of the minds behind Monzo. Once upon a time, he had a
 4. maintain a short, sharp, twitter-friendly format.
 
 # Task: Generate a sarcastic, funny summary of a {{chosenFounder}} becoming a **vc bich** in the voice and style and perspective of {{agentName}} @{{twitterUserName}}.
+
+{{uniqueTweetCandidates}}
+
 Focus on mocking their "journey" from startup dreams to VC clutches. Mention name of their startup/company, highlight their project, ironic decisions, and the punchline of their **vc bich** status.
 # - Make it short, engaging, and Twitter-friendly,
 - ensure the "pump.fun" reference is not cut or shortened in the final text.
@@ -535,17 +542,61 @@ export class TwitterPostClient {
             const postTypeChoice = Math.random();
             const minProbability2 = 0.25;
 
+            const typeOfPost = postTypeChoice < minProbability;
+
             const topics = this.runtime.character.topics.join(", ");
 
             let chosenFounder: string = "";
+            let founderUsername: string = "";
+            let uniqueTweetCandidates: Tweet[] = [];
 
             // If we are generating a founder-focused post
-            if (postTypeChoice < minProbability) {
+            if (typeOfPost) {
                 chosenFounder = await getRandomFounder(
                     this.runtime,
                     this.client.profile.username
                 );
+
+                founderUsername = extractUsername(chosenFounder);
+                if (founderUsername != null) {
+                    const tweetCandidates1 = (
+                        await this.client.fetchSearchTweets(
+                            `@${founderUsername}`,
+                            20,
+                            SearchMode.Latest
+                        )
+                    ).tweets;
+                    const tweetCandidates2 = (
+                        await this.client.fetchSearchTweets(
+                            `@${founderUsername}`,
+                            20,
+                            SearchMode.Top
+                        )
+                    ).tweets;
+
+                    const tweetSet = new Map<string, Tweet>();
+                    [...tweetCandidates1, ...tweetCandidates2].forEach(
+                        (tweet) => {
+                            if (!tweetSet.has(tweet.id)) {
+                                tweetSet.set(tweet.id, tweet); // Use tweet.id as a unique key
+                            }
+                        }
+                    );
+
+                    uniqueTweetCandidates = Array.from(tweetSet.values());
+                    console.log("uniqueTweetCandidates", uniqueTweetCandidates);
+                }
             }
+            // Format `uniqueTweetCandidates` into a string
+            const formattedTweetCandidates = uniqueTweetCandidates
+                .map((tweet) => {
+                    const mentions =
+                        tweet.mentions.length > 0
+                            ? `, Mentions: [${tweet.mentions.map((mention) => `@${mention.username}`).join(", ")}]`
+                            : ""; // Add mentions only if there are any
+                    return `ID: ${tweet.id}, Username: @${tweet.username}, Text: "${tweet.text}", URL: ${tweet.permanentUrl}${mentions}`;
+                })
+                .join("\n");
 
             const state = await this.runtime.composeState(
                 {
@@ -560,6 +611,10 @@ export class TwitterPostClient {
                 {
                     twitterUserName: this.client.profile.username,
                     chosenFounder: chosenFounder !== "" ? chosenFounder : "",
+                    uniqueTweetCandidates:
+                        formattedTweetCandidates.length > 0
+                            ? formattedTweetCandidates
+                            : "",
                 }
             );
 
@@ -570,7 +625,7 @@ export class TwitterPostClient {
                         ? this.runtime.character.templates
                               ?.twitterPostFounderTemplate2 ||
                           twitterPostFounderTemplate2
-                        : postTypeChoice < minProbability
+                        : typeOfPost
                           ? this.runtime.character.templates
                                 ?.twitterPostFounderTemplate ||
                             twitterPostFounderTemplate
@@ -586,10 +641,9 @@ export class TwitterPostClient {
                 runtime: this.runtime,
                 context,
                 modelClass: ModelClass.MEDIUM,
-                curSystem:
-                    postTypeChoice < minProbability
-                        ? systemMessages.systemToken
-                        : systemMessages.systemMain,
+                curSystem: typeOfPost
+                    ? systemMessages.systemToken
+                    : systemMessages.systemMain,
             });
             console.log("newTweetContent ", newTweetContent);
 
@@ -942,7 +996,7 @@ export class TwitterPostClient {
                                     tweet.username
                                 );
                                 console.log("targetUserInfo 1", userInfo);
-                                const founderName = `NAME: ${userInfo.screenName} (BIO: ${userInfo.bio})`;;
+                                const founderName = `NAME: ${userInfo.screenName} (BIO: ${userInfo.bio})`;
 
                                 const state1 = await this.runtime.composeState(
                                     {
@@ -1170,7 +1224,7 @@ export class TwitterPostClient {
                                     tweet.username
                                 );
                                 console.log("targetUserInfo 1", userInfo);
-                                const founderName = `NAME: ${userInfo.screenName} (BIO: ${userInfo.bio})`;;
+                                const founderName = `NAME: ${userInfo.screenName} (BIO: ${userInfo.bio})`;
 
                                 const state1 = await this.runtime.composeState(
                                     {
