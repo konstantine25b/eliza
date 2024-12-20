@@ -463,63 +463,73 @@ export class ClientBase extends EventEmitter {
             // Sometimes this fails because we are rate limited. in this case, we just need to return an empty array
             // if we dont get a response in 5 seconds, something is wrong
             const timeoutPromise = new Promise((resolve) =>
-                setTimeout(() => resolve({ tweets: [] }), 10000)
+                setTimeout(() => resolve({ tweets: [] }), 30000)
             );
 
-            try {
-                const result = (await this.requestQueue.add(
-                    async () =>
-                        await Promise.race([
-                            this.twitterClient.fetchSearchTweets(
-                                query,
-                                maxTweets,
-                                searchMode,
-                                cursor
-                            ),
-                            timeoutPromise,
-                        ])
-                )) as QueryTweetsResponse;
-                const tweets = result?.tweets || [];
+            let tweets: Tweet[] = [];
+            let nextCursor = cursor;
 
-                if (minFollowers && minFollowers > 0) {
-                    const eligibleTweets = [];
+            while (tweets.length < maxTweets) {
+                try {
+                    const result = (await this.requestQueue.add(
+                        async () =>
+                            await Promise.race([
+                                this.twitterClient.fetchSearchTweets(
+                                    query,
+                                    ,
+                                    searchMode,
+                                    nextCursor
+                                ),
+                                timeoutPromise,
+                            ])
+                    )) as QueryTweetsResponse;
 
-                    for (const tweet of tweets) {
-                        try {
-                            // Fetch user profile for each tweet
-                            const profile =
-                                await this.twitterClient.fetchSearchProfiles(
-                                    tweet.userId,
-                                    1
-                                );
-                            const user = profile.profiles[0]; // Get the first profile
+                    if (!result || !result.tweets || result.tweets.length === 0)
+                        break;
 
-                            // Check if the user's followers count meets the minimum criteria
-                            if (user && user.followersCount >= minFollowers) {
-                                eligibleTweets.push(tweet);
-                            }
-                        } catch (error) {
-                            console.error(
-                                `Error fetching profile for user ${tweet.userId}:`,
-                                error
+                    tweets = tweets.concat(result.tweets);
+                    nextCursor = result.next;
+
+                    if (!nextCursor) break;
+                } catch (error) {
+                    elizaLogger.error("Error fetching search tweets:", error);
+                    break;
+                }
+            }
+
+            if (minFollowers && minFollowers > 0) {
+                const eligibleTweets = [];
+
+                for (const tweet of tweets) {
+                    try {
+                        const profile =
+                            await this.twitterClient.fetchSearchProfiles(
+                                tweet.userId,
+                                1
                             );
-                        }
-                    }
+                        const user = profile.profiles[0];
 
-                    // Return only eligible tweets
-                    return { tweets: eligibleTweets };
+                        if (user && user.followersCount >= minFollowers) {
+                            eligibleTweets.push(tweet);
+                        }
+                    } catch (error) {
+                        console.error(
+                            `Error fetching profile for user ${tweet.userId}:`,
+                            error
+                        );
+                    }
                 }
 
-                return (result ?? { tweets: [] }) as QueryTweetsResponse;
-            } catch (error) {
-                elizaLogger.error("Error fetching search tweets:", error);
-                return { tweets: [] };
+                return { tweets: eligibleTweets };
             }
+
+            return { tweets };
         } catch (error) {
             elizaLogger.error("Error fetching search tweets:", error);
             return { tweets: [] };
         }
     }
+
 
     private async populateTimeline() {
         elizaLogger.debug("populating timeline...");

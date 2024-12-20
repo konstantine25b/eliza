@@ -169,6 +169,93 @@ Write a 1-3 sentence post that is {{adjective}} about {{topic}} (without mention
 Brief, concise statements only. The total character count MUST be less than 1000. No emojis. Use \\n\\n (double spaces) between statements.
 # IMPORTANT Keep it within 1000 characters - double check this.`;
 
+const twitterPostFounderTemplate3 = `
+# Areas of Expertise
+{{knowledge}}
+
+# About {{agentName}} (@{{twitterUserName}}):
+{{bio}}
+{{lore}}
+{{topics}}
+
+{{providers}}
+
+# Here are some exemplary posts in the voice and style of {{agentName}}:
+
+Tag means tagging people or companies.
+The VC Bitch of this week is Bill Sun (tag), the founder of Pin AI (tag).
+Look at this post – he tries to make VC as happy as possible by commenting on how great they are.
+He’s bravely sharing how Balaji was his teacher at Stanford Alma Mater in 2015. Well, it’s been 9 years since then, and Bill doesn’t seem to become Balaji.
+https://x.com/BillSun_AI/status/1868821316629156018
+Here he tried to be contrarian with YC, but again, no one cares about sir Bill Sun, renowned VC Bitch crown holder
+https://x.com/BillSun_AI/status/1868811194007798128
+Here, he even tries to capture the attention of CZ by letting him know that there are two frontier, whatever it means
+https://x.com/BillSun_AI/status/1867298718728458245
+He also echoes Alexandr Wang, while Wang will never echo him :smiling_face_with_tear:
+https://x.com/BillSun_AI/status/1867297842135806005
+Idol Elon Musk to follow, thanks Bill
+https://x.com/BillSun_AI/status/1867094916150726947
+And, of course, he always remembers to please Hoseeb (tag) for his excellent meme framework. Well, that’s the only thing Bill was created for and did Phd at Stanford – pleasing other people without having his own opinion. It’s great to have you, Bill; investors can pour redundant money into so they can feel good while generating returns on real contrarian founders.
+https://x.com/BillSun_AI/status/1865084992491261967
+And, of course, he gets 186 views for saying how great is Jason Rosenthal (tag) from a16z.
+https://x.com/BillSun_AI/status/1859822445810811298
+Welcome to the club, VC Bitch Bill Sun (tag)
+
+Meet the one and only @alex_conneau, the founder of @WaveFormsAI. Let’s forget the fact that there’s nothing groundbreaking about his start-up and focus on what he’s really talented at - being
+a vc bitch.
+Instead of focusing on his product, he spends most of his time hanging out with @a16z
+https://x.com/alex_conneau/status/1866544940844769417
+Come on Alex. we know you’re trying so hard to be @sama, but you won’t get there by reposting his tweets.
+https://x.com/sama/status/1838644910985003126
+Fun fact: your repost doesn’t help Meta at all. You can stop promoting and keep your 140 views to yourself.
+https://x.com/AIatMeta/status/1818055906179105010
+I’ve got some advice for you. I know you love AI, you gotta try fundraising from @ai16z. I guess that’s a vc you’ll be glad to serve.
+I’m not gonna talk much. Welcome to the club, you little VC Bitch @alex_conneau
+
+{{postDirections}}
+
+Here are previous tweets from {{chosenFounder}}:
+
+{{uniqueTweetCandidates}}
+
+### Guidelines:
+- write in a casual manner, no caps, and no formal structure—keep it natural and relatable
+- each post must include the phrase "vc bich"
+- write in a casual, conversational tone
+- no caps, and keep it short and sharp
+- inject humor, sarcasm, and irony to highlight the "vc bich" transition
+- use varied opening styles
+- no obscene language other than "vc bich"
+- maintain a short, sharp, twitter-friendly format
+- always mention the founder's **full name** in each post
+
+# Additional Requirements:
+1. ensure compliance with twitter's guidelines, avoiding harassment or hate beyond the satirical "vc bich" reference.
+2. avoid overly personal attacks; focus on the irony of a founder’s behavior toward vcs.
+3. no obscene language other than the phrase "vc bich."
+4. maintain a short, sharp, twitter-friendly format.
+
+# IMPORTANT always mention the founder's **full name** (first name and last name) in each post
+
+# Task: Generate a sarcastic, funny summary of a {{chosenFounder}} becoming a **vc bich** in the voice and style and perspective of {{agentName}} @{{twitterUserName}}.
+
+Focus on:
+1. **Mocking their transition** from startup dreams to VC validation through specific tweet actions or decisions.
+2. **Highlighting their behavior** toward investors, influencers, or VCs.
+3. **Using tweets to illustrate their actions**, ensuring each critique is tied to a specific post.
+4. Ending with their induction into the "VC Bitch Hall of Fame."
+
+### Structure:
+1. **Introduction**: Announce the VC Bitch by name, startup, and relevant affiliations.
+2. **Tweet Analysis**: Choose 3-5 tweets and add sarcastic commentary for each. Include tweet links. Embed tweet links as full URLs in the sentences naturally.
+3. **Closing**: Wrap up with a witty summary, including the phrase “VC Bitch Hall of Fame.”
+
+Focus on mocking their "journey" from startup dreams to VC clutches. Mention name of their startup/company, highlight their project, ironic decisions, and the punchline of their **vc bich** status.
+# - Make engaging, and Twitter-friendly,
+Write a post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
+The total character count MUST be less than 1500. Use \\n\\n (double spaces) between statements.
+# IMPORTANT Keep it within 1500 characters - double check this.
+`;
 export const twitterActionTemplate =
     `
 # INSTRUCTIONS: Determine actions for {{agentName}} (@{{twitterUserName}}) based on:
@@ -237,7 +324,7 @@ Tweet:
 
 # Respond with qualifying action tags only.` + postActionResponseFooter;
 
-const MAX_TWEET_LENGTH = 275;
+const MAX_TWEET_LENGTH = 1500;
 
 // Function to initialize founder list in cache if not already present
 async function initializeFounderList(runtime: IAgentRuntime, username: string) {
@@ -249,17 +336,11 @@ async function initializeFounderList(runtime: IAgentRuntime, username: string) {
     const allFounders = [...initialFounders, ...additionalFounders];
     console.log("additionalFounders ", additionalFounders);
 
-    const existing = await runtime.cacheManager.get<string[]>(
-        "twitter/" + username + "/founderList"
+    await runtime.cacheManager.set(
+        "twitter/" + username + "/founderList",
+        allFounders
     );
-
-    if (!existing || existing.length < 500) {
-        await runtime.cacheManager.set(
-            "twitter/" + username + "/founderList",
-            allFounders
-        );
-        elizaLogger.log("Founder list initialized with default founders.");
-    }
+    elizaLogger.log("Founder list initialized with default founders.");
 }
 
 // // Function to add a new founder dynamically
@@ -295,22 +376,23 @@ export async function addFounder(
     if (!allFounders.includes(founderName)) {
         // Save to additional founders file
         await saveAdditionalFounder(founderName);
+        initializeFounderList(runtime, username);
     }
 
     // Existing cache list logic
-    const founderList =
-        (await runtime.cacheManager.get<string[]>(
-            "twitter/" + username + "/founderList"
-        )) || [];
+    // const founderList =
+    //     (await runtime.cacheManager.get<string[]>(
+    //         "twitter/" + username + "/founderList"
+    //     )) || [];
 
-    if (!founderList.includes(founderName)) {
-        founderList.push(founderName);
+    // if (!founderList.includes(founderName)) {
+    //     founderList.push(founderName);
 
-        await runtime.cacheManager.set(
-            "twitter/" + username + "/founderList",
-            founderList
-        );
-    }
+    //     await runtime.cacheManager.set(
+    //         "twitter/" + username + "/founderList",
+    //         founderList
+    //     );
+    // }
 
     elizaLogger.log(`Founder "${founderName}" added to the list.`);
 }
@@ -330,12 +412,18 @@ async function getFounderList(
     // await runtime.cacheManager.delete("twitter/" + username + "/founderList");
     // await runtime.cacheManager.set("twitter/" + username + "/founderList", []);
 
-    if (!founderList || founderList.length < 100) {
+    if (!founderList) {
         // If for some reason the list is empty, re-initialize.
         await initializeFounderList(runtime, username);
-        return initialFounders;
+        const founderList1 = await runtime.cacheManager.get<string[]>(
+            "twitter/" + username + "/founderList"
+        );
+        return founderList1;
     }
-    console.log("founderList222", founderList);
+    console.log("Founders List:");
+    founderList.forEach((founder, index) => {
+        console.log(`${index + 1}: ${founder}`);
+    });
     return founderList;
 }
 
@@ -347,6 +435,7 @@ async function getRandomFounder(
     username: string
 ): Promise<string> {
     const founderList = await getFounderList(runtime, username);
+    console.log("founderList12",founderList)
     // Ensure we have at least two founders
     if (founderList.length < 2) {
         elizaLogger.warn(
@@ -415,6 +504,7 @@ export class TwitterPostClient {
         if (!this.client.profile) {
             await this.client.init();
         }
+        await initializeFounderList(this.runtime, this.client.profile.username);
 
         const generateNewTweetLoop = async () => {
             const lastPost = await this.runtime.cacheManager.get<{
@@ -561,14 +651,15 @@ export class TwitterPostClient {
                 if (founderUsername != null) {
                     const tweetCandidates1 = (
                         await this.client.fetchSearchTweets(
-                            `@${founderUsername}`,
-                            20,
+                            `from:${founderUsername}`,
+                            40,
                             SearchMode.Latest
                         )
                     ).tweets;
+                    console.log("tweetCandidates1.length",tweetCandidates1.length)
                     const tweetCandidates2 = (
                         await this.client.fetchSearchTweets(
-                            `@${founderUsername}`,
+                            `from:${founderUsername}`,
                             20,
                             SearchMode.Top
                         )
@@ -584,7 +675,7 @@ export class TwitterPostClient {
                     );
 
                     uniqueTweetCandidates = Array.from(tweetSet.values());
-                    console.log("uniqueTweetCandidates", uniqueTweetCandidates);
+                    // console.log("uniqueTweetCandidates", uniqueTweetCandidates);
                 }
             }
             // Format `uniqueTweetCandidates` into a string
@@ -621,16 +712,20 @@ export class TwitterPostClient {
             const context = composeContext({
                 state,
                 template:
-                    postTypeChoice < minProbability2
+                    formattedTweetCandidates.length > 0
                         ? this.runtime.character.templates
-                              ?.twitterPostFounderTemplate2 ||
-                          twitterPostFounderTemplate2
-                        : typeOfPost
+                              ?.twitterPostFounderTemplate3 ||
+                          twitterPostFounderTemplate3
+                        : postTypeChoice < minProbability2
                           ? this.runtime.character.templates
-                                ?.twitterPostFounderTemplate ||
-                            twitterPostFounderTemplate
-                          : this.runtime.character.templates
-                                ?.twitterPostTemplate || twitterPostTemplate,
+                                ?.twitterPostFounderTemplate2 ||
+                            twitterPostFounderTemplate2
+                          : typeOfPost
+                            ? this.runtime.character.templates
+                                  ?.twitterPostFounderTemplate ||
+                              twitterPostFounderTemplate
+                            : this.runtime.character.templates
+                                  ?.twitterPostTemplate || twitterPostTemplate,
             });
             console.log("context12k ", postTypeChoice);
             console.log("context123 ", context);
@@ -886,11 +981,11 @@ export class TwitterPostClient {
                 .sort((a, b) => a.id.localeCompare(b.id))
                 .filter((tweet) => tweet.userId !== this.client.profile.id);
             const results = [];
-            console.log(
-                "fetchTimelineForActions1",
-                homeTimeline,
-                homeTimeline.length
-            );
+            // console.log(
+            //     "fetchTimelineForActions1",
+            //     homeTimeline,
+            //     homeTimeline.length
+            // );
 
             for (const tweet of homeTimeline) {
                 try {
