@@ -683,11 +683,56 @@ export class TwitterPostClient {
         this.twitterUsername = runtime.getSetting("TWITTER_USERNAME");
     }
 
-    private getRandomDate(): string {
-        const start = new Date(2020, 0, 1).getTime(); // Starting point (e.g., Jan 1, 2020)
+    private getRandomLocation(): string {
+        const locations = [
+            "near:NYC within:15mi",
+            "near:LosAngeles within:20mi",
+            "near:Berlin within:10km",
+            "near:London within:10mi",
+            "near:SanFrancisco within:10mi",
+            "near:Tokyo within:5km",
+            "near:Sydney within:10km",
+        ];
+
+        // 80% chance to use a location, 20% to return an empty string
+        if (Math.random() < 0.8) {
+            return locations[Math.floor(Math.random() * locations.length)];
+        } else {
+            return ""; // No location
+        }
+    }
+    // Helper to generate a random date range
+    private getRandomDateRange(): { sinceDate: string; untilDate: string } {
+        const start = new Date(2020, 0, 1).getTime(); // e.g., since Jan 1, 2020
         const end = new Date().getTime(); // Current date
-        const randomTime = new Date(start + Math.random() * (end - start));
-        return randomTime.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+        const randomSince = new Date(start + Math.random() * (end - start));
+        // Make sure the "until" date is after "since"
+        const randomUntil = new Date(
+            randomSince.getTime() +
+                Math.random() * (end - randomSince.getTime())
+        );
+
+        // Format as YYYY-MM-DD for Twitter
+        return {
+            sinceDate: randomSince.toISOString().split("T")[0],
+            untilDate: randomUntil.toISOString().split("T")[0],
+        };
+    }
+
+    // Helper to pick a random language
+    private getRandomLanguage(): string {
+        const langs = ["lang:en", "lang:es", "lang:fr", "lang:de", "lang:it"];
+        return langs[Math.floor(Math.random() * langs.length)];
+    }
+
+    // Helper to pick a random extra keyword
+    private getRandomKeyword(): string {
+        const keywords = ["startup", "innovation", "tech", "ai", "business"];
+        // 50% chance to include or skip an extra keyword, for randomness
+        if (Math.random() < 0.5) {
+            return "";
+        }
+        return keywords[Math.floor(Math.random() * keywords.length)];
     }
 
     private async getFoundersAndCEOs() {
@@ -695,8 +740,34 @@ export class TwitterPostClient {
         const profilesPerCall = 10; // Number of profiles per call
 
         // Add a random time filter to the query (e.g., recent or specific month/year)
-        const randomDate = this.getRandomDate();
-        const query = `${baseQuery} since:${randomDate}`;
+        const { sinceDate, untilDate } = this.getRandomDateRange();
+
+        // 2. Pick a random language from a set of supported ones.
+        const randomLanguage = this.getRandomLanguage();
+
+        // 3. Get an extra random keyword (e.g., "startup", "tech", "innovation").
+        const extraKeyword = this.getRandomKeyword();
+
+        // 4. Decide randomly whether to add a negation filter or not.
+        const negationFilter = Math.random() < 0.5 ? "-filter:verified" : "";
+
+        // 5. Build the final query string.
+        // Note that some advanced operators like near: or within: are typically for tweets,
+        // and might not work for profile searches. Still, we'll show it as an example.
+        const randomLocation = this.getRandomLocation();
+        const queryParts: string[] = [
+            baseQuery,
+            extraKeyword,
+            `since:${sinceDate}`,
+            `until:${untilDate}`,
+            randomLanguage,
+            negationFilter,
+            randomLocation,
+        ];
+        const query = queryParts.filter(Boolean).join(" ");
+
+        console.log("Generated Query:", query);
+
         const profilesIterator = this.client.twitterClient.searchProfiles(
             query,
             profilesPerCall
@@ -707,9 +778,12 @@ export class TwitterPostClient {
         for await (const profile of profilesIterator) {
             console.log("LIIIST1", profile);
             if (
-                profile.biography &&
-                (profile.biography.toLowerCase().includes("founder") ||
-                    profile.biography.toLowerCase().includes("ceo"))
+                (profile.biography &&
+                    (profile.biography.toLowerCase().includes("founder") ||
+                        profile.biography.toLowerCase().includes("ceo"))) ||
+                (profile.name &&
+                    (profile.name.toLowerCase().includes("founder") ||
+                        profile.name.toLowerCase().includes("ceo")))
             ) {
                 await addFounder(
                     this.runtime,
