@@ -57,7 +57,7 @@ const twitterPostTemplate = `
 3. no obscene language other than the phrase 'vc bich.'
 
 # Task: Generate a post in the voice and style and perspective of {{agentName}} @{{twitterUserName}}.
-Write a 1-3 sentence post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
+Write a post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
 Your response should not contain any questions. Brief, concise statements only. The total character count MUST be less than {{maxTweetLength}}. No emojis. Use \\n\\n (double spaces) between statements.`;
 
 const twitterPostFounderTemplate = `
@@ -110,9 +110,9 @@ Now, meet Paul Rippon, one of the minds behind Monzo. Once upon a time, he had a
 
 Focus on mocking their "journey" from startup dreams to VC clutches. Mention name of their startup/company, highlight their project, ironic decisions, and the punchline of their **vc bich** status.
 # - Make it short, engaging, and Twitter-friendly,
-Write a 1-3 sentence post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
-Brief, concise statements only. The total character count MUST be less than 1000. No emojis. Use \\n\\n (double spaces) between statements.
-# IMPORTANT Keep it within 1000 characters - double check this.
+Write a post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
+Brief, concise statements only. The total character count MUST be less than 1500. No emojis. Use \\n\\n (double spaces) between statements.
+# IMPORTANT Keep it within 1500 characters - double check this.
 `;
 
 const twitterPostFounderTemplate2 = `
@@ -165,9 +165,9 @@ Focus on mocking their "journey" from startup dreams to VC clutches. Mention nam
 # - Make it short, engaging, and Twitter-friendly,
 - ensure the "pump.fun" reference is not cut or shortened in the final text.
 # IMPORTANT Ensure the post relates to a real founder, and includes a token name $VCBITCH.
-Write a 1-3 sentence post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
-Brief, concise statements only. The total character count MUST be less than 1000. No emojis. Use \\n\\n (double spaces) between statements.
-# IMPORTANT Keep it within 1000 characters - double check this.`;
+Write a post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
+Brief, concise statements only. The total character count MUST be less than 1500. No emojis. Use \\n\\n (double spaces) between statements.
+# IMPORTANT Keep it within 1500 characters - double check this.`;
 
 const twitterPostFounderTemplate3 = `
 # Areas of Expertise
@@ -212,6 +212,19 @@ https://x.com/AIatMeta/status/1818055906179105010
 I’ve got some advice for you. I know you love AI, you gotta try fundraising from @ai16z. I guess that’s a vc you’ll be glad to serve.
 I’m not gonna talk much. Welcome to the club, you little VC Bitch @alex_conneau
 
+When we thought it was over, another one appears - I guess, we're just getting started. Meet @Alexforglobal, the founder of Liberal AI. This guy is a total vc bitch.
+I see he's set his location to San Francisco, hoping that he's gonna get noticed by vcs. vcs don't look for founders like him, they already have enough puppets.
+Reposting @elonmusk won't help either. What will Elon think? "Oh, another AI founder who solves the non--existent problem just by putting AI in the name". I bet he has seen no one like you, you're different
+https://x.com/elonmusk/status/1854339192794251529
+Here's a post of him praising vc pitching culture, hoping that he will get there one day.
+https://x.com/Alexforglobal/status/1838102155779297553
+Another @ElonMusk quote tweet. Nothing special from a person who is nothing special himself.
+https://x.com/Alexforglobal/status/1832272101790851190
+Posting fake stories of his friends creating another "200m AI start-up". It's a shame that his company is barely searchable, he can't even make up stories about it.
+https://x.com/Alexforglobal/status/1826776947868741902
+Alex if you're reading this, I know all you care about is some appreciation from VCs, but I bet you they won't even notice you.
+Welcome to the club vc bitch and remember - the water under the golden gate is freezing cold.
+
 {{postDirections}}
 
 Here are previous tweets from {{chosenFounder}}:
@@ -235,7 +248,7 @@ Here are previous tweets from {{chosenFounder}}:
 3. no obscene language other than the phrase "vc bich."
 4. maintain a short, sharp, twitter-friendly format.
 
-# IMPORTANT always mention the founder's **full name** (first name and last name) in each post
+# IMPORTANT always mention the founder's **full name** (first name and last name) in each post and tag the founder and all relevant people by username.
 
 # Task: Generate a sarcastic, funny summary of a {{chosenFounder}} becoming a **vc bich** in the voice and style and perspective of {{agentName}} @{{twitterUserName}}.
 
@@ -246,15 +259,15 @@ Focus on:
 4. Ending with their induction into the "VC Bitch Hall of Fame."
 
 ### Structure:
-1. **Introduction**: Announce the VC Bitch by name, startup, and relevant affiliations.
+1. **Introduction**: Announce the VC Bitch by name, tag by username, startup, and relevant affiliations.
 2. **Tweet Analysis**: Choose 3-5 tweets and add sarcastic commentary for each. Include tweet links. Embed tweet links as full URLs in the sentences naturally.
 3. **Closing**: Wrap up with a witty summary, including the phrase “VC Bitch Hall of Fame.”
 
 Focus on mocking their "journey" from startup dreams to VC clutches. Mention name of their startup/company, highlight their project, ironic decisions, and the punchline of their **vc bich** status.
 # - Make engaging, and Twitter-friendly,
 Write a post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
-The total character count MUST be less than 1500. Use \\n\\n (double spaces) between statements.
-# IMPORTANT Keep it within 1500 characters - double check this.
+The total character count MUST be less than 2000. Use \\n\\n (double spaces) between statements.
+# IMPORTANT Keep it within 2000 characters - double check this.
 `;
 export const twitterActionTemplate =
     `
@@ -324,7 +337,7 @@ Tweet:
 
 # Respond with qualifying action tags only.` + postActionResponseFooter;
 
-const MAX_TWEET_LENGTH = 1500;
+const MAX_TWEET_LENGTH = 2500;
 
 // Function to initialize founder list in cache if not already present
 async function initializeFounderList(runtime: IAgentRuntime, username: string) {
@@ -435,7 +448,36 @@ async function getRandomFounder(
     username: string
 ): Promise<string> {
     const founderList = await getFounderList(runtime, username);
-    console.log("founderList12",founderList)
+    console.log("founderList12", founderList);
+    // Ensure we have at least two founders
+    if (founderList.length < 2) {
+        elizaLogger.warn(
+            "Not enough founders to ensure non-repetition. Consider adding more."
+        );
+        return founderList[0];
+    }
+
+    const lastFounder = await runtime.cacheManager.get<string>(
+        "twitter/" + username + "/lastFounder"
+    );
+    let availableFounders = founderList;
+    if (lastFounder && founderList.includes(lastFounder)) {
+        availableFounders = founderList.filter((f) => f !== lastFounder);
+    }
+    const chosen =
+        availableFounders[Math.floor(Math.random() * availableFounders.length)];
+    await runtime.cacheManager.set(
+        "twitter/" + username + "/lastFounder",
+        chosen
+    );
+    return chosen;
+}
+async function getAdditionalRandomFounder(
+    runtime: IAgentRuntime,
+    username: string
+): Promise<string> {
+    const founderList = await loadAdditionalFounders();
+
     // Ensure we have at least two founders
     if (founderList.length < 2) {
         elizaLogger.warn(
@@ -628,9 +670,10 @@ export class TwitterPostClient {
                 "twitter"
             );
 
-            const minProbability = 0.5;
+            const minProbability = 0.6;
             const postTypeChoice = Math.random();
-            const minProbability2 = 0.25;
+            const minProbability2 = 0.35;
+            const minProbability3 = 0.1;
 
             const typeOfPost = postTypeChoice < minProbability;
 
@@ -642,10 +685,17 @@ export class TwitterPostClient {
 
             // If we are generating a founder-focused post
             if (typeOfPost) {
-                chosenFounder = await getRandomFounder(
-                    this.runtime,
-                    this.client.profile.username
-                );
+                if (postTypeChoice < minProbability3) {
+                    chosenFounder = await getAdditionalRandomFounder(
+                        this.runtime,
+                        this.client.profile.username
+                    );
+                } else {
+                    chosenFounder = await getRandomFounder(
+                        this.runtime,
+                        this.client.profile.username
+                    );
+                }
 
                 founderUsername = extractUsername(chosenFounder);
                 if (founderUsername != null) {
@@ -656,7 +706,10 @@ export class TwitterPostClient {
                             SearchMode.Latest
                         )
                     ).tweets;
-                    console.log("tweetCandidates1.length",tweetCandidates1.length)
+                    console.log(
+                        "tweetCandidates1.length",
+                        tweetCandidates1.length
+                    );
                     const tweetCandidates2 = (
                         await this.client.fetchSearchTweets(
                             `from:${founderUsername}`,
@@ -801,7 +854,7 @@ export class TwitterPostClient {
 
                 const result = await this.client.requestQueue.add(
                     async () =>
-                        await this.client.twitterClient.sendTweet(
+                        await this.client.twitterClient.sendLongTweet(
                             cleanedContent
                         )
                 );
@@ -1538,7 +1591,7 @@ export class TwitterPostClient {
             );
             const result = await this.client.requestQueue.add(
                 async () =>
-                    await this.client.twitterClient.sendTweet(
+                    await this.client.twitterClient.sendLongTweet(
                         cleanedReplyText,
                         tweet.id
                     )
