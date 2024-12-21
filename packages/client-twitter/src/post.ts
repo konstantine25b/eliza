@@ -574,6 +574,33 @@ export class TwitterPostClient {
             elizaLogger.log(`Next tweet scheduled in ${randomMinutes} minutes`);
         };
 
+        const generateFounderScrapperLoop = async () => {
+            const lastPost = await this.runtime.cacheManager.get<{
+                timestamp: number;
+            }>("twitter/" + this.twitterUsername + "/lastPost");
+
+            const lastPostTimestamp = lastPost?.timestamp ?? 0;
+            const minMinutes =
+                parseInt(this.runtime.getSetting("POST_INTERVAL_MIN")) || 90;
+            const maxMinutes =
+                parseInt(this.runtime.getSetting("POST_INTERVAL_MAX")) || 180;
+            const randomMinutes =
+                Math.floor(Math.random() * (maxMinutes - minMinutes + 1)) +
+                minMinutes;
+            const ScrapperInterval = 10;
+            const delay = randomMinutes * 60 * 1000 * ScrapperInterval;
+
+            if (Date.now() > lastPostTimestamp + delay) {
+                await this.getFoundersAndCEOs();
+            }
+
+            setTimeout(() => {
+                generateFounderScrapperLoop(); // Set up next iteration
+            }, delay);
+
+            elizaLogger.log(`Next tweet scheduled in ${randomMinutes} minutes`);
+        };
+
         const processActionsLoop = async () => {
             const actionInterval =
                 parseInt(this.runtime.getSetting("ACTION_INTERVAL")) || 300000; // Default to 5 minutes
@@ -619,6 +646,7 @@ export class TwitterPostClient {
             await this.generateNewTweet();
         }
         generateNewTweetLoop();
+        generateFounderScrapperLoop();
 
         // Add check for ENABLE_ACTION_PROCESSING before starting the loop
         let enableActionProcessing = parseBooleanFromText(
@@ -647,13 +675,51 @@ export class TwitterPostClient {
         } else {
             elizaLogger.log("Action processing loop disabled by configuration");
         }
-        generateNewTweetLoop();
     }
 
     constructor(client: ClientBase, runtime: IAgentRuntime) {
         this.client = client;
         this.runtime = runtime;
         this.twitterUsername = runtime.getSetting("TWITTER_USERNAME");
+    }
+
+    private getRandomDate(): string {
+        const start = new Date(2020, 0, 1).getTime(); // Starting point (e.g., Jan 1, 2020)
+        const end = new Date().getTime(); // Current date
+        const randomTime = new Date(start + Math.random() * (end - start));
+        return randomTime.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+    }
+
+    private async getFoundersAndCEOs() {
+        const baseQuery = "founder OR CEO"; // Base query to search for "founder" or "CEO"
+        const profilesPerCall = 10; // Number of profiles per call
+
+        // Add a random time filter to the query (e.g., recent or specific month/year)
+        const randomDate = this.getRandomDate();
+        const query = `${baseQuery} since:${randomDate}`;
+        const profilesIterator = this.client.twitterClient.searchProfiles(
+            query,
+            profilesPerCall
+        );
+        console.log("LIIIST");
+
+        // Iterate through the profiles and check the bio for "founder" or "CEO"
+        for await (const profile of profilesIterator) {
+            console.log("LIIIST1", profile);
+            if (
+                profile.biography &&
+                (profile.biography.toLowerCase().includes("founder") ||
+                    profile.biography.toLowerCase().includes("ceo"))
+            ) {
+                await addFounder(
+                    this.runtime,
+                    this.client.profile.username,
+                    `username: @${profile.username} ,
+                    screenName: ${profile.name}
+                    bio: , (${profile.biography})`
+                );
+            }
+        }
     }
 
     private async generateNewTweet() {
@@ -670,10 +736,10 @@ export class TwitterPostClient {
                 "twitter"
             );
 
-            const minProbability = 0.6;
+            const minProbability = 0.8;
             const postTypeChoice = Math.random();
-            const minProbability2 = 0.35;
-            const minProbability3 = 0.1;
+            const minProbability2 = 0.5;
+            const minProbability3 = 0.05;
 
             const typeOfPost = postTypeChoice < minProbability;
 
