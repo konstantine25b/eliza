@@ -258,6 +258,13 @@ Focus on:
 3. **Using tweets to illustrate their actions**, ensuring each critique is tied to a specific post.
 4. Ending with their induction into the "VC Bitch Hall of Fame."
 
+#Analyze Tweets:
+1. Use only tweets directly relevant to the founder’s behavior toward VCs, influencers, or startup culture.
+2. Tweets should showcase specific actions or decisions that highlight their attempts to seek validation or attention from VCs.
+3. Exclude tweets that are irrelevant, off-topic, or about random personal or generic content unrelated to the theme.
+
+IMPORTANT: Only include tweets tied to the founder's startup behavior, interactions with VCs, or influencer engagement. Do not include random or irrelevant tweets. Validate the context of each tweet before including it.
+
 ### Structure:
 1. **Introduction**: Announce the VC Bitch by name, tag by username, startup, and relevant affiliations.
 2. **Tweet Analysis**: Choose 3-5 tweets and add sarcastic commentary for each. Include tweet links. Embed tweet links as full URLs in the sentences naturally.
@@ -286,6 +293,8 @@ choose Action if:
 - Pitch deck
 - Angel investor
 - Startup funding
+- should also respond to tweets tied to the startup behavior, interactions with VCs, or influencer engagement.
+- Do not respond to random or irrelevant tweets.
 
 Actions (respond only with tags):
 [LIKE] - Resonates with interests (9/10)
@@ -587,7 +596,7 @@ export class TwitterPostClient {
             const randomMinutes =
                 Math.floor(Math.random() * (maxMinutes - minMinutes + 1)) +
                 minMinutes;
-            const ScrapperInterval = 10;
+            const ScrapperInterval = 15;
             const delay = randomMinutes * 60 * 1000 * ScrapperInterval;
 
             if (Date.now() > lastPostTimestamp + delay) {
@@ -785,13 +794,15 @@ export class TwitterPostClient {
                     (profile.name.toLowerCase().includes("founder") ||
                         profile.name.toLowerCase().includes("ceo")))
             ) {
-                await addFounder(
-                    this.runtime,
-                    this.client.profile.username,
-                    `username: @${profile.username} ,
-                    screenName: ${profile.name}
-                    bio: , (${profile.biography})`
-                );
+                if (profile.followersCount > 1000) {
+                    await addFounder(
+                        this.runtime,
+                        this.client.profile.username,
+                        `username: @${profile.username} ,
+                        screenName: ${profile.name}
+                        bio: , (${profile.biography})`
+                    );
+                }
             }
         }
     }
@@ -842,7 +853,7 @@ export class TwitterPostClient {
                     const tweetCandidates1 = (
                         await this.client.fetchSearchTweets(
                             `from:${founderUsername}`,
-                            40,
+                            50,
                             SearchMode.Latest
                         )
                     ).tweets;
