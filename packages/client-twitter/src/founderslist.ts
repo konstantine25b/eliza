@@ -567,13 +567,18 @@ const ADDITIONAL_FOUNDERS_PATH = path.resolve(
     __dirname,
     "../src/data/additionalFounders.json"
 );
+const USED_FOUNDERS_PATH = path.resolve(
+    __dirname,
+    "../src/data/usedFounders.json"
+);
 
 console.log("Resolved Path:", ADDITIONAL_FOUNDERS_PATH);
+console.log("Resolved Path:", USED_FOUNDERS_PATH);
 
-// Function to load additional founders
-export async function loadAdditionalFounders(): Promise<string[]> {
+// Function to load founders (additional or used)
+async function loadFounders(filePath: string): Promise<string[]> {
     try {
-        const data = await fs.readFile(ADDITIONAL_FOUNDERS_PATH, "utf8");
+        const data = await fs.readFile(filePath, "utf8");
         return JSON.parse(data);
     } catch (error) {
         // If file doesn't exist or is invalid, return an empty array
@@ -582,21 +587,46 @@ export async function loadAdditionalFounders(): Promise<string[]> {
     }
 }
 
-// Function to save additional founders
-export async function saveAdditionalFounder(founder: string) {
-    const additionalFounders = await loadAdditionalFounders();
+export async function saveFounder(founder: string, filePath: string) {
+    const username = extractUsername(founder);
+    if (username) {
+        const founders = await loadFounders(filePath);
 
-    // Only add if not already in the list
-    if (!additionalFounders.includes(founder)) {
-        additionalFounders.push(founder);
+        // Check if the username is already included in any of the founder strings
+        const isUsernameExist = founders.some((existingFounder) => {
+            const existingUsername = extractUsername(existingFounder);
+            return existingUsername === username;
+        });
 
-        await fs.writeFile(
-            ADDITIONAL_FOUNDERS_PATH,
-            JSON.stringify(additionalFounders, null, 2)
-        );
+        // Only add if the username is not already in the list
+        if (!isUsernameExist) {
+            founders.push(founder);
+
+            await fs.writeFile(filePath, JSON.stringify(founders, null, 2));
+        }
+    } else {
+        console.error("Invalid founder input: No username found");
     }
 }
 
+// Functions for saving additional and used founders
+export async function loadAdditionalFounders() {
+   return await loadFounders(ADDITIONAL_FOUNDERS_PATH);
+}
+
+// Functions for saving additional and used founders
+export async function loadUsedFounders() {
+    return await loadFounders(USED_FOUNDERS_PATH);
+ }
+
+// Functions for saving additional and used founders
+export async function saveAdditionalFounder(founder: string) {
+    await saveFounder(founder, ADDITIONAL_FOUNDERS_PATH);
+}
+
+export async function saveUsedFounder(founder: string) {
+    await saveFounder(founder, USED_FOUNDERS_PATH);
+}
 
 export function extractUsername(inputString: string): string | null {
     /**

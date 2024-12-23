@@ -15,6 +15,8 @@ import {
     initialFounders,
     loadAdditionalFounders,
     saveAdditionalFounder,
+    loadUsedFounders,
+    saveUsedFounder,
 } from "./founderslist.ts";
 import { systemMessages } from "./systemMessages.ts";
 import { postActionResponseFooter } from "@ai16z/eliza";
@@ -486,6 +488,7 @@ async function getAdditionalRandomFounder(
     username: string
 ): Promise<string> {
     const founderList = await loadAdditionalFounders();
+    const usedFounders = await loadUsedFounders();
 
     // Ensure we have at least two founders
     if (founderList.length < 2) {
@@ -498,16 +501,29 @@ async function getAdditionalRandomFounder(
     const lastFounder = await runtime.cacheManager.get<string>(
         "twitter/" + username + "/lastFounder"
     );
+
     let availableFounders = founderList;
     if (lastFounder && founderList.includes(lastFounder)) {
         availableFounders = founderList.filter((f) => f !== lastFounder);
     }
+
+    availableFounders = availableFounders.filter(
+        (f) => !usedFounders.includes(f)
+    );
+    if (availableFounders.length === 0) {
+        elizaLogger.warn("No available founders to choose from.");
+        return founderList[0]; // fallback
+    }
+
     const chosen =
         availableFounders[Math.floor(Math.random() * availableFounders.length)];
     await runtime.cacheManager.set(
         "twitter/" + username + "/lastFounder",
         chosen
     );
+
+    await saveUsedFounder(chosen);
+
     return chosen;
 }
 /**
