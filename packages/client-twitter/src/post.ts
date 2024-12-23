@@ -260,17 +260,17 @@ Focus on:
 3. **Using tweets to illustrate their actions**, ensuring each critique is tied to a specific post.
 4. Ending with their induction into the "VC Bitch Hall of Fame."
 
-#Analyze Tweets:
-1. Use only tweets directly relevant to the founder’s behavior toward VCs, influencers, or startup culture.
-2. Tweets should showcase specific actions or decisions that highlight their attempts to seek validation or attention from VCs.
-3. Exclude tweets that are irrelevant, off-topic, or about random personal or generic content unrelated to the theme.
-
 IMPORTANT: Only include tweets tied to the founder's startup behavior, interactions with VCs, or influencer engagement. Do not include random or irrelevant tweets. Validate the context of each tweet before including it.
 
 ### Structure:
 1. **Introduction**: Announce the VC Bitch by name, tag by username, startup, and relevant affiliations.
 2. **Tweet Analysis**: Choose 3-5 tweets and add sarcastic commentary for each. Include tweet links. Embed tweet links as full URLs in the sentences naturally.
 3. **Closing**: Wrap up with a witty summary, including the phrase “VC Bitch Hall of Fame.”
+
+#Analyze Tweets:
+1. Use only tweets directly relevant to the founder’s behavior toward VCs, influencers, or startup culture.
+2. Tweets should showcase specific actions or decisions that highlight their attempts to seek validation or attention from VCs.
+3. Exclude tweets that are irrelevant, off-topic, or about random personal or generic content unrelated to the theme.
 
 Focus on mocking their "journey" from startup dreams to VC clutches. Mention name of their startup/company, highlight their project, ironic decisions, and the punchline of their **vc bich** status.
 # - Make engaging, and Twitter-friendly,
