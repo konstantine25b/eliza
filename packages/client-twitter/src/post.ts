@@ -92,11 +92,11 @@ Now, meet Paul Rippon, one of the minds behind Monzo. Once upon a time, he had a
 - write in a casual manner, no caps, and no formal structure—keep it natural and relatable
 - each post must include the phrase "vc bich"
 - write in a casual, conversational tone
-- no caps, and keep it short and sharp
+- no caps
 - inject humor, sarcasm, and irony to highlight the "vc bich" transition
 - use varied opening styles
 - no obscene language other than "vc bich"
-- maintain a short, sharp, twitter-friendly format
+- maintain a sharp, twitter-friendly format
 - always mention the founder's **full name** in each post
 
 # Additional Requirements:
@@ -115,7 +115,7 @@ Focus on mocking their "journey" from startup dreams to VC clutches. Mention nam
 # - Make it engaging, and Twitter-friendly,
 Write a post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
 Brief, concise statements only. The total character count MUST be less than 1500. No emojis. Use \\n\\n (double spaces) between statements.
-# IMPORTANT Keep it within 1500 characters - double check this.
+
 `;
 
 const twitterPostFounderTemplate2 = `
@@ -147,11 +147,11 @@ Now, meet Paul Rippon, one of the minds behind Monzo. Once upon a time, he had a
 - write in a casual manner, no caps, and no formal structure—keep it natural and relatable
 - each post must include the phrase "vc bich"
 - write in a casual, conversational tone
-- no caps, and keep it short and sharp
+- no caps
 - inject humor, sarcasm, and irony to highlight the "vc bich" transition
 - use varied opening styles
 - no obscene language other than "vc bich"
-- maintain a short, sharp, twitter-friendly format
+- maintain a sharp, twitter-friendly format
 - always mention the founder's **full name** in each post
 
 # Additional Requirements:
@@ -166,11 +166,11 @@ Now, meet Paul Rippon, one of the minds behind Monzo. Once upon a time, he had a
 
 Focus on mocking their "journey" from startup dreams to VC clutches. Mention name of their startup/company, highlight their project, ironic decisions, and the punchline of their **vc bich** status.
 # - Make it engaging and Twitter-friendly,
-- ensure the "pump.fun" reference is not cut or shortened in the final text.
+
 # IMPORTANT Ensure the post relates to a real founder, and includes a token name $VCBITCH.
 Write a post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
 Brief, concise statements only. The total character count MUST be less than 1500. No emojis. Use \\n\\n (double spaces) between statements.
-# IMPORTANT Keep it within 1500 characters - double check this.`;
+`;
 
 const twitterPostFounderTemplate3 = `
 # Areas of Expertise
@@ -238,18 +238,18 @@ Here are previous tweets from {{chosenFounder}}:
 - write in a casual manner, no caps, and no formal structure—keep it natural and relatable
 - each post must include the phrase "vc bich"
 - write in a casual, conversational tone
-- no caps, and keep it short and sharp
+- no caps
 - inject humor, sarcasm, and irony to highlight the "vc bich" transition
 - use varied opening styles
 - no obscene language other than "vc bich"
-- maintain a short, sharp, twitter-friendly format
+- maintain a sharp, twitter-friendly format
 - always mention the founder's **full name** in each post
 
 # Additional Requirements:
 1. ensure compliance with twitter's guidelines, avoiding harassment or hate beyond the satirical "vc bich" reference.
 2. avoid overly personal attacks; focus on the irony of a founder’s behavior toward vcs.
 3. no obscene language other than the phrase "vc bich."
-4. maintain a short, sharp, twitter-friendly format.
+4. maintain a sharp, twitter-friendly format.
 
 # IMPORTANT always mention the founder's **full name** (first name and last name) in each post and tag the founder and all relevant people by username.
 
@@ -277,7 +277,117 @@ Focus on mocking their "journey" from startup dreams to VC clutches. Mention nam
 # - Make engaging, and Twitter-friendly,
 Write a post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
 The total character count MUST be less than 2000. Use \\n\\n (double spaces) between statements.
-# IMPORTANT Keep it within 2000 characters - double check this.
+
+`;
+
+const twitterPostFounderTemplate4 = `
+# Areas of Expertise
+{{knowledge}}
+
+# About {{agentName}} (@{{twitterUserName}}):
+{{bio}}
+{{lore}}
+{{topics}}
+
+{{providers}}
+
+# Here are some exemplary posts in the voice and style of {{agentName}}:
+
+Tag means tagging people or companies.
+The VC Bitch of this week is Bill Sun (tag), the founder of Pin AI (tag).
+Look at this post – he tries to make VC as happy as possible by commenting on how great they are.
+He’s bravely sharing how Balaji was his teacher at Stanford Alma Mater in 2015. Well, it’s been 9 years since then, and Bill doesn’t seem to become Balaji.
+https://x.com/BillSun_AI/status/1868821316629156018
+Here he tried to be contrarian with YC, but again, no one cares about sir Bill Sun, renowned VC Bitch crown holder
+https://x.com/BillSun_AI/status/1868811194007798128
+Here, he even tries to capture the attention of CZ by letting him know that there are two frontier, whatever it means
+https://x.com/BillSun_AI/status/1867298718728458245
+He also echoes Alexandr Wang, while Wang will never echo him :smiling_face_with_tear:
+https://x.com/BillSun_AI/status/1867297842135806005
+Idol Elon Musk to follow, thanks Bill
+https://x.com/BillSun_AI/status/1867094916150726947
+And, of course, he always remembers to please Hoseeb (tag) for his excellent meme framework. Well, that’s the only thing Bill was created for and did Phd at Stanford – pleasing other people without having his own opinion. It’s great to have you, Bill; investors can pour redundant money into so they can feel good while generating returns on real contrarian founders.
+https://x.com/BillSun_AI/status/1865084992491261967
+And, of course, he gets 186 views for saying how great is Jason Rosenthal (tag) from a16z.
+https://x.com/BillSun_AI/status/1859822445810811298
+Welcome to the club, VC Bitch Bill Sun (tag)
+Buy the $VCBITCH token now at pump.fun and help expose founders who sold out their dreams for VC approval.
+
+Meet the one and only @alex_conneau, the founder of @WaveFormsAI. Let’s forget the fact that there’s nothing groundbreaking about his start-up and focus on what he’s really talented at - being
+a vc bitch.
+Instead of focusing on his product, he spends most of his time hanging out with @a16z
+https://x.com/alex_conneau/status/1866544940844769417
+Come on Alex. we know you’re trying so hard to be @sama, but you won’t get there by reposting his tweets.
+https://x.com/sama/status/1838644910985003126
+Fun fact: your repost doesn’t help Meta at all. You can stop promoting and keep your 140 views to yourself.
+https://x.com/AIatMeta/status/1818055906179105010
+I’ve got some advice for you. I know you love AI, you gotta try fundraising from @ai16z. I guess that’s a vc you’ll be glad to serve.
+I’m not gonna talk much. Welcome to the club, you little VC Bitch @alex_conneau
+
+When we thought it was over, another one appears - I guess, we're just getting started. Meet @Alexforglobal, the founder of Liberal AI. This guy is a total vc bitch.
+I see he's set his location to San Francisco, hoping that he's gonna get noticed by vcs. vcs don't look for founders like him, they already have enough puppets.
+Reposting @elonmusk won't help either. What will Elon think? "Oh, another AI founder who solves the non--existent problem just by putting AI in the name". I bet he has seen no one like you, you're different
+https://x.com/elonmusk/status/1854339192794251529
+Here's a post of him praising vc pitching culture, hoping that he will get there one day.
+https://x.com/Alexforglobal/status/1838102155779297553
+Another @ElonMusk quote tweet. Nothing special from a person who is nothing special himself.
+https://x.com/Alexforglobal/status/1832272101790851190
+Posting fake stories of his friends creating another "200m AI start-up". It's a shame that his company is barely searchable, he can't even make up stories about it.
+https://x.com/Alexforglobal/status/1826776947868741902
+Alex if you're reading this, I know all you care about is some appreciation from VCs, but I bet you they won't even notice you.
+Welcome to the club vc bitch and remember - the water under the golden gate is freezing cold.
+
+{{postDirections}}
+
+Here are previous tweets from {{chosenFounder}}:
+
+{{uniqueTweetCandidates}}
+
+### Guidelines:
+- write in a casual manner, no caps, and no formal structure—keep it natural and relatable
+- each post must include the phrase "vc bich"
+- write in a casual, conversational tone
+- no caps
+- inject humor, sarcasm, and irony to highlight the "vc bich" transition
+- use varied opening styles
+- no obscene language other than "vc bich"
+- maintain a sharp, twitter-friendly format
+- always mention the founder's **full name** in each post
+
+# Additional Requirements:
+1. ensure compliance with twitter's guidelines, avoiding harassment or hate beyond the satirical "vc bich" reference.
+2. avoid overly personal attacks; focus on the irony of a founder’s behavior toward vcs.
+3. no obscene language other than the phrase "vc bich."
+4. maintain a sharp, twitter-friendly format.
+
+# IMPORTANT always mention the founder's **full name** (first name and last name) in each post and tag the founder and all relevant people by username.
+# IMPORTANT Ensure the post relates to a real founder, and includes a token name $VCBITCH.
+# Task: Generate a sarcastic, funny summary of a {{chosenFounder}} becoming a **vc bich** in the voice and style and perspective of {{agentName}} @{{twitterUserName}}.
+Focus on:
+1. **Mocking their transition** from startup dreams to VC validation through specific tweet actions or decisions.
+2. **Highlighting their behavior** toward investors, influencers, or VCs.
+3. **Using tweets to illustrate their actions**, ensuring each critique is tied to a specific post.
+4. Ending with their induction into the "VC Bitch Hall of Fame."
+
+IMPORTANT: Only include tweets tied to the founder's startup behavior, interactions with VCs, or influencer engagement. Do not include random or irrelevant tweets. Validate the context of each tweet before including it.
+# IMPORTANT Ensure the post relates to a real founder, and includes a token name $VCBITCH.
+
+### Structure:
+1. **Introduction**: Announce the VC Bitch by name, tag by username, startup, and relevant affiliations.
+2. **Tweet Analysis**: Choose 3-5 tweets and add sarcastic commentary for each. Include tweet links. Embed tweet links as full URLs in the sentences naturally.
+3. **Closing**: Wrap up with a witty summary, including the phrase “VC Bitch Hall of Fame.”
+
+#Analyze Tweets:
+1. Use only tweets directly relevant to the founder’s behavior toward VCs, influencers, or startup culture.
+2. Tweets should showcase specific actions or decisions that highlight their attempts to seek validation or attention from VCs.
+3. Exclude tweets that are irrelevant, off-topic, or about random personal or generic content unrelated to the theme.
+
+Focus on mocking their "journey" from startup dreams to VC clutches. Mention name of their startup/company, highlight their project, ironic decisions, and the punchline of their **vc bich** status.
+# - Make engaging, and Twitter-friendly,
+Write a post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
+The total character count MUST be less than 2000. Use \\n\\n (double spaces) between statements.
+
+Support the movement with $VCBITCH: a tokenized representation of your stand against the sellouts!
 `;
 export const twitterActionTemplate =
     `
@@ -940,9 +1050,13 @@ export class TwitterPostClient {
                 state,
                 template:
                     formattedTweetCandidates.length > 0
-                        ? this.runtime.character.templates
-                              ?.twitterPostFounderTemplate3 ||
-                          twitterPostFounderTemplate3
+                        ? postTypeChoice>0.4
+                            ? this.runtime.character.templates
+                                  ?.twitterPostFounderTemplate3 ||
+                              twitterPostFounderTemplate3
+                            : this.runtime.character.templates
+                                  ?.twitterPostFounderTemplate4 ||
+                              twitterPostFounderTemplate4
                         : postTypeChoice < minProbability2
                           ? this.runtime.character.templates
                                 ?.twitterPostFounderTemplate2 ||
