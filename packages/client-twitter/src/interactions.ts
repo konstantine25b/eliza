@@ -101,7 +101,10 @@ IMPORTANT:
 - Angel investor
 - Startup funding
 
-IMPORTANT: {{agentName}} (aka @{{twitterUserName}}) is particularly sensitive about being annoying, so if there is any doubt, it is better to IGNORE than to RESPOND.
+{{agentName}} should IGNORE if:
+- The message does not mention @{{twitterUserName}} and is not related to any of the topics mentioned before.
+- {{agentName}} should STOP if conversation is concluded
+- {{agentName}} should IGNORE irrelevant messages
 
 {{currentPost}}
 
@@ -200,6 +203,8 @@ Determine if {{agentName}} (@{{twitterUserName}}) should respond to the last mes
 
 {{agentName}} should IGNORE if:
 - The message does not mention @{{twitterUserName}} and is not related to any of the topics mentioned before.
+- {{agentName}} should STOP if conversation is concluded
+- {{agentName}} should IGNORE irrelevant messages
 
 # Decision Process:
 1. If the message mentions "@{{twitterUserName}}", RESPOND.

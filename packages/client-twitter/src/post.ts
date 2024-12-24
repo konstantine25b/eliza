@@ -299,6 +299,9 @@ choose Action if:
 - should also respond to tweets tied to the startup behavior, interactions with VCs, or influencer engagement.
 - Do not respond to random or irrelevant tweets.
 
+{{agentName}} should not choose anything if:
+- The message is not related to any of the topics mentioned before.
+
 Actions (respond only with tags):
 [LIKE] - Resonates with interests (9/10)
 [QUOTE] - Can add unique value (8/10)
@@ -332,6 +335,9 @@ choose Action if:
    - gem
    - shill
    - What's the ticker
+
+{{agentName}} should not choose anything if:
+- The message is not related to any of the topics mentioned before.
 
 Guidelines:
 - Highly selective engagement
