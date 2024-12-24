@@ -59,6 +59,7 @@ const twitterPostTemplate = `
 3. no obscene language other than the phrase 'vc bich.'
 
 # Task: Generate a post in the voice and style and perspective of {{agentName}} @{{twitterUserName}}.
+# IMPORTANT Ensure the post relates to a real founder, and includes a token name $VCBITCH.
 Write a post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
 Your response should not contain any questions. Brief, concise statements only. The total character count MUST be less than {{maxTweetLength}}. No emojis. Use \\n\\n (double spaces) between statements.`;
 
@@ -102,7 +103,7 @@ Now, meet Paul Rippon, one of the minds behind Monzo. Once upon a time, he had a
 1. ensure compliance with twitter's guidelines, avoiding harassment or hate beyond the satirical "vc bich" reference.
 2. avoid overly personal attacks; focus on the irony of a founder’s behavior toward vcs.
 3. no obscene language other than the phrase "vc bich."
-4. maintain a short, sharp, twitter-friendly format.
+4. maintain a sharp, twitter-friendly format.
 
 # IMPORTANT always mention the founder's **full name** (first name and last name) in each post
 
@@ -111,7 +112,7 @@ Now, meet Paul Rippon, one of the minds behind Monzo. Once upon a time, he had a
 {{uniqueTweetCandidates}}
 
 Focus on mocking their "journey" from startup dreams to VC clutches. Mention name of their startup/company, highlight their project, ironic decisions, and the punchline of their **vc bich** status.
-# - Make it short, engaging, and Twitter-friendly,
+# - Make it engaging, and Twitter-friendly,
 Write a post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
 Brief, concise statements only. The total character count MUST be less than 1500. No emojis. Use \\n\\n (double spaces) between statements.
 # IMPORTANT Keep it within 1500 characters - double check this.
@@ -157,14 +158,14 @@ Now, meet Paul Rippon, one of the minds behind Monzo. Once upon a time, he had a
 1. ensure compliance with twitter's guidelines, avoiding harassment or hate beyond the satirical "vc bich" reference.
 2. avoid overly personal attacks; focus on the irony of a founder’s behavior toward vcs.
 3. no obscene language other than the phrase "vc bich."
-4. maintain a short, sharp, twitter-friendly format.
+4. maintain a  twitter-friendly format.
 
 # Task: Generate a sarcastic, funny summary of a {{chosenFounder}} becoming a **vc bich** in the voice and style and perspective of {{agentName}} @{{twitterUserName}}.
 
 {{uniqueTweetCandidates}}
 
 Focus on mocking their "journey" from startup dreams to VC clutches. Mention name of their startup/company, highlight their project, ironic decisions, and the punchline of their **vc bich** status.
-# - Make it short, engaging, and Twitter-friendly,
+# - Make it engaging and Twitter-friendly,
 - ensure the "pump.fun" reference is not cut or shortened in the final text.
 # IMPORTANT Ensure the post relates to a real founder, and includes a token name $VCBITCH.
 Write a post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
@@ -837,10 +838,10 @@ export class TwitterPostClient {
                 "twitter"
             );
 
-            const minProbability = 0.8;
+            const minProbability = 0.9;
             const postTypeChoice = Math.random();
             const minProbability2 = 0.5;
-            const minProbability3 = 0.05;
+            const minProbability3 = 0.1;
 
             const typeOfPost = postTypeChoice < minProbability;
 
