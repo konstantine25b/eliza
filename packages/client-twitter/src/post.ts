@@ -954,10 +954,10 @@ export class TwitterPostClient {
                 "twitter"
             );
 
-            const minProbability = 0.9;
+            const minProbability = 0.95;
             const postTypeChoice = Math.random();
-            const minProbability2 = 0.5;
-            const minProbability3 = 0.1;
+            const minProbability2 = 0.7;
+            const minProbability3 = 0.5;
 
             const typeOfPost = postTypeChoice < minProbability;
 
