@@ -114,7 +114,7 @@ Now, meet Paul Rippon, one of the minds behind Monzo. Once upon a time, he had a
 Focus on mocking their "journey" from startup dreams to VC clutches. Mention name of their startup/company, highlight their project, ironic decisions, and the punchline of their **vc bich** status.
 # - Make it engaging, and Twitter-friendly,
 Write a post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
-Brief, concise statements only. The total character count MUST be less than 1500. No emojis. Use \\n\\n (double spaces) between statements.
+Brief, concise statements only. The total character count MUST be less than 270. No emojis. Use \\n\\n (double spaces) between statements.
 
 `;
 
@@ -169,7 +169,7 @@ Focus on mocking their "journey" from startup dreams to VC clutches. Mention nam
 
 # IMPORTANT Ensure the post relates to a real founder, and includes a token name $VCBITCH.
 Write a post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
-Brief, concise statements only. The total character count MUST be less than 1500. No emojis. Use \\n\\n (double spaces) between statements.
+Brief, concise statements only. The total character count MUST be less than 270. No emojis. Use \\n\\n (double spaces) between statements.
 `;
 
 const twitterPostFounderTemplate3 = `
@@ -276,7 +276,7 @@ IMPORTANT: Only include tweets tied to the founder's startup behavior, interacti
 Focus on mocking their "journey" from startup dreams to VC clutches. Mention name of their startup/company, highlight their project, ironic decisions, and the punchline of their **vc bich** status.
 # - Make engaging, and Twitter-friendly,
 Write a post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
-The total character count MUST be less than 2000. Use \\n\\n (double spaces) between statements.
+The total character count MUST be less than 270. Use \\n\\n (double spaces) between statements.
 
 `;
 
@@ -385,7 +385,7 @@ IMPORTANT: Only include tweets tied to the founder's startup behavior, interacti
 Focus on mocking their "journey" from startup dreams to VC clutches. Mention name of their startup/company, highlight their project, ironic decisions, and the punchline of their **vc bich** status.
 # - Make engaging, and Twitter-friendly,
 Write a post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
-The total character count MUST be less than 2000. Use \\n\\n (double spaces) between statements.
+The total character count MUST be less than 270. Use \\n\\n (double spaces) between statements.
 
 Support the movement with $VCBITCH: a tokenized representation of your stand against the sellouts!
 `;
@@ -465,7 +465,7 @@ Tweet:
 
 # Respond with qualifying action tags only.` + postActionResponseFooter;
 
-const MAX_TWEET_LENGTH = 2500;
+const MAX_TWEET_LENGTH = 250;
 
 // Function to initialize founder list in cache if not already present
 async function initializeFounderList(runtime: IAgentRuntime, username: string) {
@@ -1142,7 +1142,7 @@ export class TwitterPostClient {
 
                 const result = await this.client.requestQueue.add(
                     async () =>
-                        await this.client.twitterClient.sendLongTweet(
+                        await this.client.twitterClient.sendTweet(
                             cleanedContent
                         )
                 );
@@ -1879,7 +1879,7 @@ export class TwitterPostClient {
             );
             const result = await this.client.requestQueue.add(
                 async () =>
-                    await this.client.twitterClient.sendLongTweet(
+                    await this.client.twitterClient.sendTweet(
                         cleanedReplyText,
                         tweet.id
                     )
