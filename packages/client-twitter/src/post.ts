@@ -1050,7 +1050,7 @@ export class TwitterPostClient {
                 state,
                 template:
                     formattedTweetCandidates.length > 0
-                        ? postTypeChoice>0.4
+                        ? postTypeChoice>0.3
                             ? this.runtime.character.templates
                                   ?.twitterPostFounderTemplate3 ||
                               twitterPostFounderTemplate3
