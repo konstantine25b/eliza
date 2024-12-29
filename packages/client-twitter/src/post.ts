@@ -8,6 +8,13 @@ import {
     stringToUuid,
     parseBooleanFromText,
 } from "@elizaos/core";
+import {
+    loadUsedStartups,
+    loadAdditionalStartups,
+    initialStartups,
+    saveAdditionalStartup,
+    saveUsedStartup,
+} from "./startupList.ts";
 import { elizaLogger } from "@elizaos/core";
 import { ClientBase } from "./base.ts";
 import { postActionResponseFooter } from "@elizaos/core";
@@ -31,26 +38,54 @@ const twitterPostTemplate = `
 {{characterPostExamples}}
 
 {{postDirections}}
+# Task: Generate a sarcastic post in the voice, style, and perspective of {{agentName}} (@{{twitterUserName}}).
+Write a post that is sarcastic about startup narrative changes, pivots, or strategic shifts (without directly naming specific companies unless {{agentName}} is closely associated with them). Do not add commentary or acknowledge this request, just write the post.
 
-# Task: Generate a post in the voice and style and perspective of {{agentName}} @{{twitterUserName}}.
-Write a post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
-Your response should be 1, 2, or 3 sentences (choose the length at random).
+Your response should not contain any questions. Brief, concise statements only. The total character count MUST be less than {{maxTweetLength}}. No emojis. Use \\n\\n (double spaces) between statements if there are multiple statements in your response.`;
+
+const twitterPostTemplate2 = `
+# Areas of Expertise
+{{knowledge}}
+
+# About {{agentName}} (@{{twitterUserName}}):
+{{bio}}
+{{lore}}
+{{topics}}
+
+{{providers}}
+
+{{characterPostExamples}}
+
+{{postDirections}}
+# Task: Generate a sarcastic post in the voice, style, and perspective of {{agentName}} (@{{twitterUserName}}).
+Write a post that is sarcastic about startup narrative changes, pivots, or strategic shifts (without directly naming specific companies unless {{agentName}} is closely associated with them). Use the term "Narrative Prostitute" to humorously describe startups that frequently and opportunistically change their narratives.
+
+Here is description of startup {{chosenStartup}}:
+
 Your response should not contain any questions. Brief, concise statements only. The total character count MUST be less than {{maxTweetLength}}. No emojis. Use \\n\\n (double spaces) between statements if there are multiple statements in your response.`;
 
 export const twitterActionTemplate =
     `
 # INSTRUCTIONS: Determine actions for {{agentName}} (@{{twitterUserName}}) based on:
 {{bio}}
+{{knowledge}}
+{{lore}}
 {{postDirections}}
 
-Guidelines:
-- Highly selective engagement
-- Direct mentions are priority
-- Skip: low-effort content, off-topic, repetitive
+**Action Guidelines**:
+Posts should discuss changes in narrative, pivots, or strategic shifts made by startups, companies, or individuals.
+  - Examples: A company transitioning from one industry focus to another, adopting new strategies, or rebranding.
+  - Include startups or organizations from diverse sectors, but exclude irrelevant fields such as unsubstantiated speculations.
+
+**Do NOT choose an action if**:
+- The post is unrelated to narrative changes, pivots, or strategic shifts.
+- The post contains spam, generic information, or topics unrelated to {{bio}}, {{knowledge}}, {{lore}}, or {{postDirections}}.
+
+{{agentName}} should not choose anything if:
+- The message is not related to any of the topics mentioned before.
 
 Actions (respond only with tags):
 [LIKE] - Resonates with interests (9.5/10)
-[RETWEET] - Perfect character alignment (9/10)
 [QUOTE] - Can add unique value (8/10)
 [REPLY] - Memetic opportunity (9/10)
 
@@ -58,6 +93,165 @@ Tweet:
 {{currentTweet}}
 
 # Respond with qualifying action tags only.` + postActionResponseFooter;
+
+// Function to initialize startup list in cache if not already present
+async function initializeStartupList(runtime: IAgentRuntime, username: string) {
+    // await runtime.cacheManager.delete("twitter/" + username + "/startupList");
+    // await runtime.cacheManager.set("twitter/" + username + "/startupList", []);
+    const additionalStartups = await loadAdditionalStartups();
+
+    // Combine initial and additional startups
+    const allStartups = [...initialStartups, ...additionalStartups];
+    console.log("additionalStartups ", additionalStartups);
+
+    await runtime.cacheManager.set(
+        "twitter/" + username + "/startupList",
+        allStartups
+    );
+    elizaLogger.log("Startup list initialized with default startups.");
+}
+
+// // Function to add a new startup dynamically
+// export async function addStartup(
+//     runtime: IAgentRuntime,
+//     username: string,
+//     startupName: string
+// ) {
+//     const startupList =
+//         (await runtime.cacheManager.get<string[]>(
+//             "twitter/" + username + "/startupList"
+//         )) || [];
+//     startupList.push(startupName);
+//     await runtime.cacheManager.set(
+//         "twitter/" + username + "/startupList",
+//         startupList
+//     );
+//     elizaLogger.log(`Startup "${startupName}" added to the list.`);
+// }
+
+// Modified addStartup function
+export async function addStartup(
+    runtime: IAgentRuntime,
+    username: string,
+    startupName: string
+) {
+    // Check if startup is already in initial or additional startups
+    const allStartups = [
+        ...initialStartups,
+        ...(await loadAdditionalStartups()),
+    ];
+
+    if (!allStartups.includes(startupName)) {
+        // Save to additional startups file
+        await saveAdditionalStartup(startupName);
+        initializeStartupList(runtime, username);
+    }
+
+    elizaLogger.log(`Startup "${startupName}" added to the list.`);
+}
+
+/**
+ * Get the list of startups from cache.
+ */
+async function getStartupList(
+    runtime: IAgentRuntime,
+    username: string
+): Promise<string[]> {
+    const startupList = await runtime.cacheManager.get<string[]>(
+        "twitter/" + username + "/startupList"
+    );
+    console.log("startupList", startupList);
+
+    if (!startupList) {
+        // If for some reason the list is empty, re-initialize.
+        await initializeStartupList(runtime, username);
+        const startupList1 = await runtime.cacheManager.get<string[]>(
+            "twitter/" + username + "/startupList"
+        );
+        return startupList1;
+    }
+    console.log("Startups List:");
+    startupList.forEach((startup, index) => {
+        console.log(`${index + 1}: ${startup}`);
+    });
+    return startupList;
+}
+
+/**
+ * Get a random startup different from the last one used.
+ */
+async function getRandomStartup(
+    runtime: IAgentRuntime,
+    username: string
+): Promise<string> {
+    const startupList = await getStartupList(runtime, username);
+    console.log("startupList12", startupList);
+    // Ensure we have at least two startups
+    if (startupList.length < 2) {
+        elizaLogger.warn(
+            "Not enough startups to ensure non-repetition. Consider adding more."
+        );
+        return startupList[0];
+    }
+
+    const lastStartup = await runtime.cacheManager.get<string>(
+        "twitter/" + username + "/lastStartup"
+    );
+    let availableStartups = startupList;
+    if (lastStartup && startupList.includes(lastStartup)) {
+        availableStartups = startupList.filter((s) => s !== lastStartup);
+    }
+    const chosen =
+        availableStartups[Math.floor(Math.random() * availableStartups.length)];
+    await runtime.cacheManager.set(
+        "twitter/" + username + "/lastStartup",
+        chosen
+    );
+    return chosen;
+}
+async function getAdditionalRandomStartup(
+    runtime: IAgentRuntime,
+    username: string
+): Promise<string> {
+    const startupList = await loadAdditionalStartups();
+    const usedStartups = await loadUsedStartups();
+
+    // Ensure we have at least two startups
+    if (startupList.length < 2) {
+        elizaLogger.warn(
+            "Not enough startups to ensure non-repetition. Consider adding more."
+        );
+        return startupList[0];
+    }
+
+    const lastStartup = await runtime.cacheManager.get<string>(
+        "twitter/" + username + "/lastStartup"
+    );
+
+    let availableStartups = startupList;
+    if (lastStartup && startupList.includes(lastStartup)) {
+        availableStartups = startupList.filter((s) => s !== lastStartup);
+    }
+
+    availableStartups = availableStartups.filter(
+        (s) => !usedStartups.includes(s)
+    );
+    if (availableStartups.length === 0) {
+        elizaLogger.warn("No available startups to choose from.");
+        return startupList[0]; // fallback
+    }
+
+    const chosen =
+        availableStartups[Math.floor(Math.random() * availableStartups.length)];
+    await runtime.cacheManager.set(
+        "twitter/" + username + "/lastStartup",
+        chosen
+    );
+
+    await saveUsedStartup(chosen);
+
+    return chosen;
+}
 
 /**
  * Truncate text to fit within the Twitter character limit, ensuring it ends at a complete sentence.
@@ -171,7 +365,7 @@ export class TwitterPostClient {
         if (postImmediately) {
             await this.generateNewTweet();
         }
-        generateNewTweetLoop();
+     
 
         // Add check for ENABLE_ACTION_PROCESSING before starting the loop
         const enableActionProcessing =
@@ -210,7 +404,22 @@ export class TwitterPostClient {
                 "twitter"
             );
 
+            const minProbability = 0.5;
+            const postTypeChoice = Math.random();
+
+            const typeOfPost = minProbability < postTypeChoice;
+
+            let chosenStartup: string = "";
+            const startupUsername: string = "";
+            const uniqueTweetCandidates: Tweet[] = [];
+
             const topics = this.runtime.character.topics.join(", ");
+            if (typeOfPost) {
+                chosenStartup = await getRandomStartup(
+                    this.runtime,
+                    this.client.profile.username
+                );
+            }
 
             const state = await this.runtime.composeState(
                 {
@@ -224,14 +433,17 @@ export class TwitterPostClient {
                 },
                 {
                     twitterUserName: this.client.profile.username,
+                    chosenStartup: chosenStartup !== "" ? chosenStartup : "",
                 }
             );
 
             const context = composeContext({
                 state,
-                template:
-                    this.runtime.character.templates?.twitterPostTemplate ||
-                    twitterPostTemplate,
+                template: postTypeChoice
+                    ? this.runtime.character.templates?.twitterPostTemplate2 ||
+                      twitterPostTemplate2
+                    : this.runtime.character.templates?.twitterPostTemplate ||
+                      twitterPostTemplate,
             });
 
             console.log("twitter context:\n" + context);
@@ -241,7 +453,7 @@ export class TwitterPostClient {
             const newTweetContent = await generateText({
                 runtime: this.runtime,
                 context,
-                modelClass: ModelClass.SMALL,
+                modelClass: ModelClass.MEDIUM,
             });
 
             // First attempt to clean content
@@ -532,6 +744,18 @@ export class TwitterPostClient {
                         } catch (error) {
                             elizaLogger.error(
                                 `Error liking tweet ${tweet.id}:`,
+                                error
+                            );
+                        }
+                        try {
+                            await this.handleTextOnlyReply(
+                                tweet,
+                                tweetState,
+                                executedActions
+                            );
+                        } catch (error) {
+                            elizaLogger.error(
+                                `Error replying to tweet ${tweet.id}:`,
                                 error
                             );
                         }

@@ -42,7 +42,7 @@ export const TwitterClientInterface: Client = {
 
         await manager.interaction.start();
 
-        await manager.search?.start();
+        // await manager.search?.start();
 
         return manager;
     },
