@@ -449,6 +449,9 @@ async function loadStartups(filePath: string): Promise<string[]> {
 
 export async function saveStartup(startup: string, filePath: string) {
     const startupName = extractStartupName(startup);
+    console.log("makinggggg7");
+    console.log(startupName)
+    console.log("startup",startup)
     if (startupName) {
         const startups = await loadStartups(filePath);
 
@@ -494,7 +497,8 @@ export function extractStartupName(inputString: string): string | null {
      * @param inputString - The string containing the startup name.
      * @returns The extracted startup name or null if not found.
      */
-    const match = inputString.match(/startup: ([\w\s]+)/);
+    const match = inputString.match(/username:\s*(@[\w\d]+)/);
+
 
     if (match) {
         return match[1].trim(); // Return the captured group (startup name)

@@ -169,6 +169,8 @@ export class ClientBase extends EventEmitter {
 
         const cachedCookies = await this.getCachedCookies(username);
 
+        console.log("cooookies", cachedCookies);
+
         if (cachedCookies) {
             elizaLogger.info("Using cached cookies");
             await this.setCookiesFromArray(cachedCookies);
@@ -244,6 +246,14 @@ export class ClientBase extends EventEmitter {
             count
         );
         return homeTimeline.tweets;
+    }
+    async fetchUserPosts(userId: string, count: number): Promise<Tweet[]> {
+        elizaLogger.debug(
+            `Fetching up to ${count} posts for userId: ${userId}`
+        );
+        // getUserTweets expects the userId (string) and how many tweets to return
+        const timeline = await this.twitterClient.getUserTweets(userId, count);
+        return timeline.tweets;
     }
 
     async fetchHomeTimeline(count: number): Promise<Tweet[]> {
@@ -414,6 +424,70 @@ export class ClientBase extends EventEmitter {
             return uniqueTweetCandidates;
         } catch (error) {
             console.error("Error fetching tweets:", error);
+            return [];
+        }
+    }
+
+    /**
+     * Fetch the oldest 50 tweets for a given user by paginating through their timeline.
+     * We accumulate tweets (up to maxPossible), then sort them by ascending timestamp,
+     * and finally return the first 50 (the oldest ones).
+     */
+    async fetchOldest50Tweets(
+        userId: string,
+        maxPossible: number = 2000
+    ): Promise<Tweet[]> {
+        elizaLogger.debug(`Fetching oldest 50 tweets for user: ${userId}`);
+
+        const allTweets: Tweet[] = [];
+        let nextCursor: string | undefined = undefined;
+        let totalFetched = 0;
+        let done = false;
+
+        try {
+            while (!done) {
+                // Each call can return up to 50 tweets + a cursor for additional pages
+                const response = await this.requestQueue.add(async () => {
+                    return await this.twitterClient.getUserTweets(
+                        userId,
+                        50,
+                        nextCursor
+                    );
+                });
+
+                // If the response has tweets, add them to our cumulative list
+                if (response?.tweets?.length) {
+                    allTweets.push(...response.tweets);
+                    totalFetched += response.tweets.length;
+                } else {
+                    // No tweets returned, so break out
+                    break;
+                }
+
+                // If there's a next cursor, update it; otherwise, we've reached the end
+                if (response.next) {
+                    nextCursor = response.next;
+                } else {
+                    done = true;
+                }
+
+                // Stop if we've already reached our maxPossible threshold
+                if (totalFetched >= maxPossible) {
+                    done = true;
+                }
+            }
+
+            // Sort by ascending timestamp (oldest first)
+            allTweets.sort((a, b) => {
+                const aTime = a.timestamp ?? 0;
+                const bTime = b.timestamp ?? 0;
+                return aTime - bTime;
+            });
+
+            // Return the first 50 items (the oldest 50) from this sorted list
+            return allTweets.slice(0, 50);
+        } catch (error) {
+            elizaLogger.error("Error fetching oldest tweets:", error);
             return [];
         }
     }
@@ -816,13 +890,7 @@ export class ClientBase extends EventEmitter {
                     id: profile.userId,
                     username,
                     screenName: profile.name || this.runtime.character.name,
-                    bio:
-                        profile.biography ||
-                        typeof this.runtime.character.bio === "string"
-                            ? (this.runtime.character.bio as string)
-                            : this.runtime.character.bio.length > 0
-                              ? this.runtime.character.bio[0]
-                              : "",
+                    bio: profile.biography ? profile.biography : "",
                     nicknames:
                         this.runtime.character.twitterProfile?.nicknames || [],
                 } satisfies TwitterProfile;

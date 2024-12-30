@@ -15,8 +15,11 @@ import {
     elizaLogger,
     getEmbeddingZeroVector,
 } from "@elizaos/core";
+
 import { ClientBase } from "./base";
 import { buildConversationThread, sendTweet, wait } from "./utils.ts";
+
+import { processStartupCandidate } from "./scraping.ts";
 
 export const twitterMessageHandlerTemplate =
     `
@@ -73,24 +76,22 @@ Response options are RESPOND, IGNORE and STOP.
 {{agentName}} is in a room with other users and wants to be conversational.
 {{agentName}} should RESPOND to messages that are directed at them, or participate in conversations that are interesting or relevant to {{agentName}} areas of expertise.
 If a message is not interesting or relevant, {{agentName}} should IGNORE.
-If {{agentName}} concludes a conversation and isn't part of the conversation anymore, {{agentName}} should STOP.
 
 ## Recent Activity Context:
 {{recentPosts}}
 
 IMPORTANT: {{agentName}} (aka @{{twitterUserName}}) is particularly sensitive about being annoying, so if there is any doubt, it is better to IGNORE than to RESPOND.
 
-## Guidelines for Engagement:
-{{agentName}} should RESPOND to messages or participate in conversations when:
-1. The message is explicitly directed at them (mentions @{{twitterUserName}} or replies to their tweets).
-2. The content directly relates to their expertise, focusing on:
-   - Strategic pivots, narrative changes, or innovations in crypto companies or startups.
-   - Meaningful business shifts, rebranding, or product strategies.
-   - Topics aligning with {{agentName}}'s core interests or areas of expertise.
+### Reasons to IGNORE:
+Posts must strictly discuss startups or companies (including crypto startups) and focus on:
+- Narrative changes, pivots, or strategic shifts made by startups or companies.
+  - Examples: A crypto startup launching a new product, transitioning to a new market, or adopting innovative strategies.
+  - A company undergoing rebranding, entering a new industry, or significantly evolving its business model.
+- Posts should highlight meaningful and substantial changes, trends, or innovations in the startup or business ecosystem.
+
 
 ### Reasons to IGNORE:
-- The message does not mention @{{twitterUserName}} and lacks relevance to the above topics.
-- The content is generic, off-topic, or unrelated to startups, crypto companies, or narrative changes.
+- The content is generic, off-topic, or unrelated to startups, crypto companies, or startup narrative changes.
 
 {{currentPost}}
 
@@ -291,6 +292,7 @@ export class TwitterInteractionClient {
             uniqueTweetCandidates
                 .sort((a, b) => a.id.localeCompare(b.id))
                 .filter((tweet) => tweet.userId !== this.client.profile.id);
+            console.log("uniqueTweetCandidates1", uniqueTweetCandidates);
 
             // for each tweet candidate, handle the tweet
             for (const tweet of uniqueTweetCandidates) {
@@ -457,18 +459,29 @@ export class TwitterInteractionClient {
                 this.runtime.character?.templates?.shouldRespondTemplate ||
                 twitterShouldRespondTemplate,
         });
+        console.log("shouldRespondContext1", shouldRespondContext);
 
         const shouldRespond = await generateShouldRespond({
             runtime: this.runtime,
             context: shouldRespondContext,
             modelClass: ModelClass.MEDIUM,
         });
+        console.log("shouldRespond1", shouldRespond);
 
         // Promise<"RESPOND" | "IGNORE" | "STOP" | null> {
         if (shouldRespond !== "RESPOND") {
             elizaLogger.log("Not responding to message");
             return { text: "Response Decision:", action: shouldRespond };
         }
+
+        // adding startup
+        const targetUsername = tweet.username;
+        await processStartupCandidate(
+            this.client,
+            this.runtime,
+            message,
+            targetUsername
+        );
 
         const context = composeContext({
             state,

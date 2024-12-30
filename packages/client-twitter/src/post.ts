@@ -23,6 +23,13 @@ import { IImageDescriptionService, ServiceType } from "@elizaos/core";
 import { buildConversationThread } from "./utils.ts";
 import { twitterMessageHandlerTemplate } from "./interactions.ts";
 import { DEFAULT_MAX_TWEET_LENGTH } from "./environment.ts";
+import {
+    getRandomDateRange,
+    getRandomKeyword,
+    getRandomLanguage,
+    getRandomLocation,
+    processStartupCandidate,
+} from "./scraping.ts";
 
 const twitterPostTemplate = `
 # Areas of Expertise
@@ -162,6 +169,7 @@ export async function addStartup(
         ...initialStartups,
         ...(await loadAdditionalStartups()),
     ];
+    console.log("makinggggg8",startupName );
 
     if (!allStartups.includes(startupName)) {
         // Save to additional startups file
@@ -231,7 +239,7 @@ async function getRandomStartup(
     );
     return chosen;
 }
-async function getAdditionalRandomStartup(
+export async function getAdditionalRandomStartup(
     runtime: IAgentRuntime,
     username: string
 ): Promise<string> {
@@ -346,6 +354,32 @@ export class TwitterPostClient {
 
             elizaLogger.log(`Next tweet scheduled in ${randomMinutes} minutes`);
         };
+        const generateStartupScrapperLoop = async () => {
+            const lastPost = await this.runtime.cacheManager.get<{
+                timestamp: number;
+            }>("twitter/" + this.twitterUsername + "/lastPost");
+
+            const lastPostTimestamp = lastPost?.timestamp ?? 0;
+            const minMinutes =
+                parseInt(this.runtime.getSetting("POST_INTERVAL_MIN")) || 90;
+            const maxMinutes =
+                parseInt(this.runtime.getSetting("POST_INTERVAL_MAX")) || 180;
+            const randomMinutes =
+                Math.floor(Math.random() * (maxMinutes - minMinutes + 1)) +
+                minMinutes;
+            const ScrapperInterval = 0.5;
+            const delay = randomMinutes * 60 * 1000 * ScrapperInterval;
+
+            if (Date.now() > lastPostTimestamp + delay) {
+                await this.getStartups();
+            }
+
+            setTimeout(() => {
+                generateStartupScrapperLoop(); // Set up next iteration
+            }, delay);
+
+            elizaLogger.log(`Next tweet scheduled in ${randomMinutes} minutes`);
+        };
 
         const processActionsLoop = async () => {
             const actionInterval =
@@ -403,6 +437,7 @@ export class TwitterPostClient {
             elizaLogger.log("Action processing loop disabled by configuration");
         }
         generateNewTweetLoop();
+        generateStartupScrapperLoop();
     }
 
     constructor(client: ClientBase, runtime: IAgentRuntime) {
@@ -431,8 +466,6 @@ export class TwitterPostClient {
             const typeOfPost = minProbability < postTypeChoice;
 
             let chosenStartup: string = "";
-            const startupUsername: string = "";
-            const uniqueTweetCandidates: Tweet[] = [];
 
             const topics = this.runtime.character.topics.join(", ");
             if (typeOfPost) {
@@ -1004,6 +1037,88 @@ export class TwitterPostClient {
             throw error;
         } finally {
             this.isProcessing = false;
+        }
+    }
+
+    /**
+     * Builds and executes a randomized Twitter search query for startup-related tweets.
+     * @param twitterClient The Scraper instance to use for searching.
+     * @returns An array of Tweet objects matching the generated search query.
+     */
+    private async getStartups() {
+        // 1) Generate random parameters
+        const location = getRandomLocation();
+        const { sinceDate, untilDate } = getRandomDateRange();
+        const lang = getRandomLanguage();
+        const extraKeyword = getRandomKeyword();
+
+        // 2) Core query targeting startup topics
+        const baseQuery = `(L1 OR
+  L2 OR
+  L3 OR
+  Oracle OR
+  DEX OR
+  "DEX aggregator" OR
+  wallet OR
+  Marketplace OR
+  chain OR
+  dApp OR
+  protocol OR
+  startup OR
+  company OR
+  startup OR
+  seed funding OR
+  early-stage company)`;
+
+        // 3) Construct the final query
+        const queryParts: string[] = [baseQuery];
+
+        if (location) {
+            queryParts.push(location);
+        }
+        if (sinceDate && untilDate) {
+            queryParts.push(`since:${sinceDate}`, `until:${untilDate}`);
+        }
+        if (lang) {
+            queryParts.push(lang);
+        }
+        if (extraKeyword) {
+            queryParts.push(extraKeyword);
+        }
+
+        // Join everything into an advanced search string
+        const finalQuery = queryParts.join(" ");
+        const profilesPerCall = 10;
+        console.log("Generated Query:", finalQuery);
+
+        const profilesIterator = this.client.twitterClient.searchProfiles(
+            finalQuery,
+            profilesPerCall
+        );
+        console.log("LIIIST");
+
+        // Iterate through the profiles and check the bio for "founder" or "CEO"
+        for await (const profile of profilesIterator) {
+            console.log("LIIIST1", profile);
+            const roomId = stringToUuid(
+                "twitter_generate_room-" + this.client.profile.username
+            );
+
+            if (profile.followersCount > 1000) {
+                // adding startup
+                const message = {
+                    userId: this.runtime.agentId,
+                    roomId: roomId,
+                    agentId: this.runtime.agentId,
+                    content: { text: "", action: "" },
+                };
+                await processStartupCandidate(
+                    this.client,
+                    this.runtime,
+                    message,
+                    profile.username
+                );
+            }
         }
     }
 
