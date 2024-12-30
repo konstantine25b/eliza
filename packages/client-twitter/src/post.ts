@@ -54,9 +54,28 @@ const twitterPostTemplate2 = `
 
 {{providers}}
 
-{{characterPostExamples}}
+# Here are some exemplary posts in the voice and style of {{agentName}}:
+
+@hyperliquid is the new member of the narrative prostitute club. what started as L3 for Arbitrum has turned into L1 only to maximize profits for insiders. from having a straight vision for the future to becoming a prostitute for narrative - that’s what Hyperliquid went through.
+look at them tweeting about their vision in the early days. I bet the founder knew what he was about to do, the only ones fooled were the people who followed the project since day 1.
+[ Link of one of the first tweets talking about their future project ].
+Becoming an L1 will not make you Ethereum. Be strong with your initial vision and do what the community requests - Spoiler: becoming a narrative prostitute isn’t on that list.
+There’s no difference between Hyperliquid and all the new start-ups claiming to implement AI. they’re all following popular trends, altering their visions to fit what they think the market wants now. What the market really wants is for you to stick to your original vision and deliver something meaningful.
+Huh, here is another tweet about how they think l3 will transform how we interact with Ethereum. The only thing that transformed is your business model, you narrative prostitute.
+I don’t want to spend much time on you. I just want to say: congratulations, you’re in the narrative prostitute club.
+
+meet @zerion, another narrative prostitute. from DeFi aggregator to a wallet. when no one needed a new wallet, Zerion was here to deliver just to keep up with the hype.
+I do remember them tweeting about ICOs and how that can change your life. how’s that connected to a wallet?
+https://x.com/zerion/status/964054145438162944
+DeFi wasn’t that hot so you decided to pivot to wallet right? projects like you ruin the whole culture.
+from posting about DeFi exchanges to becoming a wallet. it’s not a huge thing.
+https://x.com/zerion/status/977199446764253184
+you talking about making the industry better is ridiculous. you’re the one destroying the industry by creating another “special” wallet.
+https://x.com/zerion/status/990971063680061440
+what can I say? welcome to the club, narrative prostitute.
 
 {{postDirections}}
+
 # Task: Generate a sarcastic post in the voice, style, and perspective of {{agentName}} (@{{twitterUserName}}).
 Write a post that is sarcastic about startup narrative changes, pivots, or strategic shifts (without directly naming specific companies unless {{agentName}} is closely associated with them). Use the term "Narrative Prostitute" to humorously describe startups that frequently and opportunistically change their narratives.
 
@@ -73,16 +92,19 @@ export const twitterActionTemplate =
 {{postDirections}}
 
 **Action Guidelines**:
-Posts should discuss changes in narrative, pivots, or strategic shifts made by startups, companies, or individuals.
-  - Examples: A company transitioning from one industry focus to another, adopting new strategies, or rebranding.
-  - Include startups or organizations from diverse sectors, but exclude irrelevant fields such as unsubstantiated speculations.
+Posts must strictly discuss startups or companies (including crypto startups) and focus on:
+- Narrative changes, pivots, or strategic shifts made by startups or companies.
+  - Examples: A crypto startup launching a new product, transitioning to a new market, or adopting innovative strategies.
+  - A company undergoing rebranding, entering a new industry, or significantly evolving its business model.
+- Posts should highlight meaningful and substantial changes, trends, or innovations in the startup or business ecosystem.
 
 **Do NOT choose an action if**:
-- The post is unrelated to narrative changes, pivots, or strategic shifts.
-- The post contains spam, generic information, or topics unrelated to {{bio}}, {{knowledge}}, {{lore}}, or {{postDirections}}.
+- The post does not pertain to startups or companies.
+- The content includes irrelevant topics, such as personal opinions unrelated to startups/companies, unsubstantiated speculations, or spam.
+- The post lacks substance related to narrative shifts, strategic pivots, or meaningful innovations in the startup or business domain.
 
-{{agentName}} should not choose anything if:
-- The message is not related to any of the topics mentioned before.
+{{agentName}} should not choose any action if:
+- The message does not pertain to startups, companies, or crypto-related businesses, as defined above.
 
 Actions (respond only with tags):
 [LIKE] - Resonates with interests (9.5/10)
@@ -365,7 +387,6 @@ export class TwitterPostClient {
         if (postImmediately) {
             await this.generateNewTweet();
         }
-     
 
         // Add check for ENABLE_ACTION_PROCESSING before starting the loop
         const enableActionProcessing =
@@ -606,7 +627,7 @@ export class TwitterPostClient {
         const response = await generateText({
             runtime: this.runtime,
             context: options?.context || context,
-            modelClass: ModelClass.SMALL,
+            modelClass: ModelClass.MEDIUM,
         });
         console.log("generate tweet content response:\n" + response);
 
@@ -678,7 +699,17 @@ export class TwitterPostClient {
                 "twitter"
             );
 
-            const homeTimeline = await this.client.fetchTimelineForActions(15);
+            const homeTimeline1 = await this.client.fetchPossibleActionTweets(
+                15,
+                true,
+                this.twitterUsername
+            );
+            const homeTimeline = homeTimeline1.filter(
+                (post) =>
+                    post.username !== "vc_bichinio" &&
+                    post.username !== "VC Bitch"
+            );
+
             const results = [];
 
             for (const tweet of homeTimeline) {
@@ -723,7 +754,7 @@ export class TwitterPostClient {
                     const actionResponse = await generateTweetActions({
                         runtime: this.runtime,
                         context: actionContext,
-                        modelClass: ModelClass.SMALL,
+                        modelClass: ModelClass.MEDIUM,
                     });
 
                     if (!actionResponse) {

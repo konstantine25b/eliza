@@ -338,6 +338,86 @@ export class ClientBase extends EventEmitter {
         }));
     }
 
+    async fetchPossibleActionTweets(
+        count: number,
+        typeOfPost: boolean,
+        username: string
+    ): Promise<Tweet[]> {
+        let keywords: string[] = [];
+        let keywords2: string[] = [];
+
+        console.log("fetching possible action tweets");
+
+        const tweetCandidates = (
+            await this.twitterClient.fetchSearchTweets(
+                `@${username}`,
+                10,
+                SearchMode.Latest
+            )
+        ).tweets;
+
+        if (typeOfPost) {
+            keywords = [
+                "L1",
+                "L2",
+                "L3",
+                "Oracle",
+                "DEX",
+                "DEX aggregator",
+                "wallet",
+                "Marketplace",
+            ];
+            keywords2 = ["chain", "dApp", "protocol", "startup", "company"];
+        } else {
+            keywords = ["venture capital", "VC funding", "raised"];
+            keywords2 = [
+                "pitch deck",
+                "angel investor",
+                "startup funding",
+                "fundraising",
+            ];
+        }
+
+        try {
+            const searchQuery = keywords
+                .map((keyword) => `"${keyword}"`)
+                .join(" OR ");
+            const searchQuery2 = keywords2
+                .map((keyword) => `"${keyword}"`)
+                .join(" OR ");
+
+            const tweetCandidates2 = (
+                await this.twitterClient.fetchSearchTweets(
+                    searchQuery,
+                    10,
+                    SearchMode.Latest
+                )
+            ).tweets;
+
+            const tweetCandidates4 = (
+                await this.twitterClient.fetchSearchTweets(
+                    searchQuery2,
+                    10,
+                    SearchMode.Top
+                )
+            ).tweets;
+
+            const uniqueTweetCandidates = [
+                ...new Set([
+                    ...tweetCandidates,
+                    ...tweetCandidates2,
+                    ...tweetCandidates4,
+                ]),
+            ];
+            console.log("fetching possible action tweets4");
+
+            return uniqueTweetCandidates;
+        } catch (error) {
+            console.error("Error fetching tweets:", error);
+            return [];
+        }
+    }
+
     async fetchSearchTweets(
         query: string,
         maxTweets: number,

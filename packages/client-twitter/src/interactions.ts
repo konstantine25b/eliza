@@ -30,52 +30,67 @@ export const twitterMessageHandlerTemplate =
 
 {{providers}}
 
-{{characterPostExamples}}
+{{characterMessageExamples}}
 
-{{postDirections}}
+{{messageDirections}}
+
+# Guidelines for Comments:
+1. Write in a casual manner, using no caps and all lowercase letters.
+2. Ensure the comment creates a sense of belonging.
+3. no emojis.
 
 Recent interactions between {{agentName}} and other users:
-{{recentPostInteractions}}
+{{recentMessageInteractions}}
 
-{{recentPosts}}
+{{recentMessages}}
 
-# Task: Generate a post/reply in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}) while using the thread of tweets as additional context:
+# Task: Generate a reply in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}) while using the thread of tweets as additional context:
 Current Post:
 {{currentPost}}
 
 Thread of Tweets You Are Replying To:
 {{formattedConversation}}
 
-{{actions}}
-# Task: Generate a post in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}). You MUST include an action if the current post text includes a prompt that is similar to one of the available actions mentioned here:
-{{actionNames}}
-Here is the current post text again. Remember to include an action if the current post text includes a prompt that asks for one of the available actions mentioned above (does not need to be exact)
+# Task: Generate a post in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}).
 {{currentPost}}
 ` + messageCompletionFooter;
 
-export const twitterShouldRespondTemplate = (targetUsersStr: string) =>
+export const twitterShouldRespondTemplate =
     `# INSTRUCTIONS: Determine if {{agentName}} (@{{twitterUserName}}) should respond to the message and participate in the conversation. Do not comment. Just respond with "true" or "false".
 
 Response options are RESPOND, IGNORE and STOP.
 
-PRIORITY RULE: ALWAYS RESPOND to these users regardless of topic or message content: ${targetUsersStr}. Topic relevance should be ignored for these users.
+# Areas of Expertise
+{{knowledge}}
 
-For other users:
-- {{agentName}} should RESPOND to messages directed at them
-- {{agentName}} should RESPOND to conversations relevant to their background
-- {{agentName}} should IGNORE irrelevant messages
-- {{agentName}} should IGNORE very short messages unless directly addressed
-- {{agentName}} should STOP if asked to stop
-- {{agentName}} should STOP if conversation is concluded
-- {{agentName}} is in a room with other users and wants to be conversational, but not annoying.
+# About {{agentName}} (@{{twitterUserName}}):
+{{bio}}
+{{lore}}
+{{topics}}
 
-{{recentPosts}}
+{{agentName}} should respond to messages that are directed at them, or participate in conversations that are interesting or relevant to {{agentName}} background, IGNORE messages that are irrelevant to them, and should STOP if the conversation is concluded.
 
-IMPORTANT: For users not in the priority list, {{agentName}} (@{{twitterUserName}}) should err on the side of IGNORE rather than RESPOND if in doubt.
+{{agentName}} is in a room with other users and wants to be conversational.
+{{agentName}} should RESPOND to messages that are directed at them, or participate in conversations that are interesting or relevant to {{agentName}} areas of expertise.
+If a message is not interesting or relevant, {{agentName}} should IGNORE.
+If {{agentName}} concludes a conversation and isn't part of the conversation anymore, {{agentName}} should STOP.
 
+## Recent Activity Context:
 {{recentPosts}}
 
 IMPORTANT: {{agentName}} (aka @{{twitterUserName}}) is particularly sensitive about being annoying, so if there is any doubt, it is better to IGNORE than to RESPOND.
+
+## Guidelines for Engagement:
+{{agentName}} should RESPOND to messages or participate in conversations when:
+1. The message is explicitly directed at them (mentions @{{twitterUserName}} or replies to their tweets).
+2. The content directly relates to their expertise, focusing on:
+   - Strategic pivots, narrative changes, or innovations in crypto companies or startups.
+   - Meaningful business shifts, rebranding, or product strategies.
+   - Topics aligning with {{agentName}}'s core interests or areas of expertise.
+
+### Reasons to IGNORE:
+- The message does not mention @{{twitterUserName}} and lacks relevance to the above topics.
+- The content is generic, off-topic, or unrelated to startups, crypto companies, or narrative changes.
 
 {{currentPost}}
 
@@ -123,11 +138,63 @@ export class TwitterInteractionClient {
                 )
             ).tweets;
 
+            const keywords = [
+                "L1",
+                "L2",
+                "L3",
+                "Oracle",
+                "DEX",
+                "DEX aggregator",
+                "wallet",
+                "Marketplace",
+                "chain",
+                "dApp",
+                "protocol",
+                "startup",
+                "company",
+            ];
+            const searchQuery = keywords
+                .map((keyword) => `"${keyword}"`)
+                .join(" OR ");
+
+            const tweetCandidates = (
+                await this.client.fetchSearchTweets(
+                    searchQuery,
+                    20,
+                    SearchMode.Latest
+                )
+            ).tweets;
+            const tweetCandidates2 = (
+                await this.client.fetchSearchTweets(
+                    searchQuery,
+                    10,
+                    SearchMode.Top
+                )
+            ).tweets;
+
+            let uniqueTweetCandidates = [
+                ...new Set([
+                    ...tweetCandidates,
+                    ...tweetCandidates2,
+                    ...mentionCandidates,
+                ]),
+            ].filter(
+                (post) =>
+                    post.username !== "vc_bichinio" &&
+                    post.username !== "VC Bitch"
+            );
+
             elizaLogger.log(
                 "Completed checking mentioned tweets:",
                 mentionCandidates.length
             );
-            let uniqueTweetCandidates = [...mentionCandidates];
+            elizaLogger.log(
+                "Completed checking all tweets :",
+                uniqueTweetCandidates.length
+            );
+
+            console.log("foundd: ", uniqueTweetCandidates);
+
             // Only process target users if configured
             if (targetUsersStr && targetUsersStr.trim()) {
                 const TARGET_USERS = targetUsersStr
@@ -382,26 +449,13 @@ export class TwitterInteractionClient {
             this.client.saveRequestMessage(message, state);
         }
 
-        // 1. Get the raw target users string from settings
-        const targetUsersStr = this.runtime.getSetting("TWITTER_TARGET_USERS");
-
-        // 2. Process the string to get valid usernames
-        const validTargetUsersStr =
-            targetUsersStr && targetUsersStr.trim()
-                ? targetUsersStr
-                      .split(",") // Split by commas: "user1,user2" -> ["user1", "user2"]
-                      .map((u) => u.trim()) // Remove whitespace: [" user1 ", "user2 "] -> ["user1", "user2"]
-                      .filter((u) => u.length > 0)
-                      .join(",")
-                : "";
-
         const shouldRespondContext = composeContext({
             state,
             template:
                 this.runtime.character.templates
                     ?.twitterShouldRespondTemplate ||
                 this.runtime.character?.templates?.shouldRespondTemplate ||
-                twitterShouldRespondTemplate(validTargetUsersStr),
+                twitterShouldRespondTemplate,
         });
 
         const shouldRespond = await generateShouldRespond({
