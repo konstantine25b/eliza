@@ -367,7 +367,7 @@ export class TwitterPostClient {
             const randomMinutes =
                 Math.floor(Math.random() * (maxMinutes - minMinutes + 1)) +
                 minMinutes;
-            const ScrapperInterval = 0.5;
+            const ScrapperInterval = 8;
             const delay = randomMinutes * 60 * 1000 * ScrapperInterval;
 
             if (Date.now() > lastPostTimestamp + delay) {
