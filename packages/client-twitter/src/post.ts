@@ -570,7 +570,7 @@ export class TwitterPostClient {
 
                 const result = await this.client.requestQueue.add(
                     async () =>
-                        await this.client.twitterClient.sendTweet(
+                        await this.client.twitterClient.sendLongTweet(
                             cleanedContent
                         )
                 );
@@ -1207,7 +1207,7 @@ export class TwitterPostClient {
             // Send the tweet through request queue
             const result = await this.client.requestQueue.add(
                 async () =>
-                    await this.client.twitterClient.sendTweet(
+                    await this.client.twitterClient.sendLongTweet(
                         replyText,
                         tweet.id
                     )

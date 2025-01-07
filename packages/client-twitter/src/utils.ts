@@ -216,7 +216,7 @@ export async function sendTweet(
         }
         const result = await client.requestQueue.add(
             async () =>
-                await client.twitterClient.sendTweet(
+                await client.twitterClient.sendLongTweet(
                     chunk.trim(),
                     previousTweetId,
                     mediaData

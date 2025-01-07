@@ -1,7 +1,7 @@
 import { IAgentRuntime } from "@elizaos/core";
 import { z } from "zod";
 
-export const DEFAULT_MAX_TWEET_LENGTH = 280;
+export const DEFAULT_MAX_TWEET_LENGTH = 2000;
 
 export const twitterEnvSchema = z.object({
     TWITTER_DRY_RUN: z
