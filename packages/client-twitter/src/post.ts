@@ -14,8 +14,8 @@ import { postActionResponseFooter } from "@elizaos/core";
 import { generateTweetActions } from "@elizaos/core";
 import { IImageDescriptionService, ServiceType } from "@elizaos/core";
 import { buildConversationThread } from "./utils.ts";
-import { twitterMessageHandlerTemplate } from "./interactions.ts";
 import { DEFAULT_MAX_TWEET_LENGTH } from "./environment.ts";
+import { twitterPostTemplate2 } from "./addtemplates/postTemp.ts";
 
 const twitterPostTemplate = `
 # Areas of Expertise
@@ -701,6 +701,8 @@ export class TwitterPostClient {
                         context: actionContext,
                         modelClass: ModelClass.MEDIUM,
                     });
+                    // es davamate ro cota delay qondes
+                    await new Promise((resolve) => setTimeout(resolve, 4000));
 
                     if (!actionResponse) {
                         elizaLogger.log(
@@ -860,7 +862,7 @@ export class TwitterPostClient {
                                     template:
                                         this.runtime.character.templates
                                             ?.twitterMessageHandlerTemplate ||
-                                        twitterMessageHandlerTemplate,
+                                            twitterPostTemplate2,
                                 });
 
                             if (!quoteContent) {
@@ -1056,7 +1058,7 @@ export class TwitterPostClient {
                 template:
                     this.runtime.character.templates
                         ?.twitterMessageHandlerTemplate ||
-                    twitterMessageHandlerTemplate,
+                        twitterPostTemplate2,
             });
 
             if (!replyText) {
