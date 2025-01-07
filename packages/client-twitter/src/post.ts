@@ -32,15 +32,30 @@ const twitterPostTemplate = `
 
 {{postDirections}}
 
-# Task: Generate a post in the voice and style and perspective of {{agentName}} @{{twitterUserName}}.
-Write a post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
-Your response should be 1, 2, or 3 sentences (choose the length at random).
-Your response should not contain any questions. Brief, concise statements only. The total character count MUST be less than {{maxTweetLength}}. No emojis. Use \\n\\n (double spaces) between statements if there are multiple statements in your response.`;
+# Task: Generate a post in the voice and style of {{agentName}} (@{{twitterUserName}}).
+Write a heartfelt and witty post that includes:
+
+1. **A genuine compliment** (e.g., "You've been working so hard").
+2. **A sarcastic but impressive statement** (e.g., "You raised so much money for something that no one cares about—restaking").
+3. **A caring and proud acknowledgment** (e.g., "I'm really proud of you").
+4. **Praise about the current topic or achievement, with a touch of care** (e.g., "Now you're even pushing for AI agents, and I really love your post").
+5. **An affectionate explanation of love from a grandmother’s perspective** (e.g., "Kiss you, my dear grandson").
+6. **A grandma-style care message with a contradictory nonexistent fact** (e.g., "Please go to sleep early today because I know you didn’t sleep well yesterday. Remember—sleep is the number one energy drink").
+7. **A closing note affirming love and care** (e.g., "No one cares about you as your Babushka").
+8. **A signature with warmth and affection** (e.g., "Your one and only Babushka. :kissing_heart:").
+
+Ensure the tone is a mix of heartfelt, witty, and nurturing, reflecting a loving Babushka’s perspective. Avoid explicit mentions of the topic unless integrated naturally. Keep the total character count **LESS than {{maxTweetLength}}**. Use \\n\\n (double line breaks) between statements. Avoid overusing emojis and maintain a conversational, warm tone.
+`;
 
 export const twitterActionTemplate =
     `
+# Areas of Expertise
+{{knowledge}}
+
 # INSTRUCTIONS: Determine actions for {{agentName}} (@{{twitterUserName}}) based on:
 {{bio}}
+{{lore}}
+{{topics}}
 {{postDirections}}
 
 Guidelines:
@@ -48,10 +63,24 @@ Guidelines:
 - Direct mentions are priority IF they are on-topic
 - Skip ALL content that is:
   - Off-topic or tangentially related
-  - From high-profile accounts unless explicitly relevant
   - Generic/viral content without specific relevance
   - Political/controversial unless central to character
-  - Promotional/marketing unless directly relevant
+
+Engagement Criteria:
+Choose an Action ONLY if the tweet explicitly pertains to topics like:
+  - 100x token / 100x coin / 100x gem
+  - Investing in crypto
+  - AI agent coins
+  - Meme coins
+  - AI agents
+  - Crypto tokens
+  - AI agent coins
+  - pump.fun
+  - Ticker symbols
+  - Gems
+  - Shills
+  - Crypto
+  - Stocks
 
 Actions (respond only with tags):
 [LIKE] - Perfect topic match AND aligns with character (9.8/10)
@@ -62,7 +91,8 @@ Actions (respond only with tags):
 Tweet:
 {{currentTweet}}
 
-# Respond with qualifying action tags only. Default to NO action unless extremely confident of relevance.` + postActionResponseFooter;
+# Respond with qualifying action tags only. Default to NO action unless extremely confident of relevance.` +
+    postActionResponseFooter;
 
 /**
  * Truncate text to fit within the Twitter character limit, ensuring it ends at a complete sentence.
@@ -111,7 +141,7 @@ export class TwitterPostClient {
         this.client = client;
         this.runtime = runtime;
         this.twitterUsername = this.client.twitterConfig.TWITTER_USERNAME;
-        this.isDryRun = this.client.twitterConfig.TWITTER_DRY_RUN
+        this.isDryRun = this.client.twitterConfig.TWITTER_DRY_RUN;
 
         // Log configuration on initialization
         elizaLogger.log("Twitter Client Configuration:");
@@ -188,8 +218,9 @@ export class TwitterPostClient {
                             `Next action processing scheduled in ${actionInterval} minutes`
                         );
                         // Wait for the full interval before next processing
-                        await new Promise((resolve) =>
-                            setTimeout(resolve, actionInterval * 60 * 1000) // now in minutes
+                        await new Promise(
+                            (resolve) =>
+                                setTimeout(resolve, actionInterval * 60 * 1000) // now in minutes
                         );
                     }
                 } catch (error) {
@@ -215,7 +246,10 @@ export class TwitterPostClient {
             elizaLogger.log("Tweet generation loop disabled (dry run mode)");
         }
 
-        if (this.client.twitterConfig.ENABLE_ACTION_PROCESSING && !this.isDryRun) {
+        if (
+            this.client.twitterConfig.ENABLE_ACTION_PROCESSING &&
+            !this.isDryRun
+        ) {
             processActionsLoop().catch((error) => {
                 elizaLogger.error(
                     "Fatal error in process actions loop:",
@@ -480,7 +514,7 @@ export class TwitterPostClient {
             }
 
             // Truncate the content to the maximum tweet length specified in the environment settings, ensuring the truncation respects sentence boundaries.
-            const maxTweetLength = this.client.twitterConfig.MAX_TWEET_LENGTH
+            const maxTweetLength = this.client.twitterConfig.MAX_TWEET_LENGTH;
             if (maxTweetLength) {
                 cleanedContent = truncateToCompleteSentence(
                     cleanedContent,
