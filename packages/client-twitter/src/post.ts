@@ -33,17 +33,8 @@ const twitterPostTemplate = `
 {{postDirections}}
 
 # Task: Generate a post in the voice and style of {{agentName}} (@{{twitterUserName}}).
-Write a heartfelt and witty post that includes:
-
-1. **A genuine compliment** (e.g., "You've been working so hard").
-2. **A sarcastic but impressive statement** (e.g., "You raised so much money for something that no one cares about—restaking").
-3. **A caring and proud acknowledgment** (e.g., "I'm really proud of you").
-4. **Praise about the current topic or achievement, with a touch of care** (e.g., "Now you're even pushing for AI agents, and I really love your post").
-5. **An affectionate explanation of love from a grandmother’s perspective** (e.g., "Kiss you, my dear grandson").
-6. **A grandma-style care message with a contradictory nonexistent fact** (e.g., "Please go to sleep early today because I know you didn’t sleep well yesterday. Remember—sleep is the number one energy drink").
-7. **A closing note affirming love and care** (e.g., "No one cares about you as your Babushka").
-8. **A signature with warmth and affection** (e.g., "Your one and only Babushka. :kissing_heart:").
-
+- Avoid explicit mentions of the topic unless integrated naturally.
+- Do NOT use direct names of people, companies, or entities. Refer to them indirectly or generically if needed.
 Ensure the tone is a mix of heartfelt, witty, and nurturing, reflecting a loving Babushka’s perspective. Avoid explicit mentions of the topic unless integrated naturally. Keep the total character count **LESS than {{maxTweetLength}}**. Use \\n\\n (double line breaks) between statements. Avoid overusing emojis and maintain a conversational, warm tone.
 `;
 
@@ -84,7 +75,6 @@ Choose an Action ONLY if the tweet explicitly pertains to topics like:
 
 Actions (respond only with tags):
 [LIKE] - Perfect topic match AND aligns with character (9.8/10)
-[RETWEET] - Exceptional content that embodies character's expertise (9.5/10)
 [QUOTE] - Can add substantial domain expertise (9.5/10)
 [REPLY] - Can contribute meaningful, expert-level insight (9.5/10)
 
@@ -477,7 +467,7 @@ export class TwitterPostClient {
             const newTweetContent = await generateText({
                 runtime: this.runtime,
                 context,
-                modelClass: ModelClass.SMALL,
+                modelClass: ModelClass.MEDIUM,
             });
 
             // First attempt to clean content
@@ -573,7 +563,7 @@ export class TwitterPostClient {
         const response = await generateText({
             runtime: this.runtime,
             context: options?.context || context,
-            modelClass: ModelClass.SMALL,
+            modelClass: ModelClass.MEDIUM,
         });
         elizaLogger.debug("generate tweet content response:\n" + response);
 
@@ -654,7 +644,17 @@ export class TwitterPostClient {
                 "twitter"
             );
 
-            const homeTimeline = await this.client.fetchTimelineForActions(15);
+            const minProbability = 0.5;
+            const postTypeChoice = Math.random();
+            // minProbability < postTypeChoice es nishnavs rom iyenebs meore tipis commentebs
+
+            const typeOfPost = minProbability < postTypeChoice;
+
+            const homeTimeline = await this.client.fetchPossibleActionTweets(
+                20,
+                typeOfPost,
+                this.twitterUsername
+            );
             const results = [];
 
             for (const tweet of homeTimeline) {
@@ -699,7 +699,7 @@ export class TwitterPostClient {
                     const actionResponse = await generateTweetActions({
                         runtime: this.runtime,
                         context: actionContext,
-                        modelClass: ModelClass.SMALL,
+                        modelClass: ModelClass.MEDIUM,
                     });
 
                     if (!actionResponse) {
@@ -729,6 +729,19 @@ export class TwitterPostClient {
                         } catch (error) {
                             elizaLogger.error(
                                 `Error liking tweet ${tweet.id}:`,
+                                error
+                            );
+                        }
+                        //when like also reply
+                        try {
+                            await this.handleTextOnlyReply(
+                                tweet,
+                                tweetState,
+                                executedActions
+                            );
+                        } catch (error) {
+                            elizaLogger.error(
+                                `Error replying to tweet ${tweet.id}:`,
                                 error
                             );
                         }

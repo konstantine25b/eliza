@@ -704,6 +704,7 @@ export type Character = {
         twitterSearchTemplate?: string;
         twitterActionTemplate?: string;
         twitterPostTemplate?: string;
+        twitterPostTemplate2?: string;
         twitterMessageHandlerTemplate?: string;
         twitterShouldRespondTemplate?: string;
         farcasterPostTemplate?: string;
