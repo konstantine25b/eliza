@@ -17,6 +17,11 @@ import {
 } from "@elizaos/core";
 import { ClientBase } from "./base";
 import { buildConversationThread, sendTweet, wait } from "./utils.ts";
+import {
+    twitterMessageHandlerTemplate2,
+    twitterShouldRespondTemplate2,
+} from "./addtemplates/postTemp.ts";
+import { generateQueryForInteractions } from "./utils/scraping.ts";
 
 export const twitterMessageHandlerTemplate =
     `
@@ -39,7 +44,7 @@ Recent interactions between {{agentName}} and other users:
 
 {{recentMessages}}
 
-# TASK: Generate a post/reply in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}) while using the thread of tweets as additional context:
+# TASK: Generate a reply in the voice, style, and perspective of {{agentName}} (@{{twitterUserName}}), adding a sarcastic flair. Use the thread of tweets as additional context to craft a sharp, witty, and slightly irreverent response:
 
 Current Post:
 {{currentPost}}
@@ -47,11 +52,11 @@ Current Post:
 Thread of Tweets You Are Replying To:
 {{formattedConversation}}
 
-# INSTRUCTIONS: Generate a post in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}). You MUST include an action if the current post text includes a prompt that is similar to one of the available actions mentioned here:
+# INSTRUCTIONS: Generate a post in the voice, style, and perspective of {{agentName}} (@{{twitterUserName}}) with a sarcastic edge. Channel humor, irony, or exaggeration while maintaining relevance to the context. You MUST include an action if the current post text includes a prompt that is similar to one of the available actions mentioned here:
 {{actionNames}}
 {{actions}}
 
-Here is the current post text again. Remember to include an action if the current post text includes a prompt that asks for one of the available actions mentioned above (does not need to be exact)
+Here is the current post text again. Remember to incorporate sarcasm and include an action if the current post text includes a prompt that asks for one of the available actions mentioned above (does not need to be exact):
 {{currentPost}}
 ` + messageCompletionFooter;
 
@@ -113,11 +118,41 @@ export class TwitterInteractionClient {
         const twitterUsername = this.client.profile.username;
         try {
             // Check for mentions
+
+            const minProbability = 0.7;
+            const postTypeChoice = Math.random();
+
+            console.log("postTypeChoice ", postTypeChoice);
+
+            // minProbability < postTypeChoice es nishnavs rom iyenebs meore shilling commentebs
+
+            const typeOfPost = minProbability < postTypeChoice;
+
+            const searchQuery = generateQueryForInteractions(typeOfPost);
+
             const mentionCandidates = (
                 await this.client.fetchSearchTweets(
                     `@${twitterUsername}`,
-                    20,
+                    10,
                     SearchMode.Latest
+                )
+            ).tweets;
+
+            const tweetCandidates = (
+                await this.client.fetchSearchTweets(
+                    searchQuery,
+                    15,
+                    SearchMode.Latest,
+                    300
+                )
+            ).tweets;
+
+            const tweetCandidates2 = (
+                await this.client.fetchSearchTweets(
+                    searchQuery,
+                    10,
+                    SearchMode.Top,
+                    500
                 )
             ).tweets;
 
@@ -125,10 +160,15 @@ export class TwitterInteractionClient {
                 "Completed checking mentioned tweets:",
                 mentionCandidates.length
             );
-            let uniqueTweetCandidates = [...mentionCandidates];
+            let uniqueTweetCandidates = [
+                ...mentionCandidates,
+                ...tweetCandidates,
+                ...tweetCandidates2,
+            ];
             // Only process target users if configured
             if (this.client.twitterConfig.TWITTER_TARGET_USERS.length) {
-                const TARGET_USERS = this.client.twitterConfig.TWITTER_TARGET_USERS;
+                const TARGET_USERS =
+                    this.client.twitterConfig.TWITTER_TARGET_USERS;
 
                 elizaLogger.log("Processing target users:", TARGET_USERS);
 
@@ -278,6 +318,7 @@ export class TwitterInteractionClient {
                         tweet,
                         message,
                         thread,
+                        typeOfPost,
                     });
 
                     // Update the last checked tweet ID after processing each tweet
@@ -298,10 +339,12 @@ export class TwitterInteractionClient {
         tweet,
         message,
         thread,
+        typeOfPost,
     }: {
         tweet: Tweet;
         message: Memory;
         thread: Tweet[];
+        typeOfPost: boolean;
     }) {
         if (tweet.userId === this.client.profile.id) {
             // console.log("skipping tweet from bot itself", tweet.id);
@@ -377,16 +420,13 @@ export class TwitterInteractionClient {
             this.client.saveRequestMessage(message, state);
         }
 
-        // get usernames into str
-        const validTargetUsersStr = this.client.twitterConfig.TWITTER_TARGET_USERS.join(",");
-
         const shouldRespondContext = composeContext({
             state,
             template:
                 this.runtime.character.templates
-                    ?.twitterShouldRespondTemplate ||
+                    ?.twitterShouldRespondTemplate2 ||
                 this.runtime.character?.templates?.shouldRespondTemplate ||
-                twitterShouldRespondTemplate(validTargetUsersStr),
+                twitterShouldRespondTemplate2,
         });
 
         const shouldRespond = await generateShouldRespond({
@@ -403,11 +443,15 @@ export class TwitterInteractionClient {
 
         const context = composeContext({
             state,
-            template:
-                this.runtime.character.templates
-                    ?.twitterMessageHandlerTemplate ||
-                this.runtime.character?.templates?.messageHandlerTemplate ||
-                twitterMessageHandlerTemplate,
+            template: typeOfPost
+                ? this.runtime.character.templates
+                      ?.twitterMessageHandlerTemplate ||
+                  this.runtime.character?.templates?.messageHandlerTemplate ||
+                  twitterMessageHandlerTemplate
+                : this.runtime.character.templates
+                      ?.twitterMessageHandlerTemplate2 ||
+                  this.runtime.character?.templates?.messageHandlerTemplate ||
+                  twitterMessageHandlerTemplate2,
         });
 
         elizaLogger.debug("Interactions prompt:\n" + context);

@@ -455,6 +455,7 @@ export class ClientBase extends EventEmitter {
         query: string,
         maxTweets: number,
         searchMode: SearchMode,
+        minFollowers?: number,
         cursor?: string
     ): Promise<QueryTweetsResponse> {
         try {
@@ -464,24 +465,63 @@ export class ClientBase extends EventEmitter {
                 setTimeout(() => resolve({ tweets: [] }), 15000)
             );
 
-            try {
-                const result = await this.requestQueue.add(
-                    async () =>
-                        await Promise.race([
-                            this.twitterClient.fetchSearchTweets(
-                                query,
-                                maxTweets,
-                                searchMode,
-                                cursor
-                            ),
-                            timeoutPromise,
-                        ])
-                );
-                return (result ?? { tweets: [] }) as QueryTweetsResponse;
-            } catch (error) {
-                elizaLogger.error("Error fetching search tweets:", error);
-                return { tweets: [] };
+            let tweets: Tweet[] = [];
+            let nextCursor = cursor;
+
+            while (tweets.length < maxTweets) {
+                try {
+                    const result = (await this.requestQueue.add(
+                        async () =>
+                            await Promise.race([
+                                this.twitterClient.fetchSearchTweets(
+                                    query,
+                                    Math.min(maxTweets - tweets.length, 100),
+                                    searchMode,
+                                    nextCursor
+                                ),
+                                timeoutPromise,
+                            ])
+                    )) as QueryTweetsResponse;
+
+                    if (!result || !result.tweets || result.tweets.length === 0)
+                        break;
+
+                    tweets = tweets.concat(result.tweets);
+                    nextCursor = result.next;
+
+                    if (!nextCursor) break;
+                } catch (error) {
+                    elizaLogger.error("Error fetching search tweets:", error);
+                    break;
+                }
             }
+            if (minFollowers && minFollowers > 0) {
+                const eligibleTweets = [];
+
+                for (const tweet of tweets) {
+                    try {
+                        const profile =
+                            await this.twitterClient.fetchSearchProfiles(
+                                tweet.userId,
+                                1
+                            );
+                        const user = profile.profiles[0];
+
+                        if (user && user.followersCount >= minFollowers) {
+                            eligibleTweets.push(tweet);
+                        }
+                    } catch (error) {
+                        console.error(
+                            `Error fetching profile for user ${tweet.userId}:`,
+                            error
+                        );
+                    }
+                }
+
+                return { tweets: eligibleTweets };
+            }
+
+            return { tweets };
         } catch (error) {
             elizaLogger.error("Error fetching search tweets:", error);
             return { tweets: [] };

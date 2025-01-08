@@ -698,6 +698,7 @@ export type Character = {
         goalsTemplate?: string;
         factsTemplate?: string;
         messageHandlerTemplate?: string;
+        messageHandlerTemplate2?: string;
         shouldRespondTemplate?: string;
         continueMessageHandlerTemplate?: string;
         evaluationTemplate?: string;
@@ -706,7 +707,9 @@ export type Character = {
         twitterPostTemplate?: string;
         twitterPostTemplate2?: string;
         twitterMessageHandlerTemplate?: string;
+        twitterMessageHandlerTemplate2?: string;
         twitterShouldRespondTemplate?: string;
+        twitterShouldRespondTemplate2?: string;
         farcasterPostTemplate?: string;
         lensPostTemplate?: string;
         farcasterMessageHandlerTemplate?: string;

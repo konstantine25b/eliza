@@ -19,8 +19,11 @@ export function getRandomLocation(): string {
 }
 
 // Utility to generate a random date range
-export function getRandomDateRange(): { sinceDate: string; untilDate: string } {
-    const start = new Date(2020, 0, 1).getTime(); // Start date: Jan 1, 2020
+export function getRandomDateRange(startDate: number): {
+    sinceDate: string;
+    untilDate: string;
+} {
+    const start = new Date(startDate, 0, 1).getTime(); // Start date: Jan 1, 2020
     const end = new Date().getTime(); // Current date
     const randomSince = new Date(start + Math.random() * (end - start));
     const randomUntil = new Date(
@@ -40,46 +43,77 @@ export function getRandomLanguage(): string {
 }
 
 // Utility to pick a random keyword
-export function getRandomKeyword(): string {
-    const baseKeywords = [
+// Utility to pick a random keyword based on a condition
+export function getRandomKeyword(typeOfPost: boolean): string {
+    const primaryKeywords = [
         "founder",
         "CEO",
         "AI agents",
         "crypto",
-        "100x coin",
-        "meme coins",
-        "pump.fun",
-        "crypto tokens",
         "blockchain",
         "innovation",
         "tech leader",
         "investing",
         "startup founder",
         "angel investor",
-        "shill",
         "stocks",
+        "AI season",
     ];
 
-    // Randomly select a base keyword
-    const baseQuery =
-        baseKeywords[Math.floor(Math.random() * baseKeywords.length)];
+    const secondaryKeywords = [
+        "100x",
+        "meme coins",
+        "pump.fun",
+        "crypto tokens",
+        "Memecoin of the day",
+        "Shill me some meme coin",
+        "next big token",
+        "AI token",
+        "2x",
+        "5x",
+        "10x",
+        "100x",
+        "1000x",
+        "10000x",
+    ];
 
-    return baseQuery;
+    const selectedKeywords = typeOfPost ? primaryKeywords : secondaryKeywords;
+
+    return selectedKeywords[
+        Math.floor(Math.random() * selectedKeywords.length)
+    ];
 }
-
 // Function to generate a query for finding founders and CEOs
-export function generateQuery(): string {
-    const { sinceDate, untilDate } = getRandomDateRange();
+export function generateQuery(typeOfPost: boolean): string {
+    const { sinceDate, untilDate } = getRandomDateRange(2020);
     const randomLanguage = getRandomLanguage();
-    const Keywords = getRandomKeyword();
+    const keyword = getRandomKeyword(typeOfPost);
     const negationFilter = Math.random() < 0.5 ? "-filter:verified" : "";
     const randomLocation = getRandomLocation();
 
     const queryParts: string[] = [
-        Keywords,
+        keyword,
         `since:${sinceDate}`,
         `until:${untilDate}`,
         randomLanguage,
+        negationFilter,
+        randomLocation,
+    ];
+
+    return queryParts.filter(Boolean).join(" ");
+}
+
+// Function to generate a query for finding founders and CEOs based on interactions
+export function generateQueryForInteractions(typeOfPost: boolean): string {
+    const { sinceDate, untilDate } = getRandomDateRange(2023);
+    const keyword = getRandomKeyword(typeOfPost);
+    const negationFilter = Math.random() < 0.5 ? "-filter:verified" : "";
+    const randomLocation = getRandomLocation();
+
+    const queryParts: string[] = [
+        keyword,
+        `since:${sinceDate}`,
+        `until:${untilDate}`,
         negationFilter,
         randomLocation,
     ];

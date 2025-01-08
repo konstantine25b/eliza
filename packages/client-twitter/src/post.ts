@@ -15,7 +15,7 @@ import { generateTweetActions } from "@elizaos/core";
 import { IImageDescriptionService, ServiceType } from "@elizaos/core";
 import { buildConversationThread } from "./utils.ts";
 import { DEFAULT_MAX_TWEET_LENGTH } from "./environment.ts";
-import { twitterPostTemplate2 } from "./addtemplates/postTemp.ts";
+import { twitterMessageHandlerTemplate2, twitterPostTemplate2 } from "./addtemplates/postTemp.ts";
 
 const twitterPostTemplate = `
 # Areas of Expertise
@@ -32,11 +32,11 @@ const twitterPostTemplate = `
 
 {{postDirections}}
 
-# Task: Generate a post in the voice and style of {{agentName}} (@{{twitterUserName}}).
-- Avoid explicit mentions of the topic unless integrated naturally.
-- Do NOT use direct names of people, companies, or entities. Refer to them indirectly or generically if needed.
-Ensure the tone is a mix of heartfelt, witty, and nurturing, reflecting a loving Babushka’s perspective. Avoid explicit mentions of the topic unless integrated naturally. Keep the total character count **LESS than {{maxTweetLength}}**. Use \\n\\n (double line breaks) between statements. Avoid overusing emojis and maintain a conversational, warm tone.
-`;
+# Task: Generate a post in the voice and style and perspective of {{agentName}} @{{twitterUserName}}.
+Write a post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}. Do not add commentary or acknowledge this request, just write the post.
+Your response should be 1, 2, or 3 sentences (choose the length at random).
+Your response should not contain any questions. Brief, concise statements only. The total character count MUST be less than {{maxTweetLength}}. No emojis. Use \\n\\n (double spaces) between statements if there are multiple statements in your response.`;
+
 
 export const twitterActionTemplate =
     `
@@ -1058,7 +1058,7 @@ export class TwitterPostClient {
                 template:
                     this.runtime.character.templates
                         ?.twitterMessageHandlerTemplate ||
-                        twitterPostTemplate2,
+                        twitterMessageHandlerTemplate2,
             });
 
             if (!replyText) {
