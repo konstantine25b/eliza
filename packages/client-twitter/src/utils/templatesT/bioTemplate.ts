@@ -1,4 +1,4 @@
-export const shouldAddFounder = `
+export const shouldAddStartup = `
  # INSTRUCTIONS:
  You are an intelligent assistant tasked with evaluating whether a Twitter user should be categorized as a "startup".
 
