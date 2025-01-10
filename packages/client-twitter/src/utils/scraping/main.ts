@@ -45,3 +45,11 @@ export function getRandomKeyword(keywords: string[]): string {
     return keywords[Math.floor(Math.random() * keywords.length)];
 }
 
+export function getRandomKeywordsWithOr(keywords: string[], count: number): string {
+    // Shuffle and pick the required number of keywords
+    const shuffledKeywords = keywords.sort(() => 0.5 - Math.random());
+    const selectedKeywords = shuffledKeywords.slice(0, count);
+    // Join them with "OR"
+    return selectedKeywords.join(' OR ');
+}
+

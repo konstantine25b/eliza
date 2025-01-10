@@ -17,7 +17,7 @@ import {
 } from "@elizaos/core";
 import { ClientBase } from "./base";
 import { buildConversationThread, sendTweet, wait } from "./utils.ts";
-import { twitterShouldRespondTemplate1 } from "./utils/templatesT/interactionsT.ts";
+import { generateQueryForInteractions } from "./utils/scraping/post.ts";
 
 export const twitterMessageHandlerTemplate =
     `
@@ -117,7 +117,16 @@ export class TwitterInteractionClient {
             const mentionCandidates = (
                 await this.client.fetchSearchTweets(
                     `@${twitterUsername}`,
-                    20,
+                    10,
+                    SearchMode.Latest
+                )
+            ).tweets;
+            const query = generateQueryForInteractions();
+            console.log("query1", query);
+            const tweetCandidates = (
+                await this.client.fetchSearchTweets(
+                    query,
+                    5,
                     SearchMode.Latest
                 )
             ).tweets;
@@ -126,10 +135,15 @@ export class TwitterInteractionClient {
                 "Completed checking mentioned tweets:",
                 mentionCandidates.length
             );
-            let uniqueTweetCandidates = [...mentionCandidates];
+            let uniqueTweetCandidates = [
+                ...mentionCandidates,
+                ...tweetCandidates,
+            ];
+            console.log("unique12", uniqueTweetCandidates);
             // Only process target users if configured
             if (this.client.twitterConfig.TWITTER_TARGET_USERS.length) {
-                const TARGET_USERS = this.client.twitterConfig.TWITTER_TARGET_USERS;
+                const TARGET_USERS =
+                    this.client.twitterConfig.TWITTER_TARGET_USERS;
 
                 elizaLogger.log("Processing target users:", TARGET_USERS);
 
@@ -147,6 +161,7 @@ export class TwitterInteractionClient {
                                     SearchMode.Latest
                                 )
                             ).tweets;
+                            console.log("tweeeets", userTweets);
 
                             // Filter for unprocessed, non-reply, recent tweets
                             const validTweets = userTweets.filter((tweet) => {
@@ -158,6 +173,7 @@ export class TwitterInteractionClient {
                                     Date.now() - tweet.timestamp * 1000 <
                                     2 * 60 * 60 * 1000;
 
+                                console.log("tweeeets1", isRecent);
                                 elizaLogger.log(`Tweet ${tweet.id} checks:`, {
                                     isUnprocessed,
                                     isRecent,
@@ -172,6 +188,7 @@ export class TwitterInteractionClient {
                                     isRecent
                                 );
                             });
+                            console.log("tweeeets3", validTweets);
 
                             if (validTweets.length > 0) {
                                 tweetsByUser.set(username, validTweets);
@@ -215,11 +232,17 @@ export class TwitterInteractionClient {
                     "No target users configured, processing only mentions"
                 );
             }
+            uniqueTweetCandidates = [
+                ...uniqueTweetCandidates,
+                ...tweetCandidates,
+            ];
 
             // Sort tweet candidates by ID in ascending order
             uniqueTweetCandidates
                 .sort((a, b) => a.id.localeCompare(b.id))
                 .filter((tweet) => tweet.userId !== this.client.profile.id);
+
+            console.log("uniques", uniqueTweetCandidates);
 
             // for each tweet candidate, handle the tweet
             for (const tweet of uniqueTweetCandidates) {
@@ -379,22 +402,29 @@ export class TwitterInteractionClient {
         }
 
         // get usernames into str
-        // const validTargetUsersStr = this.client.twitterConfig.TWITTER_TARGET_USERS.join(",");
+        const validTargetUsersStr =
+            this.client.twitterConfig.TWITTER_TARGET_USERS.join(",");
+
+        console.log("validTargetUsersStr", validTargetUsersStr);
 
         const shouldRespondContext = composeContext({
             state,
             template:
                 this.runtime.character.templates
-                    ?.twitterShouldRespondTemplate1 ||
-                this.runtime.character?.templates?.shouldRespondTemplate1 ||
-                twitterShouldRespondTemplate1,
+                    ?.twitterShouldRespondTemplate ||
+                this.runtime.character?.templates?.shouldRespondTemplate ||
+                twitterShouldRespondTemplate(validTargetUsersStr),
         });
+
+        console.log("shouldRespond1", shouldRespondContext);
 
         const shouldRespond = await generateShouldRespond({
             runtime: this.runtime,
             context: shouldRespondContext,
             modelClass: ModelClass.MEDIUM,
         });
+
+        console.log("shouldRespond", shouldRespond);
 
         // Promise<"RESPOND" | "IGNORE" | "STOP" | null> {
         if (shouldRespond !== "RESPOND") {

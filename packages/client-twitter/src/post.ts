@@ -1,4 +1,4 @@
-import { Tweet } from "agent-twitter-client";
+import { SearchMode, Tweet } from "agent-twitter-client";
 import {
     composeContext,
     generateText,
@@ -18,7 +18,7 @@ import { buildConversationThread } from "./utils.ts";
 import { DEFAULT_MAX_TWEET_LENGTH } from "./environment.ts";
 import { twitterMessageHandlerTemplate1 } from "./utils/templatesT/interactionsT.ts";
 import { twitterQuoteHandlerTemplate } from "./utils/templatesT/quotesT.ts";
-import { generateQuery } from "./utils/scraping/post.ts";
+import { generateQueryForInteractions } from "./utils/scraping/post.ts";
 
 const twitterPostTemplate = `
 # Areas of Expertise
@@ -635,11 +635,110 @@ export class TwitterPostClient {
             const homeTimeline = await this.client.fetchTimelineForActions(10);
             const results = [];
 
-            const query = generateQuery();
-            const actionableTweets =
-                await this.client.fetchPossibleActionTweets(10, query);
+            const query = generateQueryForInteractions();
+            console.log("query1", query);
+            const actionableTweets = (
+                await this.client.fetchSearchTweets(query, 5, SearchMode.Latest)
+            ).tweets;
+            let combinedTimeline = [];
 
-            const combinedTimeline = [...homeTimeline, ...actionableTweets];
+            if (this.client.twitterConfig.TWITTER_TARGET_USERS.length) {
+                const TARGET_USERS =
+                    this.client.twitterConfig.TWITTER_TARGET_USERS;
+
+
+                elizaLogger.log("Processing target users1:", TARGET_USERS);
+
+                if (TARGET_USERS.length > 0) {
+                    // Create a map to store tweets by user
+                    const tweetsByUser = new Map<string, Tweet[]>();
+
+                    // Fetch tweets from all target users
+                    for (const username of TARGET_USERS) {
+                        try {
+                            const userTweets = (
+                                await this.client.twitterClient.fetchSearchTweets(
+                                    `from:${username}`,
+                                    3,
+                                    SearchMode.Latest
+                                )
+                            ).tweets;
+                            console.log("tweeeets", userTweets);
+
+                            // Filter for unprocessed, non-reply, recent tweets
+                            const validTweets = userTweets.filter((tweet) => {
+                                const isUnprocessed =
+                                    !this.client.lastCheckedTweetId ||
+                                    parseInt(tweet.id) >
+                                        this.client.lastCheckedTweetId;
+                                const isRecent =
+                                    Date.now() - tweet.timestamp * 1000 <
+                                    2 * 60 * 60 * 1000;
+
+                                console.log("tweeeets1234", isRecent);
+                                elizaLogger.log(`Tweet ${tweet.id} checks:`, {
+                                    isUnprocessed,
+                                    isRecent,
+                                    isReply: tweet.isReply,
+                                    isRetweet: tweet.isRetweet,
+                                });
+
+                                return (
+                                    isUnprocessed &&
+                                    !tweet.isReply &&
+                                    !tweet.isRetweet &&
+                                    isRecent
+                                );
+                            });
+                            console.log("tweeeets3", validTweets);
+
+                            if (validTweets.length > 0) {
+                                tweetsByUser.set(username, validTweets);
+                                elizaLogger.log(
+                                    `Found ${validTweets.length} valid tweets from ${username}`
+                                );
+                            }
+                        } catch (error) {
+                            elizaLogger.error(
+                                `Error fetching tweets for ${username}:`,
+                                error
+                            );
+                            continue;
+                        }
+                    }
+
+                    // Select one tweet from each user that has tweets
+                    const selectedTweets: Tweet[] = [];
+                    for (const [username, tweets] of tweetsByUser) {
+                        if (tweets.length > 0) {
+                            // Randomly select one tweet from this user
+                            const randomTweet =
+                                tweets[
+                                    Math.floor(Math.random() * tweets.length)
+                                ];
+                            selectedTweets.push(randomTweet);
+                            elizaLogger.log(
+                                `Selected tweet from ${username}: ${randomTweet.text?.substring(0, 100)}`
+                            );
+                        }
+                    }
+                    console.log("qna eseniii" )
+
+                    // Add selected tweets to candidates
+                    combinedTimeline = [...combinedTimeline, ...selectedTweets];
+                }
+            } else {
+                elizaLogger.log(
+                    "No target users configured, processing only mentions"
+                );
+            }
+            console.log("eseniii",combinedTimeline )
+
+            combinedTimeline = [
+                ...combinedTimeline,
+                ...homeTimeline,
+                ...actionableTweets,
+            ];
 
             for (const tweet of combinedTimeline) {
                 try {
@@ -679,7 +778,7 @@ export class TwitterPostClient {
                                 ?.twitterActionTemplate ||
                             twitterActionTemplate,
                     });
-                    console.log("actionContext1",actionContext)
+                    console.log("actionContext1", actionContext);
 
                     const actionResponse = await generateTweetActions({
                         runtime: this.runtime,
