@@ -31,16 +31,17 @@ export const twitterMessageHandlerTemplate =
 
 {{providers}}
 
-{{characterPostExamples}}
+{{characterMessageExamples}}
 
-{{postDirections}}
+{{MessageDirections}}
 
 Recent interactions between {{agentName}} and other users:
-{{recentPostInteractions}}
+{{recentMessageInteractions}}
 
-{{recentPosts}}
+{{recentMessages}}
 
 # TASK: Generate a post/reply in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}) while using the thread of tweets as additional context:
+- Do not use fillers like "ah" or similar; begin directly with the response.
 
 Current Post:
 {{currentPost}}
@@ -74,7 +75,7 @@ Response options are RESPOND, IGNORE and STOP.
    - {{agentName}} must first check if the topic is relevant to {{agentName}}'s expertise or interests.
    - If relevant, RESPOND to their messages.
    - If irrelevant, IGNORE the message.
-   
+
 For other users:
 - {{agentName}} should RESPOND to messages directed at them
 - {{agentName}} should RESPOND to conversations relevant to {{agentName}}'s background
