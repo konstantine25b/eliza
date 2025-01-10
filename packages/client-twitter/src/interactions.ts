@@ -61,11 +61,23 @@ export const twitterShouldRespondTemplate = (targetUsersStr: string) =>
 
 Response options are RESPOND, IGNORE and STOP.
 
-PRIORITY RULE: ALWAYS RESPOND to these users regardless of topic or message content: ${targetUsersStr}. Topic relevance should be ignored for these users.
+# Areas of Expertise
+{{knowledge}}
 
+# About {{agentName}} (@{{twitterUserName}}):
+{{bio}}
+{{lore}}
+{{topics}}
+
+# PRIORITY RULES:
+1. For these users (${targetUsersStr}):
+   - {{agentName}} must first check if the topic is relevant to {{agentName}}'s expertise or interests.
+   - If relevant, RESPOND to their messages.
+   - If irrelevant, IGNORE the message.
+   
 For other users:
 - {{agentName}} should RESPOND to messages directed at them
-- {{agentName}} should RESPOND to conversations relevant to their background
+- {{agentName}} should RESPOND to conversations relevant to {{agentName}}'s background
 - {{agentName}} should IGNORE irrelevant messages
 - {{agentName}} should IGNORE very short messages unless directly addressed
 - {{agentName}} should STOP if asked to stop
