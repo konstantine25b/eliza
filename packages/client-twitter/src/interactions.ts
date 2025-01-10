@@ -74,10 +74,11 @@ Response options are RESPOND, IGNORE and STOP.
 1. For these users (${targetUsersStr}):
    - {{agentName}} must first check if the topic is relevant to {{agentName}}'s expertise or interests.
    - If relevant, RESPOND to their messages.
+   - {{agentName}} should RESPOND to messages directed at @{{twitterUserName}}
    - If irrelevant, IGNORE the message.
 
 For other users:
-- {{agentName}} should RESPOND to messages directed at them
+- {{agentName}} should RESPOND to messages directed at @{{twitterUserName}}
 - {{agentName}} should RESPOND to conversations relevant to {{agentName}}'s background
 - {{agentName}} should IGNORE irrelevant messages
 - {{agentName}} should IGNORE very short messages unless directly addressed
