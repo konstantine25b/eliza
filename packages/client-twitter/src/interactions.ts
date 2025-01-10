@@ -139,7 +139,7 @@ export class TwitterInteractionClient {
             const tweetCandidates = (
                 await this.client.fetchSearchTweets(
                     query,
-                    5,
+                    15,
                     SearchMode.Latest
                 )
             ).tweets;

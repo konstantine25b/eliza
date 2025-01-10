@@ -638,14 +638,17 @@ export class TwitterPostClient {
             const query = generateQueryForInteractions();
             console.log("query1", query);
             const actionableTweets = (
-                await this.client.fetchSearchTweets(query, 5, SearchMode.Latest)
+                await this.client.fetchSearchTweets(
+                    query,
+                    10,
+                    SearchMode.Latest
+                )
             ).tweets;
             let combinedTimeline = [];
 
             if (this.client.twitterConfig.TWITTER_TARGET_USERS.length) {
                 const TARGET_USERS =
                     this.client.twitterConfig.TWITTER_TARGET_USERS;
-
 
                 elizaLogger.log("Processing target users1:", TARGET_USERS);
 
@@ -722,7 +725,7 @@ export class TwitterPostClient {
                             );
                         }
                     }
-                    console.log("qna eseniii" )
+                    console.log("qna eseniii");
 
                     // Add selected tweets to candidates
                     combinedTimeline = [...combinedTimeline, ...selectedTweets];
@@ -732,7 +735,7 @@ export class TwitterPostClient {
                     "No target users configured, processing only mentions"
                 );
             }
-            console.log("eseniii",combinedTimeline )
+            console.log("eseniii", combinedTimeline);
 
             combinedTimeline = [
                 ...combinedTimeline,
