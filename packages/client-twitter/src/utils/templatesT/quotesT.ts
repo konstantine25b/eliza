@@ -22,6 +22,7 @@ Recent interactions between {{agentName}} and other users:
 {{recentPosts}}
 
 # TASK: Generate a post/reply in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}) while using the thread of tweets as additional context:
+- Do not use fillers like "ah" or similar; begin directly with the response.
 
 Current Post:
 {{currentPost}}
