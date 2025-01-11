@@ -183,10 +183,18 @@ export class TwitterInteractionClient {
                                     SearchMode.Latest
                                 )
                             ).tweets;
+                            const userTweets2 = (
+                                await this.client.twitterClient.fetchSearchTweets(
+                                    `from:${username} is:reply`, // Include replies
+                                    3,
+                                    SearchMode.Latest
+                                )
+                            ).tweets;
                             console.log("tweeeets", userTweets);
+                            const extendedTweets = [...userTweets ,...userTweets2 ]
 
                             // Filter for unprocessed, non-reply, recent tweets
-                            const validTweets = userTweets.filter((tweet) => {
+                            const validTweets = extendedTweets.filter((tweet) => {
                                 const isUnprocessed =
                                     !this.client.lastCheckedTweetId ||
                                     parseInt(tweet.id) >
@@ -263,8 +271,9 @@ export class TwitterInteractionClient {
             uniqueTweetCandidates
                 .sort((a, b) => a.id.localeCompare(b.id))
                 .filter((tweet) => tweet.userId !== this.client.profile.id);
+            console.log("this.client.profile.id", this.client.profile.id)
 
-            console.log("uniques", uniqueTweetCandidates);
+            console.log("uniques1", uniqueTweetCandidates);
 
             // for each tweet candidate, handle the tweet
             for (const tweet of uniqueTweetCandidates) {
