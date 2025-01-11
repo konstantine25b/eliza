@@ -135,7 +135,11 @@ export class TwitterInteractionClient {
                     SearchMode.Latest
                 )
             ).tweets;
-            const query = generateQueryForInteractions();
+
+            const searchKeywords = this.runtime.character?.searchKeywords;
+            console.log("searchKeywords", searchKeywords)
+
+            const query = generateQueryForInteractions(searchKeywords);
             console.log("query1", query);
             const tweetCandidates = (
                 await this.client.fetchSearchTweets(

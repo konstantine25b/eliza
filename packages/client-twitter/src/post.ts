@@ -635,7 +635,10 @@ export class TwitterPostClient {
             const homeTimeline = await this.client.fetchTimelineForActions(10);
             const results = [];
 
-            const query = generateQueryForInteractions();
+            const searchKeywords =
+                this.runtime.character?.searchKeywords;
+
+            const query = generateQueryForInteractions(searchKeywords);
             console.log("query1", query);
             const actionableTweets = (
                 await this.client.fetchSearchTweets(
@@ -645,11 +648,7 @@ export class TwitterPostClient {
                 )
             ).tweets;
             const actionableTweets2 = (
-                await this.client.fetchSearchTweets(
-                    query,
-                    5,
-                    SearchMode.Top
-                )
+                await this.client.fetchSearchTweets(query, 5, SearchMode.Top)
             ).tweets;
             let combinedTimeline = [];
 
