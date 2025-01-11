@@ -144,6 +144,9 @@ export class TwitterInteractionClient {
                     SearchMode.Latest
                 )
             ).tweets;
+            const tweetCandidates2 = (
+                await this.client.fetchSearchTweets(query, 5, SearchMode.Top)
+            ).tweets;
 
             elizaLogger.log(
                 "Completed checking mentioned tweets:",
@@ -152,6 +155,7 @@ export class TwitterInteractionClient {
             let uniqueTweetCandidates = [
                 ...mentionCandidates,
                 ...tweetCandidates,
+                ...tweetCandidates2,
             ];
             console.log("unique12", uniqueTweetCandidates);
             // Only process target users if configured

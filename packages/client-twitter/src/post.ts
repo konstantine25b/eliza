@@ -644,6 +644,13 @@ export class TwitterPostClient {
                     SearchMode.Latest
                 )
             ).tweets;
+            const actionableTweets2 = (
+                await this.client.fetchSearchTweets(
+                    query,
+                    5,
+                    SearchMode.Top
+                )
+            ).tweets;
             let combinedTimeline = [];
 
             if (this.client.twitterConfig.TWITTER_TARGET_USERS.length) {
@@ -741,6 +748,7 @@ export class TwitterPostClient {
                 ...combinedTimeline,
                 ...homeTimeline,
                 ...actionableTweets,
+                ...actionableTweets2,
             ];
 
             for (const tweet of combinedTimeline) {
