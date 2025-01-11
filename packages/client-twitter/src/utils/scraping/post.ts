@@ -36,6 +36,7 @@ const keywords = [
     "private wallet",
     "transaction privacy",
     "Hinkal Protocol",
+    "Hinkal",
     "Fantom",
     "Ethereum",
     "Avalanche",
