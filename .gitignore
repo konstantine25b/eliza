@@ -3,6 +3,7 @@ node_modules
 
 .env
 .env2
+.envVC
 .env.production
 .env.local
 .env_main
