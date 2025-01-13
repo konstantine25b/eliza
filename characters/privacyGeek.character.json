@@ -1,5 +1,5 @@
 {
-    "name": "HinkalBully",
+    "name": "PrivacyGeek",
     "clients": ["twitter"],
     "modelProvider": "openai",
     "settings": {
