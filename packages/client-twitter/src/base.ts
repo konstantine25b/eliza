@@ -169,35 +169,85 @@ export class ClientBase extends EventEmitter {
 
         const cachedCookies = await this.getCachedCookies(username);
 
-        console.log("cookies1", cachedCookies);
+        console.log("cookies1", await this.twitterClient.getCookies());
 
-        const COOKIE = this.twitterConfig.COOKIE;
-        console.log("cookies2", COOKIE);
-
-        let cookiesArray: any[] = [];
-
-        if (!cachedCookies) {
+        if (cachedCookies) {
             elizaLogger.info("Using cached cookies");
             await this.setCookiesFromArray(cachedCookies);
-        } else if (COOKIE) {
-            try {
-                cookiesArray = JSON.parse(COOKIE);
-                if (!Array.isArray(cookiesArray)) {
-                    throw new Error(
-                        "COOKIE is not in the correct array format"
-                    );
-                }
-            } catch (error) {
-                elizaLogger.error(
-                    "Failed to parse COOKIE string into an array",
-                    error
-                );
-                cookiesArray = []; // Default to empty if parsing fails
-            }
+        } else {
+            function parseCookieStrings(cookieStrings: string[]) {
+                return cookieStrings.map((cookieStr) => {
+                    // Remove "Cookie=" prefix if it exists
+                    const cleanStr = cookieStr.replace(/^Cookie=/, "");
 
-            console.log("cookies3", cookiesArray);
-            await this.setCookiesFromArray(cookiesArray);
+                    // Split the cookie string into parts
+                    const parts = cleanStr
+                        .split(";")
+                        .map((part) => part.trim());
+
+                    // Get the key-value pair from the first part
+                    const [key, value] = parts[0]
+                        .split("=")
+                        .map((s) => s.trim());
+
+                    // Initialize cookie object
+                    const cookieObj: any = {
+                        key,
+                        value: value.replace(/^"(.*)"$/, "$1"), // Remove quotes if present
+                        domain: "",
+                        path: "/",
+                        secure: false,
+                        httpOnly: false,
+                        sameSite: "Lax",
+                    };
+
+                    // Parse remaining attributes
+                    parts.slice(1).forEach((part) => {
+                        const [attr, val] = part
+                            .split("=")
+                            .map((s) => s.trim());
+                        const lowerAttr = attr.toLowerCase();
+
+                        switch (lowerAttr) {
+                            case "domain":
+                                cookieObj.domain = val || "";
+                                break;
+                            case "path":
+                                cookieObj.path = val || "/";
+                                break;
+                            case "secure":
+                                cookieObj.secure = true;
+                                break;
+                            case "httponly":
+                                cookieObj.httpOnly = true;
+                                break;
+                            case "samesite":
+                                cookieObj.sameSite = val || "Lax";
+                                break;
+                        }
+                    });
+
+                    return cookieObj;
+                });
+            }
+            const cookieStrings = [
+                "guest_id_marketing=v1%3A173660615939101680; Domain=twitter.com; Path=/; Secure; hostOnly=false; aAge=0ms; cAge=1ms",
+                "guest_id_ads=v1%3A173660615939101680; Domain=twitter.com; Path=/; Secure; hostOnly=false; aAge=0ms; cAge=1ms",
+                'personalization_id="v1_4H4k4zrTtvUbvn2Lsw1ROA=="; Domain=twitter.com; Path=/; Secure; hostOnly=false; aAge=0ms; cAge=1ms',
+                "guest_id=v1%3A173660615939101680; Domain=twitter.com; Path=/; Secure; hostOnly=false; aAge=0ms; cAge=1ms",
+                "kdt=hPxMltUKW8Ud8QACwXxvkCeH5uco1EG2dIigG37x; Domain=twitter.com; Path=/; Secure; HttpOnly; SameSite=Lax; hostOnly=false; aAge=0ms; cAge=0ms",
+                'twid="u=1877224979600683008"; Domain=twitter.com; Path=/; Secure; hostOnly=false; aAge=0ms; cAge=0ms',
+                "ct0=cdc769b179859acba7d60096153599a0ebd5e80fe9d0a2dfba8d502b4bad5bbec1ef6489cf4c19a126176f7528dc98d36bb2f99f2d8b6d247fe1d009241a4d79378b6734a13407655579c496454b005a; Domain=twitter.com; Path=/; Secure; SameSite=Lax; hostOnly=false; aAge=0ms; cAge=0ms",
+                "auth_token=528cf3fdba42e5ac733f03d4787c119c3d7a0acb; Domain=twitter.com; Path=/; Secure; HttpOnly; hostOnly=false; aAge=0ms; cAge=0ms",
+                "att=1-uxUAHWeaRNarO58T1XsboxlN1K5F6Yw1JWRNzNcl; Domain=twitter.com; Path=/; Secure; HttpOnly; hostOnly=false; aAge=0ms; cAge=0ms",
+            ];
+            const formattedCookies = parseCookieStrings(cookieStrings);
+
+            // Now you can use formattedCookies with your setCookiesFromArray function
+            await this.setCookiesFromArray(formattedCookies);
         }
+
+        console.log("cookies2", await this.twitterClient.getCookies());
 
         elizaLogger.log("Waiting for Twitter login");
         while (retries > 0) {
@@ -221,6 +271,11 @@ export class ClientBase extends EventEmitter {
                             username,
                             await this.twitterClient.getCookies()
                         );
+                        console.log(
+                            "cookies3",
+                            await this.twitterClient.getCookies()
+                        );
+
                         break;
                     }
                 }
