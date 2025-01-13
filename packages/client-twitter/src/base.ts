@@ -172,9 +172,11 @@ export class ClientBase extends EventEmitter {
         console.log("cookies1", cachedCookies);
 
         const COOKIE = this.twitterConfig.COOKIE;
+        console.log("cookies2", COOKIE);
+
         let cookiesArray: any[] = [];
 
-        if (cachedCookies) {
+        if (!cachedCookies) {
             elizaLogger.info("Using cached cookies");
             await this.setCookiesFromArray(cachedCookies);
         } else if (COOKIE) {
@@ -192,6 +194,9 @@ export class ClientBase extends EventEmitter {
                 );
                 cookiesArray = []; // Default to empty if parsing fails
             }
+
+            console.log("cookies3", cookiesArray);
+            await this.setCookiesFromArray(cookiesArray);
         }
 
         elizaLogger.log("Waiting for Twitter login");
