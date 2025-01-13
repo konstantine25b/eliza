@@ -174,7 +174,7 @@ export class ClientBase extends EventEmitter {
         const COOKIE = this.twitterConfig.COOKIE;
         let cookiesArray: any[] = [];
 
-        if (!cachedCookies) {
+        if (cachedCookies) {
             elizaLogger.info("Using cached cookies");
             await this.setCookiesFromArray(cachedCookies);
         } else if (COOKIE) {
