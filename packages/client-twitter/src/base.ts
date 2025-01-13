@@ -160,6 +160,7 @@ export class ClientBase extends EventEmitter {
         const password = this.twitterConfig.TWITTER_PASSWORD;
         const email = this.twitterConfig.TWITTER_EMAIL;
         let retries = this.twitterConfig.TWITTER_RETRY_LIMIT;
+
         const twitter2faSecret = this.twitterConfig.TWITTER_2FA_SECRET;
 
         if (!username) {
@@ -168,9 +169,29 @@ export class ClientBase extends EventEmitter {
 
         const cachedCookies = await this.getCachedCookies(username);
 
-        if (cachedCookies) {
+        console.log("cookies1", cachedCookies);
+
+        const COOKIE = this.twitterConfig.COOKIE;
+        let cookiesArray: any[] = [];
+
+        if (!cachedCookies) {
             elizaLogger.info("Using cached cookies");
             await this.setCookiesFromArray(cachedCookies);
+        } else if (COOKIE) {
+            try {
+                cookiesArray = JSON.parse(COOKIE);
+                if (!Array.isArray(cookiesArray)) {
+                    throw new Error(
+                        "COOKIE is not in the correct array format"
+                    );
+                }
+            } catch (error) {
+                elizaLogger.error(
+                    "Failed to parse COOKIE string into an array",
+                    error
+                );
+                cookiesArray = []; // Default to empty if parsing fails
+            }
         }
 
         elizaLogger.log("Waiting for Twitter login");
@@ -324,8 +345,6 @@ export class ClientBase extends EventEmitter {
         console.log("fetching possible action tweets");
 
         try {
-
-
             const tweetCandidates = (
                 await this.twitterClient.fetchSearchTweets(
                     searchQuery,
