@@ -700,7 +700,7 @@ export class TwitterPostClient {
                                         this.client.lastCheckedTweetId;
                                 const isRecent =
                                     Date.now() - tweet.timestamp * 1000 <
-                                    2 * 60 * 60 * 1000;
+                                    7 * 60 * 60 * 1000;
 
                                 console.log("tweeeets1234", isRecent);
                                 elizaLogger.log(`Tweet ${tweet.id} checks:`, {
