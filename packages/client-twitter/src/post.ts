@@ -54,9 +54,9 @@ export const twitterActionTemplate =
 1. For these users (KBakhutashvili, VachaHinkal, SandroTurmana, hinkal_protocol, georgekvara3, GioMuxraneli, GuRgEnA02, shano_hinkal, gegelz01):
    - {{agentName}} must ALWAYS ENGAGE:
      - If their tweet mentions @{{twitterUserName}} OR is relevant to {{agentName}}'s interests, then respond with at least one of the action tags:
-       [REPLY], [LIKE], [RETWEET], or [QUOTE].
+       [LIKE], [RETWEET], or [QUOTE].
    - For explicitly on-topic or direct mentions, prefer:
-       [REPLY] + [LIKE]
+      [LIKE]
        and optionally [RETWEET] or [QUOTE] if it's especially aligned with {{agentName}}'s expertise.
 
 For other users:
