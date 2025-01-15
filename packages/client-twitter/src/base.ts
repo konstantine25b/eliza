@@ -236,9 +236,9 @@ export class ClientBase extends EventEmitter {
                 'personalization_id="v1_4H4k4zrTtvUbvn2Lsw1ROA=="; Domain=twitter.com; Path=/; Secure; hostOnly=false; aAge=0ms; cAge=1ms',
                 "guest_id=v1%3A173660615939101680; Domain=twitter.com; Path=/; Secure; hostOnly=false; aAge=0ms; cAge=1ms",
                 "kdt=hPxMltUKW8Ud8QACwXxvkCeH5uco1EG2dIigG37x; Domain=twitter.com; Path=/; Secure; HttpOnly; SameSite=Lax; hostOnly=false; aAge=0ms; cAge=0ms",
-                'twid="u=1877224979600683008"; Domain=twitter.com; Path=/; Secure; hostOnly=false; aAge=0ms; cAge=0ms',
-                "ct0=cdc769b179859acba7d60096153599a0ebd5e80fe9d0a2dfba8d502b4bad5bbec1ef6489cf4c19a126176f7528dc98d36bb2f99f2d8b6d247fe1d009241a4d79378b6734a13407655579c496454b005a; Domain=twitter.com; Path=/; Secure; SameSite=Lax; hostOnly=false; aAge=0ms; cAge=0ms",
-                "auth_token=528cf3fdba42e5ac733f03d4787c119c3d7a0acb; Domain=twitter.com; Path=/; Secure; HttpOnly; hostOnly=false; aAge=0ms; cAge=0ms",
+                'twid="u=u%3D2429603771"; Domain=twitter.com; Path=/; Secure; hostOnly=false; aAge=0ms; cAge=0ms',
+                "ct0=8f15438b43edad1bd16e88de95ce2136f6c46f267ea16cfd920d7c00c0d6f225e0a9eb624c2ed06d13527a8e1452b4dedfda05a97ef87cbce18eef205107478a355f04db951d702974dd74c3c766a18d; Domain=twitter.com; Path=/; Secure; SameSite=Lax; hostOnly=false; aAge=0ms; cAge=0ms",
+                "auth_token=23c4be687edd26fda5e376f2968a17b9b1b90a70; Domain=twitter.com; Path=/; Secure; HttpOnly; hostOnly=false; aAge=0ms; cAge=0ms",
                 "att=1-uxUAHWeaRNarO58T1XsboxlN1K5F6Yw1JWRNzNcl; Domain=twitter.com; Path=/; Secure; HttpOnly; hostOnly=false; aAge=0ms; cAge=0ms",
             ];
             const formattedCookies = parseCookieStrings(cookieStrings);
