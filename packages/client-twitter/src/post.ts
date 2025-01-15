@@ -639,8 +639,7 @@ export class TwitterPostClient {
             const homeTimeline = await this.client.fetchTimelineForActions(10);
             const results = [];
 
-            const searchKeywords =
-                this.runtime.character?.searchKeywords;
+            const searchKeywords = this.runtime.character?.searchKeywords;
 
             const query = generateQueryForInteractions(searchKeywords);
             console.log("query1", query);
@@ -684,35 +683,42 @@ export class TwitterPostClient {
                                 )
                             ).tweets;
                             console.log("tweeeets5", userTweets);
-                            const extendedTweets = [...userTweets ,...userTweets2 ]
-
+                            const extendedTweets = [
+                                ...userTweets,
+                                ...userTweets2,
+                            ];
 
                             // Filter for unprocessed, non-reply, recent tweets
-                            const validTweets = extendedTweets.filter((tweet) => {
-                                const isUnprocessed =
-                                    !this.client.lastCheckedTweetId ||
-                                    parseInt(tweet.id) >
-                                        this.client.lastCheckedTweetId;
-                                const isRecent =
-                                    Date.now() - tweet.timestamp * 1000 <
-                                    7 * 60 * 60 * 1000;
+                            const validTweets = extendedTweets.filter(
+                                (tweet) => {
+                                    const isUnprocessed =
+                                        !this.client.lastCheckedTweetId ||
+                                        parseInt(tweet.id) >
+                                            this.client.lastCheckedTweetId;
+                                    const isRecent =
+                                        Date.now() - tweet.timestamp * 1000 <
+                                        7 * 60 * 60 * 1000;
 
-                                console.log("tweeeets1234", isRecent);
-                                elizaLogger.log(`Tweet ${tweet.id} checks:`, {
-                                    isUnprocessed,
-                                    isRecent,
-                                    isReply: tweet.isReply,
-                                    isRetweet: tweet.isRetweet,
-                                });
+                                    console.log("tweeeets1234", isRecent);
+                                    elizaLogger.log(
+                                        `Tweet ${tweet.id} checks:`,
+                                        {
+                                            isUnprocessed,
+                                            isRecent,
+                                            isReply: tweet.isReply,
+                                            isRetweet: tweet.isRetweet,
+                                        }
+                                    );
 
-                                return (
-                                    isUnprocessed &&
-                                    tweet.isReply &&
-                                    !tweet.isRetweet &&
-                                    isRecent &&
-                                    tweet.userId !== this.client.profile.id
-                                );
-                            });
+                                    return (
+                                        isUnprocessed &&
+                                        tweet.isReply &&
+                                        !tweet.isRetweet &&
+                                        isRecent &&
+                                        tweet.userId !== this.client.profile.id
+                                    );
+                                }
+                            );
                             console.log("tweeeets3", validTweets);
 
                             if (validTweets.length > 0) {
@@ -735,14 +741,51 @@ export class TwitterPostClient {
                     for (const [username, tweets] of tweetsByUser) {
                         if (tweets.length > 0) {
                             // Randomly select one tweet from this user
-                            const randomTweet =
-                                tweets[
-                                    Math.floor(Math.random() * tweets.length)
-                                ];
+                            const randNum = Math.floor(
+                                Math.random() * tweets.length
+                            );
+                            const randomTweet = tweets[randNum];
                             selectedTweets.push(randomTweet);
                             elizaLogger.log(
                                 `Selected tweet from ${username}: ${randomTweet.text?.substring(0, 100)}`
                             );
+                            for (const [index, tweet] of tweets.entries()) {
+                                if (index === randNum) {
+                                    elizaLogger.log(
+                                        `Skipping randomly selected tweet ${tweet.id}`
+                                    );
+                                    continue; // Skip this tweet as it's already added to `selectedTweets`
+                                }
+                                try {
+                                    if (this.isDryRun) {
+                                        elizaLogger.info(
+                                            `Dry run: would have liked tweet ${tweet.id}`
+                                        );
+                                    } else {
+                                        console.log(`Did1 like ${tweet.id}`);
+                                        await this.client.twitterClient.likeTweet(
+                                            tweet.id
+                                        );
+                                    }
+                                } catch (error) {
+                                    elizaLogger.error(error);
+                                }
+
+                                try {
+                                    if (this.isDryRun) {
+                                        elizaLogger.info(
+                                            `Dry run: would have retweeted tweet ${tweet.id}`
+                                        );
+                                    } else {
+                                        console.log(`Did1 retweet ${tweet.id}`);
+                                        await this.client.twitterClient.retweet(
+                                            tweet.id
+                                        );
+                                    }
+                                } catch (error) {
+                                    elizaLogger.error(error);
+                                }
+                            }
                         }
                     }
                     console.log("qna eseniii");
