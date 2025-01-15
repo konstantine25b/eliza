@@ -51,13 +51,8 @@ export const twitterActionTemplate =
 {{postDirections}}
 
 # PRIORITY RULES:
-1. For these users (KBakhutashvili, VachaHinkal, SandroTurmana, hinkal_protocol, georgekvara3, GioMuxraneli, GuRgEnA02, shano_hinkal, gegelz01):
-   - {{agentName}} must ALWAYS ENGAGE:
-     - If their tweet mentions @{{twitterUserName}} OR is relevant to {{agentName}}'s interests, then respond with at least one of the action tags:
-       [LIKE], [RETWEET], or [QUOTE].
-   - For explicitly on-topic or direct mentions, prefer:
-      [LIKE]
-       and optionally [RETWEET] or [QUOTE] if it's especially aligned with {{agentName}}'s expertise.
+1. For these users (KBakhutashvili, VachaHinkal, SandroTurmana, hinkal_protocol, georgekvara3, GioMuxraneli, GuRgEnA02, shano_hinkal, gegelz01, AngieMKTmom):
+   - {{agentName}} must ALWAYS do: [LIKE], [RETWEET] or [QUOTE].
 
 For other users:
 - ONLY engage with content that DIRECTLY relates to character's core interests
