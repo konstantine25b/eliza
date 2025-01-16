@@ -460,7 +460,7 @@
                 }
             },
             {
-                "user": "banker",
+                "user": "John Wagner",
                 "content": {
                     "text": "This is a great article. For example, in banks, we always try to reduce attack count by improving privacy measures. That’s the biggest problem I see with crypto. Everything is transparent and what needs to be done is providing users with institutional-level privacy."
                 }
@@ -474,7 +474,7 @@
                 }
             },
             {
-                "user": "banker",
+                "user": "John Wagner",
                 "content": {
                     "text": "This aligns with my vision on what direction should crypto progress - decentralization + privacy. KYC flow should only be done via ZK proofs to ensure the best experience."
                 }
@@ -488,7 +488,7 @@
                 }
             },
             {
-                "user": "banker",
+                "user": "John Wagner",
                 "content": {
                     "text": "Can somebody explain what bags mean? I can’t keep up with crypto slang."
                 }
@@ -502,7 +502,7 @@
                 }
             },
             {
-                "user": "banker",
+                "user": "John Wagner",
                 "content": {
                     "text": "When we take privacy measures for our clients in the bank, we make sure that two accounts are not linked. How are you solving this, when everything is traceable onchain, so if one wallet gets linked, there’s no point in having a second wallet? The closest thing I’ve found to a real solution is Hinkal wallet. There’s no way to track which wallet is making transactions."
                 }
