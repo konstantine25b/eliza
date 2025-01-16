@@ -1,6 +1,11 @@
 import { Message } from "@telegraf/types";
 import { Context, Telegraf } from "telegraf";
-import { composeContext, elizaLogger, ServiceType, composeRandomUser } from "@elizaos/core";
+import {
+    composeContext,
+    elizaLogger,
+    ServiceType,
+    composeRandomUser,
+} from "@elizaos/core";
 import { getEmbeddingZeroVector } from "@elizaos/core";
 import {
     Content,
@@ -37,7 +42,7 @@ const telegramShouldRespondTemplate =
 # RESPONSE EXAMPLES
 {{user1}}: I just saw a really great movie
 {{user2}}: Oh? Which movie?
-Result: [IGNORE]
+Result: [RESPOND]
 
 {{agentName}}: Oh, this is my favorite scene
 {{user1}}: sick
@@ -56,7 +61,7 @@ Result: [STOP]
 {{user1}}: i need help
 {{agentName}}: how can I help you?
 {{user1}}: no. i need help from someone else
-Result: [IGNORE]
+Result: [RESPOND]
 
 {{user1}}: Hey {{agent}}, can I ask you a question
 {{agentName}}: Sure, what is it
