@@ -749,13 +749,7 @@ export class TwitterPostClient {
                             elizaLogger.log(
                                 `Selected tweet from ${username}: ${randomTweet.text?.substring(0, 100)}`
                             );
-                            for (const [index, tweet] of tweets.entries()) {
-                                if (index === randNum) {
-                                    elizaLogger.log(
-                                        `Skipping randomly selected tweet ${tweet.id}`
-                                    );
-                                    continue; // Skip this tweet as it's already added to `selectedTweets`
-                                }
+                            for (const tweet of tweets) {
                                 try {
                                     if (this.isDryRun) {
                                         elizaLogger.info(
