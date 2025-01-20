@@ -929,6 +929,31 @@ Text: ${attachment.text}
             })
             .join("\n\n");
 
+        const formattedCharacterTelegramExamples =
+            this.character.telegramExamples
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 5)
+                .map((example) => {
+                    const exampleNames = Array.from({ length: 5 }, () =>
+                        uniqueNamesGenerator({ dictionaries: [names] })
+                    );
+
+                    return example
+                        .map((message) => {
+                            let messageString = `${message.user}: ${message.content.text}`;
+                            exampleNames.forEach((name, index) => {
+                                const placeholder = `{{user${index + 1}}}`;
+                                messageString = messageString.replaceAll(
+                                    placeholder,
+                                    name
+                                );
+                            });
+                            return messageString;
+                        })
+                        .join("\n");
+                })
+                .join("\n\n");
+
         const formattedCharacterQuoteExamples = this.character.quoteExamples
             .sort(() => 0.5 - Math.random())
             .slice(0, 5)
@@ -1114,6 +1139,14 @@ Text: ${attachment.text}
                     ? addHeader(
                           `# Example Conversations for ${this.character.name}`,
                           formattedCharacterQuoteExamples
+                      )
+                    : "",
+            characterTelegramExamples:
+                formattedCharacterTelegramExamples &&
+                formattedCharacterTelegramExamples.replaceAll("\n", "").length > 0
+                    ? addHeader(
+                          `# Example Conversations for ${this.character.name}`,
+                          formattedCharacterTelegramExamples
                       )
                     : "",
             messageDirections:
