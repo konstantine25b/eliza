@@ -18,7 +18,7 @@ interface MessageData {
     message: string;
 }
 
-export const fetchMessages = async (): Promise<MessageData[]> => {
+export const fetchTelegramMessages = async (): Promise<MessageData[]> => {
     const client = new TelegramClient(stringSession, apiId, apiHash, {
         connectionRetries: 5,
     });
