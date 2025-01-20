@@ -734,6 +734,9 @@ export type Character = {
     /** Example messages */
     messageExamples: MessageExample[][];
 
+    /** Example messages telegram*/
+    telegramExamples?: MessageExample[][];
+
     /** quota messages */
     quoteExamples?: MessageExample[][];
 

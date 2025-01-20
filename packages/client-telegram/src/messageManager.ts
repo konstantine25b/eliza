@@ -120,7 +120,7 @@ About {{agentName}}:
 {{lore}}
 
 Examples of {{agentName}}'s dialog and actions:
-{{characterMessageExamples}}
+{{characterTelegramExamples}}
 
 {{providers}}
 
