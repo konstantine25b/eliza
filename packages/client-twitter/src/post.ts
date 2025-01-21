@@ -642,11 +642,11 @@ export class TwitterPostClient {
             const searchKeywords = this.runtime.character?.searchKeywords;
 
             const query = generateQueryForInteractions(searchKeywords);
-            console.log("query1", query);
+            console.log("query2", query);
             const actionableTweets = (
                 await this.client.fetchSearchTweets(
                     query,
-                    10,
+                    5,
                     SearchMode.Latest
                 )
             ).tweets;
@@ -699,7 +699,8 @@ export class TwitterPostClient {
                                         Date.now() - tweet.timestamp * 1000 <
                                         7 * 60 * 60 * 1000;
 
-                                    console.log("tweeeets1234", isRecent);
+
+                                    console.log("tweeeets51", isRecent);
                                     elizaLogger.log(
                                         `Tweet ${tweet.id} checks:`,
                                         {
@@ -712,14 +713,12 @@ export class TwitterPostClient {
 
                                     return (
                                         isUnprocessed &&
-                                        tweet.isReply &&
-                                        !tweet.isRetweet &&
                                         isRecent &&
                                         tweet.userId !== this.client.profile.id
                                     );
                                 }
                             );
-                            console.log("tweeeets3", validTweets);
+                            console.log("tweeeets52", userTweets);
 
                             if (validTweets.length > 0) {
                                 tweetsByUser.set(username, validTweets);
@@ -736,6 +735,8 @@ export class TwitterPostClient {
                         }
                     }
 
+                    console.log("tweeeets55", tweetsByUser);
+
                     // Select one tweet from each user that has tweets
                     const selectedTweets: Tweet[] = [];
                     for (const [username, tweets] of tweetsByUser) {
@@ -750,6 +751,8 @@ export class TwitterPostClient {
                                 `Selected tweet from ${username}: ${randomTweet.text?.substring(0, 100)}`
                             );
                             for (const tweet of tweets) {
+
+                                console.log("tweeeets56", tweet);
                                 try {
                                     if (this.isDryRun) {
                                         elizaLogger.info(
@@ -783,9 +786,12 @@ export class TwitterPostClient {
                         }
                     }
                     console.log("qna eseniii");
+                    console.log("tweeeets53", selectedTweets);
 
                     // Add selected tweets to candidates
                     combinedTimeline = [...combinedTimeline, ...selectedTweets];
+
+                    console.log("tweeeets54", combinedTimeline);
                 }
             } else {
                 elizaLogger.log(

@@ -144,7 +144,7 @@ export class TwitterInteractionClient {
             const tweetCandidates = (
                 await this.client.fetchSearchTweets(
                     query,
-                    15,
+                    5,
                     SearchMode.Latest
                 )
             ).tweets;
@@ -190,7 +190,7 @@ export class TwitterInteractionClient {
                                     SearchMode.Latest
                                 )
                             ).tweets;
-                            console.log("tweeeets", userTweets);
+                            console.log("tweeeets4", userTweets);
                             const extendedTweets = [...userTweets ,...userTweets2 ]
 
                             // Filter for unprocessed, non-reply, recent tweets
@@ -203,7 +203,7 @@ export class TwitterInteractionClient {
                                     Date.now() - tweet.timestamp * 1000 <
                                     2 * 60 * 60 * 1000;
 
-                                console.log("tweeeets1", isRecent);
+                                console.log("tweeeets41", isRecent);
                                 elizaLogger.log(`Tweet ${tweet.id} checks:`, {
                                     isUnprocessed,
                                     isRecent,
@@ -213,12 +213,11 @@ export class TwitterInteractionClient {
 
                                 return (
                                     isUnprocessed &&
-                                    !tweet.isReply &&
                                     !tweet.isRetweet &&
                                     isRecent
                                 );
                             });
-                            console.log("tweeeets3", validTweets);
+                            console.log("tweeeets42", validTweets);
 
                             if (validTweets.length > 0) {
                                 tweetsByUser.set(username, validTweets);
@@ -256,6 +255,8 @@ export class TwitterInteractionClient {
                         ...mentionCandidates,
                         ...selectedTweets,
                     ];
+
+                    console.log("tweeeets43", uniqueTweetCandidates);
                 }
             } else {
                 elizaLogger.log(
