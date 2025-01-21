@@ -40,7 +40,7 @@ export class TelegramClient {
         elizaLogger.log(
             "✨ Telegram bot successfully launched and is running!"
         );
-
+console.log("check 5");
         const botInfo = await this.bot.telegram.getMe();
         this.bot.botInfo = botInfo;
         elizaLogger.success(`Bot username: @${botInfo.username}`);
