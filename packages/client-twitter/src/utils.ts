@@ -14,6 +14,10 @@ export const wait = (minTime: number = 1000, maxTime: number = 3000) => {
     return new Promise((resolve) => setTimeout(resolve, waitTime));
 };
 
+export const pause = (milliseconds: number) => {
+    return new Promise<void>((resolve) => setTimeout(resolve, milliseconds));
+};
+
 export const isValidTweet = (tweet: Tweet): boolean => {
     // Filter out tweets with too many hashtags, @s, or $ signs, probably spam or garbage
     const hashtagCount = (tweet.text?.match(/#/g) || []).length;

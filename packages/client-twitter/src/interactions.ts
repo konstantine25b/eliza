@@ -16,7 +16,7 @@ import {
     getEmbeddingZeroVector,
 } from "@elizaos/core";
 import { ClientBase } from "./base";
-import { buildConversationThread, sendTweet, wait } from "./utils.ts";
+import { buildConversationThread, pause, sendTweet, wait } from "./utils.ts";
 import { generateQueryForInteractions } from "./utils/scraping/post.ts";
 import isWithinTimeRange from "./isWithinTimeRange.ts";
 export const twitterMessageHandlerTemplate =
@@ -114,43 +114,33 @@ export class TwitterInteractionClient {
         this.runtime = runtime;
     }
 
-
     async start() {
         const handleTwitterInteractionsLoop = () => {
-            this.handleTwitterInteractions();
+            // Check if within the allowed time range
+            if (isWithinTimeRange(9, 10) ||  isWithinTimeRange(14, 15) ||isWithinTimeRange(18, 19) ||   isWithinTimeRange(23, 24))
+                {
+
+                pause(60*1000);
+                this.handleTwitterInteractions
+
+                elizaLogger.log("Handled Twitter interactions. Scheduling next interaction.");
+            } else {
+                elizaLogger.log(
+                    "Outside of allowed time range (9 AM to 10 AM, 2 PM to 3 PM, 6 PM to 7 PM, 10 PM to 11 PM, 11 PM to 12 AM). Skipping interactions."
+                );
+            }
+
+            // Schedule the next loop regardless of time range
+            console.log("checka 30");
             setTimeout(
                 handleTwitterInteractionsLoop,
-                // Defaults to 2 minutes
-                this.client.twitterConfig.TWITTER_POLL_INTERVAL * 1000
+                this.client.twitterConfig.TWITTER_POLL_INTERVAL * 1000 // Defaults to 2 minutes
             );
         };
+
+        // Start the loop
         handleTwitterInteractionsLoop();
     }
-
-    // async start() {
-    //     const handleTwitterInteractionsLoop = () => {
-    //         // Check if within the allowed time range
-    //         if (isWithinTimeRange(9, 10) ||  isWithinTimeRange(14, 15) ||isWithinTimeRange(18, 19) ||   isWithinTimeRange(22, 24))
-    //             {
-    //             console.log("checka 5");
-    //             this.handleTwitterInteractions();
-    //             elizaLogger.log("Handled Twitter interactions. Scheduling next interaction.");
-    //         } else {
-    //             elizaLogger.log(
-    //                 "Outside of allowed time range (9 AM to 10 AM, 2 PM to 3 PM, 6 PM to 7 PM, 10 PM to 11 PM, 11 PM to 12 AM). Skipping interactions."
-    //             );
-    //         }
-
-    //         // Schedule the next loop regardless of time range
-    //         setTimeout(
-    //             handleTwitterInteractionsLoop,
-    //             this.client.twitterConfig.TWITTER_POLL_INTERVAL * 1000 // Defaults to 2 minutes
-    //         );
-    //     };
-
-    //     // Start the loop
-    //     handleTwitterInteractionsLoop();
-    // }
 
 
     async handleTwitterInteractions() {
@@ -374,8 +364,10 @@ export class TwitterInteractionClient {
 
             // Save the latest checked tweet ID to the file
             await this.client.cacheLatestCheckedTweetId();
-
+            console.log("checka 15");
             elizaLogger.log("Finished checking Twitter interactions");
+            console.log("checka 16");
+
         } catch (error) {
             elizaLogger.error("Error handling Twitter interactions:", error);
         }

@@ -76,7 +76,7 @@ export const TwitterClientInterface: Client = {
 
         // Start interactions (mentions, replies)
         await manager.interaction.start();
-
+        console.log("jambazi 4");
         // If Spaces are enabled, start the periodic check
         // if (manager.space) {
         //     manager.space.startPeriodicSpaceCheck();
