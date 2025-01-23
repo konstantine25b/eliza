@@ -44,8 +44,7 @@ Recent interactions between {{agentName}} and other users:
 - Do not use fillers like "ah" or similar; begin directly with the response.
 1. You should respond in a very casual manner.
 2. The length of the reply should not be more then 7 words.
-3. Your QUOTE should NOT be more then 15 words.
-4. Make your replies seem less like AI generated.
+3. Make your replies seem less like AI generated.
 
 
 Current Post:
@@ -115,30 +114,43 @@ export class TwitterInteractionClient {
         this.runtime = runtime;
     }
 
+
     async start() {
         const handleTwitterInteractionsLoop = () => {
-            // Check if within the allowed time range
-            if (isWithinTimeRange(9, 10) ||  isWithinTimeRange(14, 15) ||isWithinTimeRange(18, 19) ||   isWithinTimeRange(22, 23))
-                {
-                console.log("checka 5");
-                this.handleTwitterInteractions();
-                elizaLogger.log("Handled Twitter interactions. Scheduling next interaction.");
-            } else {
-                elizaLogger.log(
-                    "Outside of allowed time range (9 AM to 10 AM, 2 PM to 3 PM, 6 PM to 7 PM, 10 PM to 11 PM, 11 PM to 12 AM). Skipping interactions."
-                );
-            }
-
-            // Schedule the next loop regardless of time range
+            this.handleTwitterInteractions();
             setTimeout(
                 handleTwitterInteractionsLoop,
-                this.client.twitterConfig.TWITTER_POLL_INTERVAL * 1000 // Defaults to 2 minutes
+                // Defaults to 2 minutes
+                this.client.twitterConfig.TWITTER_POLL_INTERVAL * 1000
             );
         };
-
-        // Start the loop
         handleTwitterInteractionsLoop();
     }
+
+    // async start() {
+    //     const handleTwitterInteractionsLoop = () => {
+    //         // Check if within the allowed time range
+    //         if (isWithinTimeRange(9, 10) ||  isWithinTimeRange(14, 15) ||isWithinTimeRange(18, 19) ||   isWithinTimeRange(22, 24))
+    //             {
+    //             console.log("checka 5");
+    //             this.handleTwitterInteractions();
+    //             elizaLogger.log("Handled Twitter interactions. Scheduling next interaction.");
+    //         } else {
+    //             elizaLogger.log(
+    //                 "Outside of allowed time range (9 AM to 10 AM, 2 PM to 3 PM, 6 PM to 7 PM, 10 PM to 11 PM, 11 PM to 12 AM). Skipping interactions."
+    //             );
+    //         }
+
+    //         // Schedule the next loop regardless of time range
+    //         setTimeout(
+    //             handleTwitterInteractionsLoop,
+    //             this.client.twitterConfig.TWITTER_POLL_INTERVAL * 1000 // Defaults to 2 minutes
+    //         );
+    //     };
+
+    //     // Start the loop
+    //     handleTwitterInteractionsLoop();
+    // }
 
 
     async handleTwitterInteractions() {
