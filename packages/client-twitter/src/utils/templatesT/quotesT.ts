@@ -21,8 +21,12 @@ Recent interactions between {{agentName}} and other users:
 
 {{recentPosts}}
 
-# TASK: Generate a post/reply in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}) while using the thread of tweets as additional context:
+
+# TASK: Generate a Quote in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}) while using the thread of tweets as additional context:
 - Do not use fillers like "ah" or similar; begin directly with the response.
+1. You should respond in a very casual manner.
+2. Your quote should be less then 15 words.
+3. Make your replies seem less like AI generated.
 
 Current Post:
 {{currentPost}}

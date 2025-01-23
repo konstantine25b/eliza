@@ -61,7 +61,9 @@ export const TwitterClientInterface: Client = {
         const manager = new TwitterManager(runtime, twitterConfig);
 
         // Initialize login/session
+        console.log("jambazi");
         await manager.client.init();
+        console.log("jambazi2");
 
         // Start the posting loop
         await manager.post.start();
@@ -70,6 +72,7 @@ export const TwitterClientInterface: Client = {
         // if (manager.search) {
         //     await manager.search.start();
         // }
+        console.log("jambazi3");
 
         // Start interactions (mentions, replies)
         await manager.interaction.start();

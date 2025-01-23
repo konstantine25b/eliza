@@ -233,12 +233,12 @@ export class ClientBase extends EventEmitter {
             const cookieStrings = [
                 "guest_id_marketing=v1%3A173660615939101680; Domain=twitter.com; Path=/; Secure; hostOnly=false; aAge=0ms; cAge=1ms",
                 "guest_id_ads=v1%3A173660615939101680; Domain=twitter.com; Path=/; Secure; hostOnly=false; aAge=0ms; cAge=1ms",
-                'personalization_id="v1_4H4k4zrTtvUbvn2Lsw1ROA=="; Domain=twitter.com; Path=/; Secure; hostOnly=false; aAge=0ms; cAge=1ms',
+                "personalization_id=“v1_4H4k4zrTtvUbvn2Lsw1ROA==“; Domain=twitter.com; Path=/; Secure; hostOnly=false; aAge=0ms; cAge=1ms",
                 "guest_id=v1%3A173660615939101680; Domain=twitter.com; Path=/; Secure; hostOnly=false; aAge=0ms; cAge=1ms",
                 "kdt=hPxMltUKW8Ud8QACwXxvkCeH5uco1EG2dIigG37x; Domain=twitter.com; Path=/; Secure; HttpOnly; SameSite=Lax; hostOnly=false; aAge=0ms; cAge=0ms",
-                'twid="u=u%3D2429603771"; Domain=twitter.com; Path=/; Secure; hostOnly=false; aAge=0ms; cAge=0ms',
-                "ct0=8f15438b43edad1bd16e88de95ce2136f6c46f267ea16cfd920d7c00c0d6f225e0a9eb624c2ed06d13527a8e1452b4dedfda05a97ef87cbce18eef205107478a355f04db951d702974dd74c3c766a18d; Domain=twitter.com; Path=/; Secure; SameSite=Lax; hostOnly=false; aAge=0ms; cAge=0ms",
-                "auth_token=23c4be687edd26fda5e376f2968a17b9b1b90a70; Domain=twitter.com; Path=/; Secure; HttpOnly; hostOnly=false; aAge=0ms; cAge=0ms",
+                "twid=“u=u%3D2326325252; Domain=twitter.com; Path=/; Secure; hostOnly=false; aAge=0ms; cAge=0ms",
+                "ct0=21b6dbca47664789bb083927422ecda0073d5be9def9acbfa3a6c88f9061aad9b481ac5433dcb89b7941028ade86ba8f94b51b8c3c017c5c0cd5cf57397748b17c6fd207741c75869e0e7d09bc9c6576; Domain=twitter.com; Path=/; Secure; SameSite=Lax; hostOnly=false; aAge=0ms; cAge=0ms",
+                "auth_token=b12c5a685cb970e5e3dd588a0777d11a5838a701; Domain=twitter.com; Path=/; Secure; HttpOnly; hostOnly=false; aAge=0ms; cAge=0ms",
                 "att=1-uxUAHWeaRNarO58T1XsboxlN1K5F6Yw1JWRNzNcl; Domain=twitter.com; Path=/; Secure; HttpOnly; hostOnly=false; aAge=0ms; cAge=0ms",
             ];
             const formattedCookies = parseCookieStrings(cookieStrings);

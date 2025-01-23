@@ -19,6 +19,7 @@ import { DEFAULT_MAX_TWEET_LENGTH } from "./environment.ts";
 import { twitterQuoteHandlerTemplate } from "./utils/templatesT/quotesT.ts";
 import { generateQueryForInteractions } from "./utils/scraping/post.ts";
 import { twitterMessageHandlerTemplate } from "./interactions.ts";
+import isWithinTimeRange from './isWithinTimeRange.ts';
 
 const twitterPostTemplate = `
 # Areas of Expertise
@@ -165,46 +166,74 @@ export class TwitterPostClient {
         }
 
         const generateNewTweetLoop = async () => {
-            const lastPost = await this.runtime.cacheManager.get<{
-                timestamp: number;
-            }>("twitter/" + this.twitterUsername + "/lastPost");
+            console.log("checka 1");
 
-            const lastPostTimestamp = lastPost?.timestamp ?? 0;
-            const minMinutes = this.client.twitterConfig.POST_INTERVAL_MIN;
-            const maxMinutes = this.client.twitterConfig.POST_INTERVAL_MAX;
-            const randomMinutes =
-                Math.floor(Math.random() * (maxMinutes - minMinutes + 1)) +
-                minMinutes;
-            const delay = randomMinutes * 60 * 1000;
+            // Check if within the allowed time range
+            if (
+                isWithinTimeRange(9, 10) ||
+                isWithinTimeRange(14, 15) ||
+                isWithinTimeRange(18, 19) ||
+                isWithinTimeRange(22, 23)
+            ) {
+                console.log("checka 2");
+                const lastPost = await this.runtime.cacheManager.get<{
+                    timestamp: number;
+                }>("twitter/" + this.twitterUsername + "/lastPost");
 
-            if (Date.now() > lastPostTimestamp + delay) {
-                await this.generateNewTweet();
+                const lastPostTimestamp = lastPost?.timestamp ?? 0;
+                const minMinutes = this.client.twitterConfig.POST_INTERVAL_MIN;
+                const maxMinutes = this.client.twitterConfig.POST_INTERVAL_MAX;
+                const randomMinutes =
+                    Math.floor(Math.random() * (maxMinutes - minMinutes + 1)) +
+                    minMinutes;
+                const delay = randomMinutes * 60 * 1000;
+
+                if (Date.now() > lastPostTimestamp + delay) {
+                    await this.generateNewTweet();
+                    elizaLogger.log(`Generated a new tweet. Next tweet scheduled in ${randomMinutes} minutes.`);
+                } else {
+                    elizaLogger.log(`Skipping tweet generation. Next tweet can be generated after ${randomMinutes} minutes.`);
+                }
+            } else {
+                elizaLogger.log("Outside of allowed time range (9 AM to 10 AM, 2 PM to 3 PM, 6 PM to 7 PM, 10 PM to 11 PM). Skipping tweet generation.");
             }
 
+            // Retry the loop every 10 minutes
             setTimeout(() => {
-                generateNewTweetLoop(); // Set up next iteration
-            }, delay);
-
-            elizaLogger.log(`Next tweet scheduled in ${randomMinutes} minutes`);
+                generateNewTweetLoop();
+            }, 10 * 60 * 1000); // 10 minutes in milliseconds
         };
+
 
         const processActionsLoop = async () => {
             const actionInterval = this.client.twitterConfig.ACTION_INTERVAL; // Defaults to 5 minutes
 
             while (!this.stopProcessingActions) {
                 try {
-                    const results = await this.processTweetActions();
-                    if (results) {
-                        elizaLogger.log(`Processed ${results.length} tweets`);
+                    // Check if within the allowed time range
+                    if (
+                        isWithinTimeRange(9, 10) ||
+                        isWithinTimeRange(14, 15) ||
+                        isWithinTimeRange(18, 19) ||
+                        isWithinTimeRange(23, 0)
+                    ) {
+                        const results = await this.processTweetActions();
+                        if (results) {
+                            elizaLogger.log(`Processed ${results.length} tweets`);
+                            elizaLogger.log(
+                                `Next action processing scheduled in ${actionInterval} minutes`
+                            );
+                        }
+                    } else {
                         elizaLogger.log(
-                            `Next action processing scheduled in ${actionInterval} minutes`
-                        );
-                        // Wait for the full interval before next processing
-                        await new Promise(
-                            (resolve) =>
-                                setTimeout(resolve, actionInterval * 60 * 1000) // now in minutes
+                            "Outside of allowed time range. Skipping tweet actions."
                         );
                     }
+                    // Wait for the full interval before the next check
+                    await new Promise(
+                        (resolve) =>
+                            setTimeout(resolve, actionInterval * 60 * 1000) // Now in minutes
+                    );
                 } catch (error) {
                     elizaLogger.error(
                         "Error in action processing loop:",
@@ -215,6 +244,7 @@ export class TwitterPostClient {
                 }
             }
         };
+
 
         if (this.client.twitterConfig.POST_IMMEDIATELY) {
             await this.generateNewTweet();
@@ -1264,3 +1294,5 @@ export class TwitterPostClient {
         this.stopProcessingActions = true;
     }
 }
+
+
