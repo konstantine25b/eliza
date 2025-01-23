@@ -117,8 +117,9 @@ export class TwitterInteractionClient {
     async start() {
         const handleTwitterInteractionsLoop = () => {
             // Check if within the allowed time range
-            if (isWithinTimeRange(9, 10) ||  isWithinTimeRange(14, 15) ||isWithinTimeRange(18, 19) ||   isWithinTimeRange(23, 24))
-                {
+            // console.log((isWithinTimeRange(9, 10) ||  isWithinTimeRange(14, 15) ||isWithinTimeRange(18, 19) ||   isWithinTimeRange(23, 24)), " blabla");
+            // process.exit();
+            if (isWithinTimeRange()) {
 
                 pause(60*1000);
                 this.handleTwitterInteractions
@@ -533,6 +534,7 @@ export class TwitterInteractionClient {
                 )) as State;
 
                 for (const responseMessage of responseMessages) {
+                    pause(60*1000);
                     if (
                         responseMessage ===
                         responseMessages[responseMessages.length - 1]

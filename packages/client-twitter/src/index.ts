@@ -9,6 +9,7 @@ import { TwitterInteractionClient } from "./interactions.ts";
 import { TwitterPostClient } from "./post.ts";
 import { TwitterSearchClient } from "./search.ts";
 import { TwitterSpaceClient } from "./spaces.ts";
+import isWithinTimeRange from "./isWithinTimeRange.ts";
 
 /**
  * A manager that orchestrates all specialized Twitter logic:
@@ -66,17 +67,19 @@ export const TwitterClientInterface: Client = {
         console.log("jambazi2");
 
         // Start the posting loop
-        await manager.post.start();
 
         // Start the search logic if it exists
         // if (manager.search) {
         //     await manager.search.start();
         // }
-        console.log("jambazi3");
 
         // Start interactions (mentions, replies)
         await manager.interaction.start();
         console.log("jambazi 4");
+
+        await manager.post.start();
+
+        console.log("jambazi3");
         // If Spaces are enabled, start the periodic check
         // if (manager.space) {
         //     manager.space.startPeriodicSpaceCheck();
