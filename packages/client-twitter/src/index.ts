@@ -62,12 +62,9 @@ export const TwitterClientInterface: Client = {
         const manager = new TwitterManager(runtime, twitterConfig);
 
         // Initialize login/session
-        console.log("jambazi");
 
         await manager.client.init();
         // process.exit();
-        console.log("jambazi2");
-
         // Start the posting loop
 
         // Start the search logic if it exists
@@ -76,12 +73,8 @@ export const TwitterClientInterface: Client = {
         // }
 
         // Start interactions (mentions, replies)
-        await manager.interaction.start();
-        console.log("jambazi 4");
-
-        // await manager.post.start();
-
-        console.log("jambazi3");
+        // await manager.interaction.start();
+        await manager.post.start();
         // If Spaces are enabled, start the periodic check
         // if (manager.space) {
         //     manager.space.startPeriodicSpaceCheck();

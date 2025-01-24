@@ -186,17 +186,18 @@ export class TwitterPostClient {
                 generateNewTweetLoop(); // Set up next iteration
             }, delay);
 
-            elizaLogger.log(`Next tweet scheduled in ${randomMinutes} minutes`);
+            // elizaLogger.log(`Next tweet scheduled in ${randomMinutes} minutes`);
         };
 
         const processActionsLoop = async () => {
             const actionInterval = this.client.twitterConfig.ACTION_INTERVAL; // Defaults to 5 minutes
 
             while (!this.stopProcessingActions) {
+                pause(60*1000);
                 try {
                     const results = await this.processTweetActions();
                     if (results) {
-                        elizaLogger.log(`Processed ${results.length} tweets`);
+                        // elizaLogger.log(`Processed ${results.length} tweets`);
                         elizaLogger.log(
                             `Next action processing scheduled in ${actionInterval} minutes`
                         );
@@ -297,7 +298,7 @@ export class TwitterPostClient {
         await client.cacheTweet(tweet);
 
         // Log the posted tweet
-        elizaLogger.log(`Tweet posted:\n ${tweet.permanentUrl}`);
+        // elizaLogger.log(`Tweet posted:\n ${tweet.permanentUrl}`);
 
         // Ensure the room and participant exist
         await runtime.ensureRoomExists(roomId);
@@ -643,7 +644,7 @@ export class TwitterPostClient {
             const searchKeywords = this.runtime.character?.searchKeywords;
 
             const query = generateQueryForInteractions(searchKeywords);
-            console.log("query2", query);
+            // console.log("query2", query);
             const actionableTweets = (
                 await this.client.fetchSearchTweets(
                     query,
@@ -660,7 +661,7 @@ export class TwitterPostClient {
                 const TARGET_USERS =
                     this.client.twitterConfig.TWITTER_TARGET_USERS;
 
-                elizaLogger.log("Processing target users1:", TARGET_USERS);
+                // elizaLogger.log("Processing target users1:", TARGET_USERS);
 
                 if (TARGET_USERS.length > 0) {
                     // Create a map to store tweets by user
@@ -683,7 +684,7 @@ export class TwitterPostClient {
                                     SearchMode.Latest
                                 )
                             ).tweets;
-                            console.log("tweeeets5", userTweets);
+                            // console.log("tweeeets5", userTweets);
                             const extendedTweets = [
                                 ...userTweets,
                                 ...userTweets2,
@@ -701,16 +702,16 @@ export class TwitterPostClient {
                                         7 * 60 * 60 * 1000;
 
 
-                                    console.log("tweeeets51", isRecent);
-                                    elizaLogger.log(
-                                        `Tweet ${tweet.id} checks:`,
-                                        {
-                                            isUnprocessed,
-                                            isRecent,
-                                            isReply: tweet.isReply,
-                                            isRetweet: tweet.isRetweet,
-                                        }
-                                    );
+                                    // console.log("tweeeets51", isRecent);
+                                    // elizaLogger.log(
+                                    //     `Tweet ${tweet.id} checks:`,
+                                    //     {
+                                    //         isUnprocessed,
+                                    //         isRecent,
+                                    //         isReply: tweet.isReply,
+                                    //         isRetweet: tweet.isRetweet,
+                                    //     }
+                                    // );
 
                                     return (
                                         isUnprocessed &&
@@ -719,13 +720,13 @@ export class TwitterPostClient {
                                     );
                                 }
                             );
-                            console.log("tweeeets52", userTweets);
+                            // console.log("tweeeets52", userTweets);
 
                             if (validTweets.length > 0) {
                                 tweetsByUser.set(username, validTweets);
-                                elizaLogger.log(
-                                    `Found ${validTweets.length} valid tweets from ${username}`
-                                );
+                                // elizaLogger.log(
+                                //     `Found ${validTweets.length} valid tweets from ${username}`
+                                // );
                             }
                         } catch (error) {
                             elizaLogger.error(
@@ -736,7 +737,7 @@ export class TwitterPostClient {
                         }
                     }
 
-                    console.log("tweeeets55", tweetsByUser);
+                    // console.log("tweeeets55", tweetsByUser);
 
                     // Select one tweet from each user that has tweets
                     const selectedTweets: Tweet[] = [];
@@ -748,19 +749,19 @@ export class TwitterPostClient {
                             );
                             const randomTweet = tweets[randNum];
                             selectedTweets.push(randomTweet);
-                            elizaLogger.log(
-                                `Selected tweet from ${username}: ${randomTweet.text?.substring(0, 100)}`
-                            );
+                            // elizaLogger.log(
+                            //     `Selected tweet from ${username}: ${randomTweet.text?.substring(0, 100)}`
+                            // );
                             for (const tweet of tweets) {
 
-                                console.log("tweeeets56", tweet);
+                                // console.log("tweeeets56", tweet);
                                 try {
                                     if (this.isDryRun) {
                                         elizaLogger.info(
                                             `Dry run: would have liked tweet ${tweet.id}`
                                         );
                                     } else {
-                                        console.log(`Did1 like ${tweet.id}`);
+                                        // console.log(`Did1 like ${tweet.id}`);
                                         await this.client.twitterClient.likeTweet(
                                             tweet.id
                                         );
@@ -775,7 +776,7 @@ export class TwitterPostClient {
                                             `Dry run: would have retweeted tweet ${tweet.id}`
                                         );
                                     } else {
-                                        console.log(`Did1 retweet ${tweet.id}`);
+                                        // console.log(`Did1 retweet ${tweet.id}`);
                                         await this.client.twitterClient.retweet(
                                             tweet.id
                                         );
@@ -786,20 +787,20 @@ export class TwitterPostClient {
                             }
                         }
                     }
-                    console.log("qna eseniii");
-                    console.log("tweeeets53", selectedTweets);
+                    // console.log("qna eseniii");
+                    // console.log("tweeeets53", selectedTweets);
 
                     // Add selected tweets to candidates
                     combinedTimeline = [...combinedTimeline, ...selectedTweets];
 
-                    console.log("tweeeets54", combinedTimeline);
+                    // console.log("tweeeets54", combinedTimeline);
                 }
             } else {
                 elizaLogger.log(
                     "No target users configured, processing only mentions"
                 );
             }
-            console.log("eseniii", combinedTimeline);
+            // console.log("eseniii", combinedTimeline);
 
             combinedTimeline = [
                 ...combinedTimeline,
@@ -817,9 +818,9 @@ export class TwitterPostClient {
                             stringToUuid(tweet.id + "-" + this.runtime.agentId)
                         );
                     if (memory) {
-                        elizaLogger.log(
-                            `Already processed tweet ID: ${tweet.id}`
-                        );
+                        // elizaLogger.log(
+                        //     `Already processed tweet ID: ${tweet.id}`
+                        // );
                         continue;
                     }
 
@@ -847,7 +848,7 @@ export class TwitterPostClient {
                                 ?.twitterActionTemplate ||
                             twitterActionTemplate,
                     });
-                    console.log("actionContext1", actionContext);
+                    // console.log("actionContext1", actionContext);
 
                     const actionResponse = await generateTweetActions({
                         runtime: this.runtime,
