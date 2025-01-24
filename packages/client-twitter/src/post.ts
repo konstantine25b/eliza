@@ -165,93 +165,96 @@ export class TwitterPostClient {
             await this.client.init();
         }
 
-        const generateNewTweetLoop = async () => {
-            const lastPost = await this.runtime.cacheManager.get<{
-                timestamp: number;
-            }>("twitter/" + this.twitterUsername + "/lastPost");
+        const handleTwitterInteractionsLoop = async () => {
+            if (isWithinTimeRange()) {
+                const lastPost = await this.runtime.cacheManager.get<{
+                    timestamp: number;
+                }>("twitter/" + this.twitterUsername + "/lastPost");
 
-            const lastPostTimestamp = lastPost?.timestamp ?? 0;
-            const minMinutes = this.client.twitterConfig.POST_INTERVAL_MIN;
-            const maxMinutes = this.client.twitterConfig.POST_INTERVAL_MAX;
-            const randomMinutes =
-                Math.floor(Math.random() * (maxMinutes - minMinutes + 1)) +
-                minMinutes;
-            const delay = randomMinutes * 60 * 1000;
+                const lastPostTimestamp = lastPost?.timestamp ?? 0;
+                const minMinutes = this.client.twitterConfig.POST_INTERVAL_MIN;
+                const maxMinutes = this.client.twitterConfig.POST_INTERVAL_MAX;
+                const randomMinutes =
+                    Math.floor(Math.random() * (maxMinutes - minMinutes + 1)) +
+                    minMinutes;
+                const delay = randomMinutes * 60 * 1000;
 
-            if (Date.now() > lastPostTimestamp + delay) {
-                await this.generateNewTweet();
+                if (Date.now() > lastPostTimestamp + delay) {
+                    await this.generateNewTweet();
+                }
+
+                // Set up next iteration
+                setTimeout(handleTwitterInteractionsLoop, delay);
+                elizaLogger.log(`Next tweet scheduled in ${randomMinutes} minutes`);
+            } else {
+                elizaLogger.log("Outside of allowed time range");
+                // Retry after a short delay
+                setTimeout(handleTwitterInteractionsLoop, 30 * 1000); // 30s check again
             }
-
-            setTimeout(() => {
-                generateNewTweetLoop(); // Set up next iteration
-            }, delay);
-
-            // elizaLogger.log(`Next tweet scheduled in ${randomMinutes} minutes`);
         };
 
         const processActionsLoop = async () => {
             const actionInterval = this.client.twitterConfig.ACTION_INTERVAL; // Defaults to 5 minutes
 
             while (!this.stopProcessingActions) {
-                pause(60*1000);
-                try {
-                    const results = await this.processTweetActions();
-                    if (results) {
-                        // elizaLogger.log(`Processed ${results.length} tweets`);
-                        elizaLogger.log(
-                            `Next action processing scheduled in ${actionInterval} minutes`
-                        );
-                        // Wait for the full interval before next processing
-                        await new Promise(
-                            (resolve) =>
-                                setTimeout(resolve, actionInterval * 60 * 1000) // now in minutes
-                        );
+                if (isWithinTimeRange()) {
+                    try {
+                        await pause(60 * 1000); // Wait for 1 minute
+
+                        const results = await this.processTweetActions();
+                        if (results) {
+                            elizaLogger.log(`Processed ${results.length} tweets`);
+                            elizaLogger.log(
+                                `Next action processing scheduled in ${actionInterval} minutes`
+                            );
+                            // Wait for the full interval before next processing
+                            await new Promise(
+                                (resolve) =>
+                                    setTimeout(resolve, actionInterval * 60 * 1000) // interval in minutes
+                            );
+                        }
+                    } catch (error) {
+                        elizaLogger.error("Error in action processing loop:", error);
+                        // Add exponential backoff on error
+                        await new Promise((resolve) => setTimeout(resolve, 30000)); // Wait 30s on error
                     }
-                } catch (error) {
-                    elizaLogger.error(
-                        "Error in action processing loop:",
-                        error
-                    );
-                    // Add exponential backoff on error
-                    await new Promise((resolve) => setTimeout(resolve, 30000)); // Wait 30s on error
+                } else {
+                    elizaLogger.log("Outside of allowed time range for actions");
+                    // Retry after a short delay
+                    await new Promise((resolve) => setTimeout(resolve, 30 * 1000)); // 30s check again
                 }
             }
         };
 
-        if (this.client.twitterConfig.POST_IMMEDIATELY) {
+        if (this.client.twitterConfig.POST_IMMEDIATELY && isWithinTimeRange()) {
             await this.generateNewTweet();
         }
 
-        // Only start tweet generation loop if not in dry run mode
-        if (!this.isDryRun) {
-            generateNewTweetLoop();
+        // Only start tweet generation loop if not in dry run mode and within the time range
+        if (!this.isDryRun && isWithinTimeRange()) {
+            handleTwitterInteractionsLoop();
             elizaLogger.log("Tweet generation loop started");
         } else {
-            elizaLogger.log("Tweet generation loop disabled (dry run mode)");
+            if (this.isDryRun) {
+                elizaLogger.log("Tweet generation loop disabled (dry run mode)");
+            } else {
+                elizaLogger.log("Tweet generation loop disabled (outside of allowed time range)");
+            }
         }
 
-        if (
-            this.client.twitterConfig.ENABLE_ACTION_PROCESSING &&
-            !this.isDryRun
-        ) {
+        if (this.client.twitterConfig.ENABLE_ACTION_PROCESSING && !this.isDryRun) {
             processActionsLoop().catch((error) => {
-                elizaLogger.error(
-                    "Fatal error in process actions loop:",
-                    error
-                );
+                elizaLogger.error("Fatal error in process actions loop:", error);
             });
         } else {
             if (this.isDryRun) {
-                elizaLogger.log(
-                    "Action processing loop disabled (dry run mode)"
-                );
+                elizaLogger.log("Action processing loop disabled (dry run mode)");
             } else {
-                elizaLogger.log(
-                    "Action processing loop disabled by configuration"
-                );
+                elizaLogger.log("Action processing loop disabled by configuration or outside time range");
             }
         }
     }
+
 
     createTweetObject(
         tweetResult: any,
