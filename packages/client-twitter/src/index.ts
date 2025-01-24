@@ -63,7 +63,9 @@ export const TwitterClientInterface: Client = {
 
         // Initialize login/session
         console.log("jambazi");
+
         await manager.client.init();
+        // process.exit();
         console.log("jambazi2");
 
         // Start the posting loop
@@ -77,7 +79,7 @@ export const TwitterClientInterface: Client = {
         await manager.interaction.start();
         console.log("jambazi 4");
 
-        await manager.post.start();
+        // await manager.post.start();
 
         console.log("jambazi3");
         // If Spaces are enabled, start the periodic check

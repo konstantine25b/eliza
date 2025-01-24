@@ -157,7 +157,7 @@ export class ClientBase extends EventEmitter {
     }
 
     async init() {
-        if (isWithinTimeRange()) {
+
         const username = this.twitterConfig.TWITTER_USERNAME;
         const password = this.twitterConfig.TWITTER_PASSWORD;
         const email = this.twitterConfig.TWITTER_EMAIL;
@@ -322,15 +322,7 @@ export class ClientBase extends EventEmitter {
 
         await this.loadLatestCheckedTweetId();
         await this.populateTimeline();
-    } else {
-        elizaLogger.log(
-            "lalalalala Outside of allowed time range (9 AM to 10 AM, 2 PM to 3 PM, 6 PM to 7 PM, 10 PM to 11 PM, 11 PM to 12 AM). Skipping interactions."
-        );
-        setTimeout(
-            this.init,
-            600*1000 // Defaults to 2 minutes
-        );
-    }
+
     }
 
     async fetchOwnPosts(count: number): Promise<Tweet[]> {

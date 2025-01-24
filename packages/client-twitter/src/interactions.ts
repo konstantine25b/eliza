@@ -116,26 +116,18 @@ export class TwitterInteractionClient {
 
     async start() {
         const handleTwitterInteractionsLoop = () => {
-            // Check if within the allowed time range
-            // console.log((isWithinTimeRange(9, 10) ||  isWithinTimeRange(14, 15) ||isWithinTimeRange(18, 19) ||   isWithinTimeRange(23, 24)), " blabla");
-            // process.exit();
             if (isWithinTimeRange()) {
-
-                pause(60*1000);
-                this.handleTwitterInteractions
+                this.handleTwitterInteractions();
 
                 elizaLogger.log("Handled Twitter interactions. Scheduling next interaction.");
             } else {
                 elizaLogger.log(
-                    "Outside of allowed time range (9 AM to 10 AM, 2 PM to 3 PM, 6 PM to 7 PM, 10 PM to 11 PM, 11 PM to 12 AM). Skipping interactions."
+                    "Outside of allowed time range"
                 );
             }
-
-            // Schedule the next loop regardless of time range
-            console.log("checka 30");
             setTimeout(
                 handleTwitterInteractionsLoop,
-                this.client.twitterConfig.TWITTER_POLL_INTERVAL * 1000 // Defaults to 2 minutes
+                30 * 1000 // Defaults to 2 minutes
             );
         };
 
@@ -159,10 +151,10 @@ export class TwitterInteractionClient {
             ).tweets;
 
             const searchKeywords = this.runtime.character?.searchKeywords;
-            console.log("searchKeywords", searchKeywords)
+            // console.log("searchKeywords", searchKeywords)
 
             const query = generateQueryForInteractions(searchKeywords);
-            console.log("query1", query);
+            // console.log("query1", query);
             const tweetCandidates = (
                 await this.client.fetchSearchTweets(
                     query,
@@ -174,22 +166,23 @@ export class TwitterInteractionClient {
                 await this.client.fetchSearchTweets(query, 5, SearchMode.Top)
             ).tweets;
 
-            elizaLogger.log(
-                "Completed checking mentioned tweets:",
-                mentionCandidates.length
-            );
+            // elizaLogger.log(
+            //     "Completed checking mentioned tweets:",
+            //     mentionCandidates.length
+            // );
             let uniqueTweetCandidates = [
                 ...mentionCandidates,
                 ...tweetCandidates,
                 ...tweetCandidates2,
             ];
-            console.log("unique12", uniqueTweetCandidates);
+            // console.log("unique12", uniqueTweetCandidates);
+
             // Only process target users if configured
             if (this.client.twitterConfig.TWITTER_TARGET_USERS.length) {
                 const TARGET_USERS =
                     this.client.twitterConfig.TWITTER_TARGET_USERS;
 
-                elizaLogger.log("Processing target users:", TARGET_USERS);
+                // elizaLogger.log("Processing target users:", TARGET_USERS);
 
                 if (TARGET_USERS.length > 0) {
                     // Create a map to store tweets by user
@@ -212,7 +205,7 @@ export class TwitterInteractionClient {
                                     SearchMode.Latest
                                 )
                             ).tweets;
-                            console.log("tweeeets4", userTweets);
+                            // console.log("tweeeets4", userTweets);
                             const extendedTweets = [...userTweets ,...userTweets2 ]
 
                             // Filter for unprocessed, non-reply, recent tweets
@@ -225,13 +218,13 @@ export class TwitterInteractionClient {
                                     Date.now() - tweet.timestamp * 1000 <
                                     2 * 60 * 60 * 1000;
 
-                                console.log("tweeeets41", isRecent);
-                                elizaLogger.log(`Tweet ${tweet.id} checks:`, {
-                                    isUnprocessed,
-                                    isRecent,
-                                    isReply: tweet.isReply,
-                                    isRetweet: tweet.isRetweet,
-                                });
+                                // console.log("tweeeets41", isRecent);
+                                // elizaLogger.log(`Tweet ${tweet.id} checks:`, {
+                                //     isUnprocessed,
+                                //     isRecent,
+                                //     isReply: tweet.isReply,
+                                //     isRetweet: tweet.isRetweet,
+                                // });
 
                                 return (
                                     isUnprocessed &&
@@ -239,13 +232,13 @@ export class TwitterInteractionClient {
                                     isRecent
                                 );
                             });
-                            console.log("tweeeets42", validTweets);
+                            // console.log("tweeeets42", validTweets);
 
                             if (validTweets.length > 0) {
                                 tweetsByUser.set(username, validTweets);
-                                elizaLogger.log(
-                                    `Found ${validTweets.length} valid tweets from ${username}`
-                                );
+                                // elizaLogger.log(
+                                //     `Found ${validTweets.length} valid tweets from ${username}`
+                                // );
                             }
                         } catch (error) {
                             elizaLogger.error(
@@ -266,9 +259,9 @@ export class TwitterInteractionClient {
                                     Math.floor(Math.random() * tweets.length)
                                 ];
                             selectedTweets.push(randomTweet);
-                            elizaLogger.log(
-                                `Selected tweet from ${username}: ${randomTweet.text?.substring(0, 100)}`
-                            );
+                            // elizaLogger.log(
+                            //     `Selected tweet from ${username}: ${randomTweet.text?.substring(0, 100)}`
+                            // );
                         }
                     }
 
@@ -278,7 +271,7 @@ export class TwitterInteractionClient {
                         ...selectedTweets,
                     ];
 
-                    console.log("tweeeets43", uniqueTweetCandidates);
+                    // console.log("tweeeets43", uniqueTweetCandidates);
                 }
             } else {
                 elizaLogger.log(
@@ -296,7 +289,7 @@ export class TwitterInteractionClient {
                 .filter((tweet) => tweet.userId !== this.client.profile.id);
             console.log("this.client.profile.id", this.client.profile.id)
 
-            console.log("uniques1", uniqueTweetCandidates);
+            // console.log("uniques1", uniqueTweetCandidates);
 
             // for each tweet candidate, handle the tweet
             for (const tweet of uniqueTweetCandidates) {
@@ -365,9 +358,9 @@ export class TwitterInteractionClient {
 
             // Save the latest checked tweet ID to the file
             await this.client.cacheLatestCheckedTweetId();
-            console.log("checka 15");
-            elizaLogger.log("Finished checking Twitter interactions");
-            console.log("checka 16");
+            // console.log("checka 15");
+            // elizaLogger.log("Finished checking Twitter interactions");
+            // console.log("checka 16");
 
         } catch (error) {
             elizaLogger.error("Error handling Twitter interactions:", error);
