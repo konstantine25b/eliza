@@ -258,7 +258,7 @@ export class TwitterSearchClient {
             const responseContent = await generateMessageResponse({
                 runtime: this.runtime,
                 context,
-                modelClass: ModelClass.LARGE,
+                modelClass: ModelClass.SMALL,
             });
 
             responseContent.inReplyTo = message.id;

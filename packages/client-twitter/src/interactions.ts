@@ -30,14 +30,14 @@ export const twitterMessageHandlerTemplate =
 
 {{providers}}
 
-{{characterPostExamples}}
+{{characterMessageExamples}}
 
-{{postDirections}}
+{{messageDirections}}
 
 Recent interactions between {{agentName}} and other users:
 {{recentPostInteractions}}
 
-{{recentPosts}}
+{{recentMessages}}
 
 # TASK: Generate a post/reply in the voice, style and perspective of {{agentName}} (@{{twitterUserName}}) while using the thread of tweets as additional context:
 
@@ -116,7 +116,59 @@ export class TwitterInteractionClient {
             const mentionCandidates = (
                 await this.client.fetchSearchTweets(
                     `@${twitterUsername}`,
-                    20,
+                    5,
+                    SearchMode.Latest
+                )
+            ).tweets;
+
+            const keywords = [
+                "GM",
+                "what we cooking for today?",
+                "AI token",
+                "cooking",
+                "what you cooking?",
+                "GM",
+                "what we cooking for today?",
+                "AI token",
+                "cooking",
+                "what you cooking?",
+                "privacy matters",
+                "stay private",
+                "Hinkal Mode ON",
+                "deep in the grind",
+                "crypto security",
+                "zero-knowledge",
+                "on-chain privacy",
+                "Web3 builders",
+                "smart contracts",
+                "AI agents",
+                "machine learning",
+                "football talk",
+                "Khvicha Kvaratskhelia",
+                "rugby",
+                "water polo",
+                "swimming",
+                "grilled chicken",
+                "best seasoning",
+                "stay active",
+                "what's your sport?",
+                "football is life",
+                "let’s build",
+                "hinkal_protocol",
+                "hinkal",
+            ];
+            function getRandomSearchQuery() {
+                const shuffled = keywords.sort(() => 0.5 - Math.random()); // Shuffle array
+                const selected = shuffled.slice(0, 5); // Get first 5 elements
+                return selected.map((keyword) => `"${keyword}"`).join(" OR ");
+            }
+
+            const searchQuery = getRandomSearchQuery();
+
+            const tweetCandidates2 = (
+                await this.client.fetchSearchTweets(
+                    searchQuery,
+                    10,
                     SearchMode.Latest
                 )
             ).tweets;
@@ -125,10 +177,14 @@ export class TwitterInteractionClient {
                 "Completed checking mentioned tweets:",
                 mentionCandidates.length
             );
-            let uniqueTweetCandidates = [...mentionCandidates];
+            let uniqueTweetCandidates = [
+                ...mentionCandidates,
+                ...tweetCandidates2,
+            ];
             // Only process target users if configured
             if (this.client.twitterConfig.TWITTER_TARGET_USERS.length) {
-                const TARGET_USERS = this.client.twitterConfig.TWITTER_TARGET_USERS;
+                const TARGET_USERS =
+                    this.client.twitterConfig.TWITTER_TARGET_USERS;
 
                 elizaLogger.log("Processing target users:", TARGET_USERS);
 
@@ -378,7 +434,8 @@ export class TwitterInteractionClient {
         }
 
         // get usernames into str
-        const validTargetUsersStr = this.client.twitterConfig.TWITTER_TARGET_USERS.join(",");
+        const validTargetUsersStr =
+            this.client.twitterConfig.TWITTER_TARGET_USERS.join(",");
 
         const shouldRespondContext = composeContext({
             state,
@@ -392,7 +449,7 @@ export class TwitterInteractionClient {
         const shouldRespond = await generateShouldRespond({
             runtime: this.runtime,
             context: shouldRespondContext,
-            modelClass: ModelClass.MEDIUM,
+            modelClass: ModelClass.SMALL,
         });
 
         // Promise<"RESPOND" | "IGNORE" | "STOP" | null> {
@@ -415,7 +472,7 @@ export class TwitterInteractionClient {
         const response = await generateMessageResponse({
             runtime: this.runtime,
             context,
-            modelClass: ModelClass.LARGE,
+            modelClass: ModelClass.SMALL,
         });
 
         const removeQuotes = (str: string) =>

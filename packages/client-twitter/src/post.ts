@@ -1,4 +1,4 @@
-import { Tweet } from "agent-twitter-client";
+import { SearchMode, Tweet } from "agent-twitter-client";
 import {
     composeContext,
     generateText,
@@ -62,7 +62,8 @@ Actions (respond only with tags):
 Tweet:
 {{currentTweet}}
 
-# Respond with qualifying action tags only. Default to NO action unless extremely confident of relevance.` + postActionResponseFooter;
+# Respond with qualifying action tags only. Default to NO action unless extremely confident of relevance.` +
+    postActionResponseFooter;
 
 /**
  * Truncate text to fit within the Twitter character limit, ensuring it ends at a complete sentence.
@@ -111,7 +112,7 @@ export class TwitterPostClient {
         this.client = client;
         this.runtime = runtime;
         this.twitterUsername = this.client.twitterConfig.TWITTER_USERNAME;
-        this.isDryRun = this.client.twitterConfig.TWITTER_DRY_RUN
+        this.isDryRun = this.client.twitterConfig.TWITTER_DRY_RUN;
 
         // Log configuration on initialization
         elizaLogger.log("Twitter Client Configuration:");
@@ -188,8 +189,9 @@ export class TwitterPostClient {
                             `Next action processing scheduled in ${actionInterval} minutes`
                         );
                         // Wait for the full interval before next processing
-                        await new Promise((resolve) =>
-                            setTimeout(resolve, actionInterval * 60 * 1000) // now in minutes
+                        await new Promise(
+                            (resolve) =>
+                                setTimeout(resolve, actionInterval * 60 * 1000) // now in minutes
                         );
                     }
                 } catch (error) {
@@ -215,7 +217,10 @@ export class TwitterPostClient {
             elizaLogger.log("Tweet generation loop disabled (dry run mode)");
         }
 
-        if (this.client.twitterConfig.ENABLE_ACTION_PROCESSING && !this.isDryRun) {
+        if (
+            this.client.twitterConfig.ENABLE_ACTION_PROCESSING &&
+            !this.isDryRun
+        ) {
             processActionsLoop().catch((error) => {
                 elizaLogger.error(
                     "Fatal error in process actions loop:",
@@ -480,7 +485,7 @@ export class TwitterPostClient {
             }
 
             // Truncate the content to the maximum tweet length specified in the environment settings, ensuring the truncation respects sentence boundaries.
-            const maxTweetLength = this.client.twitterConfig.MAX_TWEET_LENGTH
+            const maxTweetLength = this.client.twitterConfig.MAX_TWEET_LENGTH;
             if (maxTweetLength) {
                 cleanedContent = truncateToCompleteSentence(
                     cleanedContent,
@@ -620,10 +625,63 @@ export class TwitterPostClient {
                 "twitter"
             );
 
-            const homeTimeline = await this.client.fetchTimelineForActions(15);
+            const homeTimeline = await this.client.fetchTimelineForActions(5);
+            const keywords = [
+                "GM",
+                "what we cooking for today?",
+                "AI token",
+                "cooking",
+                "what you cooking?",
+                "GM",
+                "what we cooking for today?",
+                "AI token",
+                "cooking",
+                "what you cooking?",
+                "privacy matters",
+                "stay private",
+                "Hinkal Mode ON",
+                "deep in the grind",
+                "crypto security",
+                "zero-knowledge",
+                "on-chain privacy",
+                "Web3 builders",
+                "smart contracts",
+                "AI agents",
+                "machine learning",
+                "football talk",
+                "Khvicha Kvaratskhelia",
+                "rugby",
+                "water polo",
+                "swimming",
+                "grilled chicken",
+                "best seasoning",
+                "stay active",
+                "what's your sport?",
+                "football is life",
+                "let’s build",
+                "hinkal_protocol",
+                "hinkal",
+            ];
+            function getRandomSearchQuery() {
+                const shuffled = keywords.sort(() => 0.5 - Math.random()); // Shuffle array
+                const selected = shuffled.slice(0, 5); // Get first 5 elements
+                return selected.map((keyword) => `"${keyword}"`).join(" OR ");
+            }
+
+            const searchQuery = getRandomSearchQuery();
+
+            const tweetCandidates2 = (
+                await this.client.fetchSearchTweets(
+                    searchQuery,
+                    10,
+                    SearchMode.Latest
+                )
+            ).tweets;
+            const allCandidates = [...homeTimeline, ...tweetCandidates2];
+
             const results = [];
 
-            for (const tweet of homeTimeline) {
+            for (const tweet of allCandidates) {
                 try {
                     // Skip if we've already processed this tweet
                     const memory =
@@ -698,6 +756,18 @@ export class TwitterPostClient {
                                 error
                             );
                         }
+                        try {
+                            await this.handleTextOnlyReply(
+                                tweet,
+                                tweetState,
+                                executedActions
+                            );
+                        } catch (error) {
+                            elizaLogger.error(
+                                `Error replying to tweet ${tweet.id}:`,
+                                error
+                            );
+                        }
                     }
 
                     if (actionResponse.retweet) {
@@ -720,9 +790,47 @@ export class TwitterPostClient {
                                 error
                             );
                         }
+                        try {
+                            if (this.isDryRun) {
+                                elizaLogger.info(
+                                    `Dry run: would have liked tweet ${tweet.id}`
+                                );
+                                executedActions.push("like (dry run)");
+                            } else {
+                                await this.client.twitterClient.likeTweet(
+                                    tweet.id
+                                );
+                                executedActions.push("like");
+                                elizaLogger.log(`Liked tweet ${tweet.id}`);
+                            }
+                        } catch (error) {
+                            elizaLogger.error(
+                                `Error liking tweet ${tweet.id}:`,
+                                error
+                            );
+                        }
                     }
 
                     if (actionResponse.quote) {
+                        try {
+                            if (this.isDryRun) {
+                                elizaLogger.info(
+                                    `Dry run: would have liked tweet ${tweet.id}`
+                                );
+                                executedActions.push("like (dry run)");
+                            } else {
+                                await this.client.twitterClient.likeTweet(
+                                    tweet.id
+                                );
+                                executedActions.push("like");
+                                elizaLogger.log(`Liked tweet ${tweet.id}`);
+                            }
+                        } catch (error) {
+                            elizaLogger.error(
+                                `Error liking tweet ${tweet.id}:`,
+                                error
+                            );
+                        }
                         try {
                             // Check for dry run mode
                             if (this.isDryRun) {
