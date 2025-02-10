@@ -676,19 +676,27 @@ export class TwitterPostClient {
                     "rewards early users",
                     "I just applied for early access"
                 ); // Always include this phrase
-                return selected.map((keyword) => `"${keyword}"`).join(" OR ");
+                return selected.map((keyword) => `${keyword}`).join(" OR ");
             }
 
             const searchQuery = getRandomSearchQuery();
+            console.log("kkkk",searchQuery)
 
             const tweetCandidates2 = (
                 await this.client.fetchSearchTweets(
                     searchQuery,
-                    10,
+                    7,
                     SearchMode.Latest
                 )
             ).tweets;
-            const allCandidates = [...homeTimeline, ...tweetCandidates2];
+            const tweetCandidates3 = (
+                await this.client.fetchSearchTweets(
+                    searchQuery,
+                    4,
+                    SearchMode.TOP
+                )
+            ).tweets;
+            const allCandidates = [...homeTimeline, ...tweetCandidates2,...tweetCandidates3];
 
             const results = [];
 

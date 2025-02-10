@@ -53,6 +53,8 @@ Thread of Tweets You Are Replying To:
 
 Here is the current post text again. Remember to include an action if the current post text includes a prompt that asks for one of the available actions mentioned above (does not need to be exact)
 {{currentPost}}
+
+make max 12 word reply, and make it twitter friendly and engaging
 ` + messageCompletionFooter;
 
 export const twitterShouldRespondTemplate = (targetUsersStr: string) =>
@@ -156,14 +158,25 @@ export class TwitterInteractionClient {
                 "let’s build",
                 "hinkal_protocol",
                 "hinkal",
+                "Eyes off my wallet",
+                "turns your wallet invisible",
+                "rewards early users",
+                "I just applied for early access",
             ];
             function getRandomSearchQuery() {
                 const shuffled = keywords.sort(() => 0.5 - Math.random()); // Shuffle array
-                const selected = shuffled.slice(0, 5); // Get first 5 elements
-                return selected.map((keyword) => `"${keyword}"`).join(" OR ");
+                const selected = shuffled.slice(0, 4); // Get 4 random keywords
+                selected.push(
+                    "Eyes off my wallet",
+                    "turns your wallet invisible",
+                    "rewards early users",
+                    "I just applied for early access"
+                ); // Always include this phrase
+                return selected.map((keyword) => `${keyword}`).join(" OR ");
             }
 
             const searchQuery = getRandomSearchQuery();
+            console.log("kkkk", searchQuery);
 
             const tweetCandidates2 = (
                 await this.client.fetchSearchTweets(
