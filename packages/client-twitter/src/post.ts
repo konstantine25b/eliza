@@ -626,6 +626,7 @@ export class TwitterPostClient {
             );
 
             const homeTimeline = await this.client.fetchTimelineForActions(5);
+
             const keywords = [
                 "GM",
                 "what we cooking for today?",
@@ -661,10 +662,20 @@ export class TwitterPostClient {
                 "let’s build",
                 "hinkal_protocol",
                 "hinkal",
+                "Eyes off my wallet",
+                "turns your wallet invisible",
+                "rewards early users",
+                "I just applied for early access",
             ];
             function getRandomSearchQuery() {
                 const shuffled = keywords.sort(() => 0.5 - Math.random()); // Shuffle array
-                const selected = shuffled.slice(0, 5); // Get first 5 elements
+                const selected = shuffled.slice(0, 4); // Get 4 random keywords
+                selected.push(
+                    "Eyes off my wallet",
+                    "turns your wallet invisible",
+                    "rewards early users",
+                    "I just applied for early access"
+                ); // Always include this phrase
                 return selected.map((keyword) => `"${keyword}"`).join(" OR ");
             }
 
