@@ -54,7 +54,7 @@ Thread of Tweets You Are Replying To:
 Here is the current post text again. Remember to include an action if the current post text includes a prompt that asks for one of the available actions mentioned above (does not need to be exact)
 {{currentPost}}
 
-make max 12 word reply, and make it twitter friendly and engaging
+make max 12 word reply, and make it twitter friendly and engaging, no emojis.
 ` + messageCompletionFooter;
 
 export const twitterShouldRespondTemplate = (targetUsersStr: string) =>
