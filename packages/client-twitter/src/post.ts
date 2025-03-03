@@ -666,6 +666,38 @@ export class TwitterPostClient {
                 "turns your wallet invisible",
                 "rewards early users",
                 "I just applied for early access",
+                "what are you cooking?",
+                "good morning",
+                "what's on the menu?",
+                "AI innovations",
+                "culinary delights",
+                "food trends",
+                "privacy concerns",
+                "maintain privacy",
+                "working hard",
+                "immersed in projects",
+                "blockchain security",
+                "data privacy",
+                "decentralized finance",
+                "tech enthusiasts",
+                "smart contract development",
+                "artificial intelligence",
+                "machine learning advancements",
+                "sports discussions",
+                "football insights",
+                "rugby highlights",
+                "water sports",
+                "fitness activities",
+                "healthy recipes",
+                "best cooking tips",
+                "stay fit",
+                "what's your favorite sport?",
+                "football passion",
+                "let's innovate",
+                "crypto community",
+                "wallet security",
+                "user rewards",
+                "early access applications",
             ];
             function getRandomSearchQuery() {
                 const shuffled = keywords.sort(() => 0.5 - Math.random()); // Shuffle array
@@ -693,7 +725,7 @@ export class TwitterPostClient {
                 await this.client.fetchSearchTweets(
                     searchQuery,
                     4,
-                    SearchMode.TOP
+                    SearchMode.Top
                 )
             ).tweets;
             const allCandidates = [...homeTimeline, ...tweetCandidates2,...tweetCandidates3];
